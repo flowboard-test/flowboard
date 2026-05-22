@@ -2,21 +2,26 @@ import { buildApp } from './app';
 import { config } from './shared/config';
 import { initWebSocket } from './modules/realtime/websocket';
 import { getDb } from './shared/database/connection';
+import bcrypt from 'bcrypt';
+import { v4 as uuid } from 'uuid';
+import path from 'path';
 
 async function start() {
   // DB 마이그레이션 자동 실행
   const db = getDb();
+  const migrationDir = config.nodeEnv === 'production'
+    ? path.join(__dirname, 'shared/database/migrations')
+    : './src/shared/database/migrations';
+
   await db.migrate.latest({
-    directory: './src/shared/database/migrations',
-    extension: 'ts',
+    directory: migrationDir,
+    extension: config.nodeEnv === 'production' ? 'js' : 'ts',
   });
   console.log('DB migrations applied');
 
   // 테스트 사용자 확인/생성
   const existing = await db('users').where('email', 'admin@flowboard.dev').first();
   if (!existing) {
-    const bcrypt = require('bcrypt');
-    const { v4: uuid } = require('uuid');
     const hash = await bcrypt.hash('password123', 12);
     await db('users').insert({
       id: uuid(),
@@ -26,9 +31,7 @@ async function start() {
     });
     console.log('Test user created: admin@flowboard.dev / password123');
   } else {
-    // 비밀번호가 bcrypt 형식이 아니면 재설정
     if (existing.password_hash && !existing.password_hash.startsWith('$2')) {
-      const bcrypt = require('bcrypt');
       const hash = await bcrypt.hash('password123', 12);
       await db('users').where('id', existing.id).update({ password_hash: hash });
       console.log('Test user password reset to bcrypt');
@@ -49,8 +52,8 @@ async function start() {
     { name: '서보안', email: 'seo@flowboard.dev', dept: '보안팀', pos: '팀장' },
   ];
 
-  const bcrypt2 = require('bcrypt');
-  const { v4: uuid2 } = require('uuid');
+  const bcrypt2 = bcrypt;
+  const uuid2 = uuid;
   for (const u of testUsers) {
     const exists = await db('users').where('email', u.email).first();
     if (!exists) {
