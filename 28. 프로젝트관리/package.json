@@ -1,0 +1,9 @@
+{
+  "name": "flowboard",
+  "private": true,
+  "scripts": {
+    "build": "cd backend && npm install && npx tsc",
+    "start": "cd backend && node dist/server.js",
+    "install:all": "cd backend && npm install && cd ../frontend && npm install"
+  }
+}
