@@ -1,9 +1,8 @@
 import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 import { AppError } from '../errors/AppError';
-import { ZodError } from 'zod';
 
 export function errorHandler(
-  error: FastifyError | AppError | ZodError | Error,
+  error: FastifyError | AppError | Error,
   _request: FastifyRequest,
   reply: FastifyReply
 ) {
@@ -17,13 +16,14 @@ export function errorHandler(
   }
 
   // Zod validation error
-  if (error instanceof ZodError) {
-    const messages = error.errors.map((e) => e.message).join(', ');
+  if (error.name === 'ZodError' && 'errors' in error) {
+    const zodErrors = (error as any).errors;
+    const messages = zodErrors.map((e: any) => e.message).join(', ');
     return reply.status(400).send({
       statusCode: 400,
       error: 'VALIDATION_ERROR',
       message: messages,
-      details: error.errors,
+      details: zodErrors,
     });
   }
 

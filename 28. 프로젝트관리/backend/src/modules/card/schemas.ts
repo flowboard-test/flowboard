@@ -17,6 +17,7 @@ export const updateCardSchema = z.object({
   assignee_id: z.string().uuid().nullable().optional(),
   start_date: z.string().nullable().optional(),
   due_date: z.string().nullable().optional(),
+  status: z.enum(['todo', 'in_progress', 'done']).optional(),
   tags: z.array(z.string()).optional(),
   version: z.number().int().positive(),
 });
