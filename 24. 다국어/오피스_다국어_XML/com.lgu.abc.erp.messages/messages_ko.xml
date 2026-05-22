@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="erp.option.user.card.excel.file.name">법인카드 목록</entry>
+	<entry key="erp.option.user.card.excel.sheet.name">법인카드 목록</entry>
+	
+	<entry key="erp.option.user.card.excel.header.card.name">법인카드명</entry>
+	<entry key="erp.option.user.card.excel.header.card.number">카드번호</entry>
+	<entry key="erp.option.user.card.excel.header.card.corp">카드사</entry>
+	<entry key="erp.option.user.card.excel.header.card.used">사용구분</entry>
+
+</properties>

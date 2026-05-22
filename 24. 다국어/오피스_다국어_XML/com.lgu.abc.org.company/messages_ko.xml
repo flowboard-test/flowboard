@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="org.company.option.ui.name">화면 설정</entry>
+	<entry key="org.company.option.env.name">기본 설정</entry>
+	<entry key="org.company.option.menu.name">사용 메뉴 설정</entry>
+	<entry key="org.company.option.ip.name">IP 관리</entry>
+	<entry key="org.company.option.popup.name">팝업 관리</entry>
+	<entry key="org.company.option.link.name">연동 설정</entry>
+	<entry key="org.company.option.shortcut.name">바로 가기</entry>
+	<entry key="org.company.option.office.name">오피스</entry>
+	<entry key="org.company.option.volume.name">용량관리</entry>
+	<entry key="org.company.option.groupware.name">그룹웨어 설정</entry>
+	<entry key="org.company.option.cowork.name">협업관리</entry>
+	<entry key="org.company.option.policy.name">정책관리</entry>
+	<entry key="org.company.option.erp.name">U+ ERP 연동하기</entry>
+	<entry key="org.company.option.erp.ylw">영림원 ERP 연동하기</entry>
+	<entry key="org.company.option.attendance.workTime.name">U+ 근무시간관리 연동</entry>
+	<entry key="org.company.option.services.name">서비스 설정</entry>
+	<entry key="org.company.option.dashboard.name">서비스 가입현황</entry>
+	<entry key="org.company.option.usestate.name">서비스 이용현황</entry>
+	<entry key="org.company.option.statistics.name">통계정보</entry>
+	<entry key="org.company.option.dns.name">접속 설정</entry>
+	<entry key="org.configuration.name">조직관리</entry>
+	<!-- <entry key="org.company.option.mobile.ip.name">모바일 관리</entry> -->
+	<entry key="org.company.option.mobile.ip.name">모바일앱 설정</entry>
+	<entry key="org.company.option.workstore.name">부가서비스 설정</entry>
+	<entry key="org.company.option.invitation.user.name">초대한 사용자 관리</entry>
+
+	<entry key="org.company.option.backup.name">백업관리</entry>
+	<entry key="org.company.option.backup.setting.name">백업관리설정</entry>
+		
+	<entry key="org.company.option.function.name">기능별 설정</entry>
+	<entry key="org.company.option.internet.telephone.name">인터넷전화</entry>
+	<entry key="org.company.option.hard.name">U+ 웹하드 연동</entry>
+	<entry key="org.company.option.fax.name">U+ 웹팩스 연동</entry>
+	<entry key="org.company.option.document.name">U+ 전자문서 연동</entry>
+	
+	<entry key="org.company.report.statistics.sms.user.name">사용자명(ID)</entry>
+	<entry key="org.company.report.statistics.sms.user.smsSendCount">sms 건수</entry>
+	<entry key="org.company.report.statistics.sms.user.mmsSendCount">mms 건수</entry>
+	<entry key="org.company.report.statistics.sms.user.sendCount">발송 횟수(총)</entry>
+	
+	<entry key="exception.message.NoCompanyAdministratorException">전사 관리자는 한 명 이상이어야 합니다.</entry>
+</properties>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="board.listTitle"><![CDATA[목록화면]]></entry>
+	<entry key="board.saveTitle"><![CDATA[저장화면]]></entry>
+	<entry key="board.editTitle"><![CDATA[수정화면]]></entry>
+	<entry key="board.showTitle"><![CDATA[본문화면]]></entry>	
+	
+	<entry key="board.yesButton"><![CDATA[예]]></entry>
+	<entry key="board.noButton"><![CDATA[아니오]]></entry>	
+	
+	<entry key="board.atclSeq"><![CDATA[번호]]></entry>
+	<entry key="board.brdSeq"><![CDATA[게시판타입]]></entry>
+	<entry key="board.wrtUsrKey"><![CDATA[작성자키]]></entry>
+	<entry key="board.keepTermCd"><![CDATA[보존기간코드]]></entry>
+	<entry key="board.keepExpiDate"><![CDATA[보존만료일]]></entry>
+	<entry key="board.postNotiYN"><![CDATA[알림여부]]></entry>
+	<entry key="board.impoAncmtYN"><![CDATA[공지]]></entry>
+	<entry key="board.ancmtTitle"><![CDATA[공지기간]]></entry>
+	<entry key="board.ancmtStrtDate"><![CDATA[공지시작일]]></entry>
+	<entry key="board.ancmtExpiDate"><![CDATA[공지만료일]]></entry>
+	<entry key="board.atclTit"><![CDATA[제목]]></entry>
+	<entry key="board.atclCont"><![CDATA[내용]]></entry>
+	<entry key="board.hitCnt"><![CDATA[조회수]]></entry>
+	<entry key="board.recomCnt"><![CDATA[추천수]]></entry>
+	<entry key="board.atchFileCnt"><![CDATA[첨부파일수]]></entry>	
+	<entry key="board.brdAtclSeq"><![CDATA[순번]]></entry>
+	<entry key="board.rplyParntAtclSeq"><![CDATA[답글부모게시물순번]]></entry>
+	<entry key="board.rplyAtclSeq"><![CDATA[답글게시물순번]]></entry>
+	<entry key="board.rplyAtclLvl"><![CDATA[답글게시물레벨]]></entry>	
+	<entry key="board.tempStrgYN"><![CDATA[임시보관]]></entry>
+	<entry key="board.delYN"><![CDATA[삭제]]></entry>
+	<entry key="board.tag"><![CDATA[태그]]></entry>
+	<entry key="board.regDtime"><![CDATA[등록일]]></entry>
+	<entry key="board.regUsrKey"><![CDATA[등록자키]]></entry>
+	<entry key="board.modDtime"><![CDATA[수정일]]></entry>
+	<entry key="board.modUsrKey"><![CDATA[수정자키]]></entry>
+	<entry key="board.lbl"><![CDATA[레이블]]></entry>
+	
+	<entry key="board.findTitle"><![CDATA[검색]]></entry>
+	<entry key="board.detailfindTitle"><![CDATA[상세검색]]></entry>
+	<entry key="board.findCategory"><![CDATA[검색범주]]></entry>
+	<entry key="board.findTerm"><![CDATA[검색기간]]></entry>
+	<entry key="board.findCondition"><![CDATA[검색조건]]></entry>
+	<entry key="board.findConditionAnd"><![CDATA[AND]]></entry>
+	<entry key="board.findConditionOr"><![CDATA[OR]]></entry>
+	<entry key="board.findString"><![CDATA[검색어]]></entry>
+	
+	<entry key="board.multipartFile"><![CDATA[파일첨부]]></entry>
+	<entry key="board.fileName"><![CDATA[첨부파일명]]></entry>
+	
+	
+	<entry key="board.add"><![CDATA[추가]]></entry>
+	<entry key="board.del"><![CDATA[삭제]]></entry>
+		
+	<entry key="boardLbl.lblSeq"><![CDATA[레이블순번]]></entry>
+	<entry key="boardLbl.CorpSeq"><![CDATA[회사순번]]></entry>
+	<entry key="boardLbl.DeptSeq"><![CDATA[부서순번]]></entry>
+	<entry key="boardLbl.WsSeq"><![CDATA[워크스페이스순번]]></entry>
+	<entry key="boardLbl.LblNm"><![CDATA[레이블명]]></entry>
+	<entry key="boardLbl.DelYn"><![CDATA[삭제여부]]></entry>
+	<entry key="boardLbl.RegDtime"><![CDATA[등록일시]]></entry>
+	<entry key="boardLbl.RegUsrKey"><![CDATA[등록사용자키]]></entry>
+	<entry key="boardLbl.ModDtime"><![CDATA[수정일시]]></entry>
+	<entry key="boardLbl.ModUsrKey"><![CDATA[수정사용자키]]></entry>
+	
+	
+	<entry key="brd.rplyButton"><![CDATA[답글]]></entry>
+	
+	<entry key="brdCnfg.brdSeq"><![CDATA[설정순번]]></entry>
+	<entry key="brdCnfg.brdId"><![CDATA[게시판아이디]]></entry>
+	<entry key="brdCnfg.corpSeq"><![CDATA[회사순번]]></entry>
+	<entry key="brdCnfg.deptSeq"><![CDATA[부서순번]]></entry>
+	<entry key="brdCnfg.wsSeq"><![CDATA[WS순번]]></entry>
+	<entry key="brdCnfg.brdTypCd"><![CDATA[타입코드]]></entry>
+	<entry key="brdCnfg.brdNm"><![CDATA[게시판명]]></entry>
+	<entry key="brdCnfg.brdDscrt"><![CDATA[게시판설명]]></entry>
+	<entry key="brdCnfg.bsicBrdYN"><![CDATA[기본게시판]]></entry>
+	<entry key="brdCnfg.cmtUseYN"><![CDATA[댓글사용]]></entry>
+	<entry key="brdCnfg.useYN"><![CDATA[사용]]></entry>
+	<entry key="brdCnfg.delYN"><![CDATA[삭제]]></entry>
+	<entry key="brdCnfg.regDtime"><![CDATA[등록일시]]></entry>
+	<entry key="brdCnfg.regUsrKey"><![CDATA[등록사용자키]]></entry>
+	<entry key="brdCnfg.modDtime"><![CDATA[수정일시]]></entry>
+	<entry key="brdCnfg.modUsrKey"><![CDATA[수정사용자키]]></entry>	
+	
+		
+	<entry key="brdCmt.atclCmtSeq"><![CDATA[댓글순번]]></entry>
+	<entry key="brdCmt.atclSeq"><![CDATA[게시물순번]]></entry>
+	<entry key="brdCmt.usrKey"><![CDATA[작성자]]></entry>
+	<entry key="brdCmt.cmtCont"><![CDATA[댓글내용]]></entry>
+	<entry key="brdCmt.delYN"><![CDATA[삭제여부]]></entry>
+	<entry key="brdCmt.regDtime"><![CDATA[등록일시]]></entry>
+	<entry key="brdCmt.regUsrKey"><![CDATA[등록사용자키]]></entry>
+	<entry key="brdCmt.modDtime"><![CDATA[수정일시]]></entry>
+	<entry key="brdCmt.modUsrKey"><![CDATA[수정사용자키]]></entry>
+	<entry key="brdCmt.saveButton"><![CDATA[댓글저장]]></entry>
+	
+	<entry key="brdCmt.list"><![CDATA[댓글목록]]></entry>
+	<entry key="brdCmt.add"><![CDATA[댓글작성]]></entry>
+	<entry key="brdCmt.edit"><![CDATA[댓글수정]]></entry>
+	<entry key="brdCmt.del"><![CDATA[댓글삭제]]></entry>
+	
+	
+	<entry key="brdRecomHist.recom"><![CDATA[추천]]></entry>
+	
+	
+	
+	<entry key="board.Title"><![CDATA[게시판]]></entry>
+	<entry key="boardLbl.Title"><![CDATA[레이블관리]]></entry>
+	<entry key="brdCnfg.Title"><![CDATA[게시판설정]]></entry>
+	<entry key="brdCmt.Title"><![CDATA[댓글관리]]></entry>
+</properties>

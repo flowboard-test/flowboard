@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="works.domain.find.available">그룹웨어에서 사용 가능한 접속 URL입니다.</entry>
+	<entry key="works.domain.find.unavailable">그룹웨어에서 이미 사용 중인 접속 URL입니다. 다른 URL을 입력해 주세요.</entry>
+	<entry key="works.userid.find.available">사용 가능한 아이디입니다.</entry>
+	<entry key="works.userid.find.unavailable">이미 사용 중인 아이디입니다.</entry>
+	<entry key="works.userid.find.failure">아이디 중복 확인에 실패하였습니다.</entry>
+	<entry key="works.email.send.success">메일을 발송하였습니다.</entry>
+	<entry key="works.email.send.failure">메일 발송을 실패하였습니다.</entry>
+	<entry key="works.certification.available">인증되었습니다.</entry>
+	<entry key="works.certification.unavailable">인증번호가 일치하지 않습니다.</entry>
+	<entry key="works.product.email.send.success">이메일을 발송하였습니다.</entry>
+	<entry key="works.product.email.send.failure">이메일 발송을 실패했습니다.</entry>
+	<entry key="works.product.email.not.exist">가입한 서비스가 없습니다.</entry>
+	<entry key="works.product.email.empty">이메일 주소를 입력해 주세요.</entry>
+	<entry key="works.email.valid.available">이메일 유효성 검사가 완료되었습니다.</entry>
+	<entry key="works.email.valid.unavailable">존재하지 않는 이메일로 확인됩니다.</entry>
+
+	<entry key="works.create.subscription.success">서비스 가입(개통)이 완료되었습니다.</entry>
+	<entry key="works.create.subscription.failure">서비스 가입(개통)에 실패하였습니다.</entry>
+	<entry key="works.create.subscription.already">이미 가입(개통)이 된 서비스입니다.</entry>
+	<entry key="works.create.mail.success">서비스 가입(메일 개통)이 완료되었습니다.</entry>
+	<entry key="works.create.mail.failure">서비스 가입(메일 개통)에 실패하였습니다.</entry>
+	<entry key="works.create.product.success">서비스 가입(상품)이 완료되었습니다.</entry>
+	<entry key="works.create.product.failure">서비스 가입(상품)에 실패하였습니다.</entry>
+	<entry key="works.create.user.success">초대 가입이 완료되었습니다.</entry>
+	<entry key="works.create.user.failure">초대 가입에 실패하였습니다.</entry>
+	<entry key="works.create.user.already">이미 가입이 된 초대입니다.</entry>
+
+	<entry key="exception.message.WorksInvalidAgreementException">서비스 이용약관 및 개인 정보 수집 이용에 동의하지 않았습니다.</entry>
+	<entry key="exception.message.WorksInvalidCertificationException">이메일 인증이 되지 않았습니다.</entry>
+	<entry key="exception.message.WorksInvalidProfileException">필수 항목이 모두 입력되지 않았습니다.</entry>
+	<entry key="exception.message.WorksInvalidInvitationCodeException">초대 코드가 유효하지 않습니다.</entry>
+	<entry key="exception.message.WorksInvalidInvitationProfileException">초대 필수 항목이 모두 입력되지 않았습니다.</entry>
+	<entry key="exception.message.WorksDuplicateDomainException">그룹웨어에서 이미 사용 중인 접속 URL입니다. 다른 URL을 입력해 주세요.</entry>
+	<entry key="exception.message.WorksDuplicateUserEmailException">이미 사용 중인 사용자 메일입니다.</entry>
+	<entry key="exception.message.WorksCompanyNotFoundException">회사를 찾을 수 없습니다.</entry>
+
+	<entry key="com.lgu.abc.om.works.exception.WorksInvalidAgreementException">서비스 이용약관 및 개인 정보 수집 이용에 동의하지 않았습니다.</entry>
+	<entry key="com.lgu.abc.om.works.exception.WorksInvalidCertificationException">이메일 인증이 되지 않았습니다.</entry>
+	<entry key="com.lgu.abc.om.works.exception.WorksInvalidProfileException">필수 항목이 모두 입력되지 않았습니다.</entry>
+	<entry key="com.lgu.abc.om.works.exception.WorksInvalidInvitationCodeException">초대 코드가 유효하지 않습니다.</entry>
+	<entry key="com.lgu.abc.om.works.exception.WorksInvalidInvitationProfileException">초대 필수 항목이 모두 입력되지 않았습니다.</entry>
+	<entry key="com.lgu.abc.om.works.exception.WorksDuplicateDomainException">그룹웨어에서 이미 사용 중인 접속 URL입니다. 다른 URL을 입력해 주세요.</entry>
+	<entry key="com.lgu.abc.om.works.exception.WorksDuplicateUserEmailException">이미 사용 중인 사용자 메일입니다.</entry>
+	<entry key="com.lgu.abc.om.works.exception.WorksCompanyNotFoundException">회사를 찾을 수 없습니다.</entry>
+
+	<entry key="works.om.store.retry">서비스 가입 처리되었습니다. 정상적으로 처리되었는지 확인해 주십시오.</entry>
+	<entry key="works.om.store.exception.UserNotFoundException">SUB_USR_KEY를 다시 확인해 주십시오.</entry>
+	<entry key="works.om.store.exception.InvalidCorpSeqException">SUB_USR_KEY 또는 SUB_COPR_SEQ를 다시 확인해 주십시오.</entry>
+</properties>

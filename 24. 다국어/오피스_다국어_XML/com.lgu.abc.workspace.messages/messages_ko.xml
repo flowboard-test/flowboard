@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="action.success.create.WorkspaceFavorite">즐겨찾기가 추가되었습니다.</entry>
+	<entry key="action.success.delete.WorkspaceFavorite">즐겨찾기가 삭제되었습니다.</entry>
+	
+	<entry key="action.success.request.WorkspaceMember">회원 가입 신청되었습니다. 관리자 승인 후 가입이 완료됩니다.</entry>
+	<entry key="action.success.approve.WorkspaceMember">회원 가입이 승인되었습니다.</entry>
+	<entry key="action.success.reject.WorkspaceMember">회원 가입 신청이 반려되었습니다.</entry>
+	<entry key="action.success.expel.WorkspaceMember">선택하신 회원이 강제 탈퇴되었습니다.</entry>
+	<entry key="action.success.leave.WorkspaceMember">워크스페이스를 탈퇴하였습니다.</entry>
+	<entry key="action.success.submanager.WorkspaceMember">선택하신 회원이 부관리자로 지정되었습니다.</entry>
+	<entry key="action.success.leader.WorkspaceMember">선택하신 회원이 리더로 지정되었습니다.</entry>
+	<entry key="action.success.demote.WorkspaceMember">선택하신 회원이 일반회원으로 지정되었습니다.</entry>
+	<entry key="action.success.inherit.WorkspaceMember">주관리자가 이양되었습니다.</entry>
+	
+	<entry key="action.success.open.WorkspaceProfile">워크스페이스 개설이 신청되었습니다.</entry>
+	<entry key="action.success.approve.WorkspaceProfile">워크스페이스 개설이 승인되었습니다.</entry>
+	<entry key="action.success.reject.WorkspaceProfile">워크스페이스 개설이 반려되었습니다.</entry>
+	<entry key="action.success.close.WorkspaceProfile">워크스페이스가 폐쇄되었습니다.</entry>
+	<entry key="action.success.restore.WorkspaceProfile">워크스페이스가 복구되었습니다.</entry>
+	
+	<entry key="exception.message.TeamWorkspaceDuplicationException">팀 워크스페이스가 이미 개설 혹은 개설 신청되었습니다.</entry>
+
+	<entry key="exception.message.WorkspaceManagerMovementException">워크스페이스 관리자는 삭제/부서이동이 불가능합니다.</entry>
+	<entry key="exception.message.WorkspaceMemberJoiningUnrequestableException">회원 가입 신청이 허용되지 않는 워크스페이스입니다.</entry>
+	<entry key="exception.message.WorkspaceMemberAlreadyJoinedException">이미 가입 혹은 가입신청되어 있습니다.</entry>	
+	
+	<entry key="exception.message.WorkspaceMemberAlreadyApprovedException">이미 승인된 사용자입니다.</entry>
+	<entry key="exception.message.WorkspaceMemberAlreadyLeftException">이미 탈퇴한 사용자입니다.</entry>
+	<entry key="exception.message.WorkspaceMemberAlreadyRejectedException">이미 승인된 사용자입니다.</entry>
+	<entry key="exception.message.WorkspaceMemberStateTransferException">유효하지 않은 상태 변경입니다.</entry>
+	<entry key="exception.message.WorkspaceMemberExpelException">일반 회원만 강제 탈퇴시킬 수 있습니다.</entry>
+	<entry key="exception.message.WorkspaceManagerLeavingException">주관리자는 권한 이양 후 탈퇴할 수 있습니다.</entry>
+	
+	<entry key="exception.message.WorkspaceMemberSubManagerPromotionException">주관리자를 부관리자로 지정할 수 없습니다.</entry>
+	<entry key="exception.message.WorkspaceMemberLeaderPromotionException">주관리자를 리더로 지정할 수 없습니다.</entry>
+	<entry key="exception.message.WorkspaceMemberManagerDemotionException">주관리자를 일반회원으로 강등시킬 수 없습니다.</entry>
+	<entry key="exception.message.WorkspaceMemberInheritException">주관리자에게 주관리자 권한을 이양할 수 없습니다.</entry>
+</properties>

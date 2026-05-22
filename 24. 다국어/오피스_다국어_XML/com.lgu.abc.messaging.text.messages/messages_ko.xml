@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="messaging.text.requester.unavailable.count">할당된 전송 건수가 없습니다.</entry>
+	<entry key="messaging.text.requester.invalid.target">잘못된 수신 번호입니다.</entry>
+</properties>

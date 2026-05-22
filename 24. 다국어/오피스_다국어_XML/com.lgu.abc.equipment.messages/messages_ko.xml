@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="action.success.create.EquipmentReservation">자원 예약이 신청 되었습니다. 관리자 승인후 사용 가능합니다.</entry>
+	<entry key="action.success.update.EquipmentReservation">자원 예약신청을 변경 하였습니다.</entry>
+	<entry key="action.success.reservation.EquipmentReservation">자원 예약이 신청 되었습니다. 사용예약 시간에 사용 가능합니다.</entry>
+	<entry key="action.success.cancel.EquipmentReservation">자원 예약이 취소되었습니다.</entry>
+	<entry key="action.success.approval.EquipmentReservation">자원 예약신청을 승인하였습니다.</entry>
+	<entry key="action.success.rejection.EquipmentReservation">자원 예약신청을 반려하였습니다.</entry>
+	
+	<entry key="exception.message.EquipmentReservationExistException">해당 장비에 대한 예약이 존재합니다.</entry>
+	<entry key="exception.message.EquipmentExistException">해당 분류에 대한 설비가 존재합니다.</entry>
+	<entry key="exception.message.EquipmentTypeExistException">해당 카테고리에 대한 분류가 존재합니다.</entry>
+	<entry key="exception.message.EquipmentAdministratorNotExistException">승인할 관리자가 지정되지 않았습니다.</entry>
+	
+	<entry key="exception.message.InvalidEquipmentRentalPeriodException">설비 사용 가능한 시간이 아닙니다.</entry>
+	<entry key="exception.message.EquipmentReservationConflictionException">이미 등록된 예약이 있습니다.</entry>
+	<entry key="exception.message.EquipmentReservationAlreadyApprovedException">이미 승인된 예약입니다.</entry>
+	<entry key="exception.message.EquipmentReservationAlreadyRejectedException">이미 반려된 예약입니다.</entry>
+	<entry key="exception.message.EquipmentReservationAlreadyCancelledException">이미 취소된 예약입니다.</entry>
+</properties>

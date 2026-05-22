@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="CRX0000"><![CDATA[저장되었습니다. 재로그인 후 사용해 주세요.]]></entry>
+	<entry key="CRX1001"><![CDATA[필수 Paramer 누락]]></entry>
+	<entry key="CRX1002"><![CDATA[전화번호를 확인해 주세요.]]></entry> <!-- Parmeter 누락 -->
+	<entry key="CRX1003"><![CDATA[전화번호를 확인해 주세요.]]></entry> <!-- 전화번호 에러 -->
+	<entry key="CRX1004"><![CDATA[비밀번호를 확인해 주세요.]]></entry> <!-- 패스워드 에러 -->
+	<entry key="CRX1005"><![CDATA[알수없는 명령]]></entry>
+	<entry key="CRX2001"><![CDATA[Host 정보 오류]]></entry>
+	<entry key="CRX2002"><![CDATA[계정에 대한 권한이 없습니다.]]></entry> <!-- 권한 에러 --> 
+	<entry key="CRX3001"><![CDATA[내부 프로세스 오류]]></entry>
+	<entry key="CRX3002"><![CDATA[메세지 길이 초과]]></entry>
+	<entry key="CRX3003"><![CDATA[동시발송 개수 초과]]></entry>
+	<entry key="CRX3004"><![CDATA[SMS 남은 발송 건수 없음]]></entry>
+	<entry key="CRX4001"><![CDATA[API명 오류]]></entry>
+	<entry key="CRX4002"><![CDATA[정보 없음]]></entry>
+	<entry key="CRX4003"><![CDATA[알수없는 폰 상태]]></entry>
+	<entry key="CRX4004"><![CDATA[통화중채널없음]]></entry>
+	<entry key="CRX9999"><![CDATA[기타 오류]]></entry>
+</properties>

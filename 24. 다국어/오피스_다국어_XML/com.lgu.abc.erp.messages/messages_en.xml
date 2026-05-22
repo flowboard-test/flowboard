@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="erp.option.user.card.excel.file.name">CardList</entry>
+	<entry key="erp.option.user.card.excel.sheet.name">CardList</entry>
+	
+	<entry key="erp.option.user.card.excel.header.card.name">Card Name</entry>
+	<entry key="erp.option.user.card.excel.header.card.number">Card Number</entry>
+	<entry key="erp.option.user.card.excel.header.card.corp">Card Company</entry>
+	<entry key="erp.option.user.card.excel.header.card.used">Use classification</entry>
+
+</properties>

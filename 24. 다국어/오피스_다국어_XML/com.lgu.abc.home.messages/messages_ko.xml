@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="exception.mobile.message.CompanyNotFoundException">서비스가 정보가 존재하지않는 고객사입니다.</entry>
+	<entry key="exception.mobile.message.InvalidLoginIdException">사용자 정보가 존재 하지 않습니다. 담당자에게 문의해주십시오.</entry>
+	<entry key="exception.mobile.message.InvalidPasswordException">비밀번호가 맞지 않습니다.</entry>
+	<entry key="exception.mobile.message.AuthFailCountOverException">비밀번호 오류 횟수가 5회 이상을 초과하였습니다. 관리자에게 문의해주십시오.</entry>
+	<entry key="exception.mobile.message.SfaNotUseException">영업관리 사용 권한이 없습니다. 관리자에게 문의해주십시오.</entry>
+
+	<entry key="external.external.kind.Caps">캡스</entry>
+
+	<entry key="external.message.success">로그인되었습니다.</entry>
+	<entry key="external.message.InvalidHeader">헤더 정보가 올바르지 않습니다.</entry>
+	<entry key="external.message.InvalidNotExistLoginId">아이디(이메일주소)를 다시 확인해주세요.</entry>
+	<entry key="external.message.InvalidAdministratorAuthority">관리자 권한이 없습니다.</entry>
+	<entry key="external.message.InvalidStopLoginId">로그인한 아이디는 삭제되었습니다.</entry>
+	<entry key="external.message.InvalidPasssword">비밀번호를 다시 확인해주세요.</entry>
+	<entry key="external.message.InvalidCompanyUnpaid">그룹웨어 해지로 인해 서비스 이용이 불가능합니다.</entry>
+	<entry key="external.message.InvalidCompanyStop">고객님의 가입상태가 요금미납으로 인해 중지 처리되었습니다.</entry>
+	<entry key="external.message.InvalidCompanyPause">고객님의 가입상태가 일시정지 신청으로 인해 중지 처리되었습니다.</entry>
+	<entry key="external.message.NotUseStatExternal">캡스 사용 상태가 사용안함으로 설정되어있습니다.</entry>
+	<entry key="external.message.EnableUseExternal">캡스를 이용할 수 없습니다.</entry>
+	<entry key="external.message.NotUseStatExternalSone">에스원세콤 사용 상태가 사용안함으로 설정되어있습니다.</entry>
+	<entry key="external.message.EnableUseExternalSone">에스원세콤을 이용할 수 없습니다.</entry>
+	<entry key="external.message.LoginError">로그인 중 오류가 발생하였습니다.</entry>
+</properties>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="board.feed.content.nodata">선택하신 게시글은 삭제 또는 다른 게시판으로 이동되어 확인이 불가합니다.</entry>
+	<entry key="board.feed.content.forbidden">권한이 없는 게시물입니다.</entry>
+	<entry key="board.feed.unUse">사용하지 않는 게시판의 게시물입니다.</entry>
+	
+	<entry key="board.cnfg.draganddrop.success">[{0}]이(가) 정상적으로 이동되었습니다.</entry>
+	<entry key="board.cnfg.draganddrop.fail">[{0}]이(가) 이동하는데 실패하였습니다.</entry>
+	
+	<entry key="BRD.00001"><![CDATA[전체]]></entry>
+	<entry key="BRD.00002"><![CDATA[모두 읽음 상태 표시]]></entry>
+	<entry key="BRD.00003"><![CDATA[목록만]]></entry>
+	<entry key="BRD.00004"><![CDATA[오른쪽]]></entry>
+	<entry key="BRD.00005"><![CDATA[아래쪽]]></entry>
+	<entry key="BRD.00006"><![CDATA[번호]]></entry>
+	<entry key="BRD.00007"><![CDATA[제목]]></entry>
+	<entry key="BRD.00008"><![CDATA[작성자]]></entry>
+	<entry key="BRD.00009"><![CDATA[작성일]]></entry>
+	<entry key="BRD.00010"><![CDATA[조회자]]></entry>
+	<entry key="BRD.00011"><![CDATA[조회수]]></entry>
+	<entry key="BRD.00012"><![CDATA[글쓰기]]></entry>
+	<entry key="BRD.00013"><![CDATA[임시 보관함]]></entry>
+	<entry key="BRD.00014"><![CDATA[게시물 등록함]]></entry>
+	<entry key="BRD.00015"><![CDATA[전사 게시판]]></entry>
+	<entry key="BRD.00016"><![CDATA[팀 게시판]]></entry>
+	<entry key="BRD.00017"><![CDATA[내 게시판]]></entry>
+	<entry key="BRD.00018"><![CDATA[공유 게시판]]></entry>
+	<entry key="BRD.00019"><![CDATA[환경 설정]]></entry>
+	<entry key="BRD.00020"><![CDATA[저장]]></entry>
+	<entry key="BRD.00021"><![CDATA[임시 저장]]></entry>
+	<entry key="BRD.00022"><![CDATA[취소]]></entry>
+	<entry key="BRD.00023"><![CDATA[카테고리]]></entry>
+	<entry key="BRD.00024"><![CDATA[중요 공지]]></entry>
+	<entry key="BRD.00025"><![CDATA[동시 등록]]></entry>
+	<entry key="BRD.00026"><![CDATA[태그]]></entry>
+	<entry key="BRD.00027"><![CDATA[파일 첨부]]></entry>
+	<entry key="BRD.00028"><![CDATA[PC]]></entry>
+	<entry key="BRD.00029"><![CDATA[웹디스크]]></entry>
+	<entry key="BRD.00030"><![CDATA[U+ BOX]]></entry>
+	<entry key="BRD.00031"><![CDATA[업로드]]></entry>
+	<entry key="BRD.00032"><![CDATA[검색]]></entry>
+	<entry key="BRD.00033"><![CDATA[상세]]></entry>
+	<entry key="BRD.00034"><![CDATA[상세]]></entry>
+	<entry key="BRD.00035"><![CDATA[경조일]]></entry>
+	<entry key="BRD.00036"><![CDATA[문서버전]]></entry>
+	<entry key="BRD.00037"><![CDATA[편집잠금]]></entry>
+	<entry key="BRD.00038"><![CDATA[잠금상태]]></entry>
+	<entry key="BRD.00039"><![CDATA[버전]]></entry>
+	<entry key="BRD.00040"><![CDATA[댓글]]></entry>
+	<entry key="BRD.00041"><![CDATA[추천]]></entry>
+	<entry key="BRD.00042"><![CDATA[답글쓰기]]></entry>
+	<entry key="BRD.00043"><![CDATA[추천하기]]></entry>
+	<entry key="BRD.00044"><![CDATA[댓글쓰기]]></entry>
+	<entry key="BRD.00045"><![CDATA[다운로드]]></entry>
+	<entry key="BRD.00046"><![CDATA[수정]]></entry>
+	<entry key="BRD.00047"><![CDATA[삭제]]></entry>
+	<entry key="BRD.00048"><![CDATA[복사]]></entry>
+	<entry key="BRD.00049"><![CDATA[이동]]></entry>
+	<entry key="BRD.00050"><![CDATA[PC저장]]></entry>
+	<entry key="BRD.00051"><![CDATA[인쇄]]></entry>
+	<entry key="BRD.00052"><![CDATA[읽지 않은 게시물]]></entry>
+	<entry key="BRD.00053"><![CDATA[읽은 게시물]]></entry>
+	<entry key="BRD.10091"><![CDATA[검색 키워드가 입력되지 않았습니다.]]></entry>
+</properties>

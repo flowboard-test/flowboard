@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="action.success.move.AddressCard">Address cards have been moved.</entry>
+	<entry key="action.success.copy.AddressCard">Address cards have been copied.</entry>
+
+	<entry key="exception.message.DefaultAddressBookRemovalException">Default address book can't be removed.</entry>
+	<entry key="exception.message.AddressCardUnauthorizedUpdateException">Address card update is allowed only to the owner.</entry>
+	<entry key="exception.message.AddressCardUnauthorizedMoveException">Address card move is not allowed.</entry>
+	<entry key="exception.message.AddressCardUnauthorizedCopyException">Address card copy is not allowed.</entry>
+	<entry key="exception.message.AddressCardMovingToSameBookException">Address cards cannot be moved to the same book.</entry>
+	<entry key="exception.message.AddressCardNoBookFoundException">Address book is not found.</entry>
+
+	<entry key="address.card.excel.sheet.name">ADDRESS</entry>
+	<entry key="address.card.excel.header.name">NAME(*)</entry>
+	<entry key="address.card.excel.header.address.book.name">ADDRESS BOOK NAME(*)</entry>
+	<entry key="address.card.excel.header.company">COMPANY</entry>
+	<entry key="address.card.excel.header.department">DEPARTMENT</entry>
+	<entry key="address.card.excel.header.position">POSITION</entry>
+	<entry key="address.card.excel.header.email">EMAIL</entry>
+	<entry key="address.card.excel.header.mobile">MOBILE</entry>
+	<entry key="address.card.excel.header.fax">FAX</entry>
+	<entry key="address.card.excel.header.company.phone">COMPANY PHONE</entry>
+	<entry key="address.card.excel.header.company.address">COMPANY ADDRESS</entry>
+	<entry key="address.card.excel.header.home.address">HOME ADDRESS</entry>
+	<entry key="address.card.excel.header.birthday.date">BIRTHDAY</entry>
+	<entry key="address.card.excel.header.birthday.lunar">LUNAR</entry>
+	<entry key="address.card.excel.header.wedding.date">WEDDING</entry>
+	<entry key="address.card.excel.header.wedding.lunar">LUNAR</entry>
+	<entry key="address.card.excel.header.contact.other">OTHER CONTACT</entry>
+	<entry key="address.card.excel.header.memo">MEMO</entry>
+	
+	<entry key="address.card.outlook.header.name">First Name</entry>
+	<entry key="address.card.outlook.header.company">Company</entry>
+	<entry key="address.card.outlook.header.email">E-mail Address</entry>
+	<entry key="address.card.outlook.header.mobile">Primary Phone</entry>
+	<entry key="address.card.outlook.header.personal.phone">Home Phone</entry>
+	<entry key="address.card.outlook.header.company.phone">Company Main Phone</entry>
+	
+	<entry key="address.card.express.header.name">First Name</entry>
+	<entry key="address.card.express.header.company">Company</entry>
+	<entry key="address.card.express.header.email">E-mail Address</entry>
+	<entry key="address.card.express.header.mobile">Primary Phone</entry>
+	<entry key="address.card.express.header.personal.phone">Home Phone</entry>
+	<entry key="address.card.express.header.company.phone">Company Main Phone</entry>
+	
+	<entry key="address.card.common.content.file.name.prefix">address_</entry>
+	
+	<entry key="address.book.transfer.save.fail">save error</entry>
+</properties>

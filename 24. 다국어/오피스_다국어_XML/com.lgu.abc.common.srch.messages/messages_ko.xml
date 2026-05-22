@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="SRCH.00001"><![CDATA[조직도]]></entry>
+	<entry key="SRCH.00002"><![CDATA[게시/공지]]></entry>
+	<entry key="SRCH.00003"><![CDATA[전자결재]]></entry>
+	<entry key="SRCH.00004"><![CDATA[업무관리]]></entry>
+	<entry key="SRCH.00005"><![CDATA[웹디스크]]></entry>
+	
+	<entry key="SRCH.00006"><![CDATA[통합검색]]></entry>
+	<entry key="SRCH.00007"><![CDATA[더 보기]]></entry>
+	
+	<entry key="SRCH.00008"><![CDATA[전체]]></entry>
+	<entry key="SRCH.00009"><![CDATA[1일]]></entry>
+	<entry key="SRCH.00010"><![CDATA[1주]]></entry>
+	<entry key="SRCH.00011"><![CDATA[1개월]]></entry>
+	<entry key="SRCH.00012"><![CDATA[1년]]></entry>
+	
+	<entry key="SRCH.00013"><![CDATA[요청하신 "검색어"의 검색 결과는 총]]></entry>
+	<entry key="SRCH.00014"><![CDATA[건입니다.]]></entry>
+	
+	<entry key="SRCH.00015"><![CDATA[이름]]></entry>
+	<entry key="SRCH.00016"><![CDATA[직급]]></entry>
+	<entry key="SRCH.00017"><![CDATA[부서]]></entry>
+	<entry key="SRCH.00018"><![CDATA[이메일]]></entry>
+	<entry key="SRCH.00019"><![CDATA[전화번호]]></entry>
+	<entry key="SRCH.00020"><![CDATA[담당업무]]></entry>
+	
+	<entry key="SRCH.00021"><![CDATA[분류]]></entry>
+	<entry key="SRCH.00022"><![CDATA[등록자]]></entry>
+	<entry key="SRCH.00023"><![CDATA[등록일]]></entry>
+
+	<entry key="SRCH.10000"><![CDATA[두 글자 이상 입력해주세요.]]></entry>
+	
+</properties>

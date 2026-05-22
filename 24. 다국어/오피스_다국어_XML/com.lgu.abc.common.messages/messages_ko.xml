@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="ajaxTest"><![CDATA[ajaxTest]]></entry>
+	<entry key="requiredMsg"><![CDATA[필수 항목 입력 누락으로 등록이 되지 않습니다.]]></entry>
+	<entry key="requiredKeyword"><![CDATA[검색 키워드가 입력되지 않았습니다.]]></entry>
+	<entry key="stopWritingMsg"><![CDATA[작성을 중지하시겠습니까?]]></entry>
+	<entry key="duplicateKey"><![CDATA[중복키 입니다.]]></entry>
+	
+	<entry key="uploadSizeExceeded"><![CDATA[파일의 크기가 다음과 같거나 작아야 합니다. "{0} bytes"]]></entry>
+	<entry key="uploadTypeMismatch"><![CDATA[파일의 유형이 다음과 같아야 합니다. "{0}" ]]></entry>
+	<entry key="uploadException"><![CDATA[upload failure {0} ]]></entry>
+	<entry key="uploadParsedException"><![CDATA[upload failure {0} ]]></entry>
+
+	<entry key="typeMismatch"><![CDATA[값 유형이 맞지않습니다. {1}]]></entry>
+
+	<entry key="AssertFalse"><![CDATA[거짓이어야 합니다. {0}]]></entry>
+	<entry key="AssertTrue"><![CDATA[참이어야 합니다. {0}]]></entry>
+	<entry key="DecimalMax"><![CDATA[다음과 같거나 작아야 합니다. {1}]]></entry>
+	<entry key="DecimalMin"><![CDATA[다음과 같거나 커야 합니다. {1}]]></entry>
+	<entry key="Digits"><![CDATA[자리수를 확인 합니다. (<{0} digits>.<{1} digits> expected)]]></entry>
+	<entry key="Future"><![CDATA[현재일 이후이어야 합니다.]]></entry>
+	<entry key="Max"><![CDATA[다음과 같거나 작아야 합니다. {0}]]></entry>
+	<entry key="Min"><![CDATA[다음과 같거나 커야 합니다. {0}]]></entry>
+	<entry key="NotNull"><![CDATA[필수 입력 항목입니다.]]></entry>
+	<entry key="Null"><![CDATA[빈값이어야 합니다.]]></entry>
+	<entry key="Past"><![CDATA[현재일 이전이어야 합니다.]]></entry>
+	<entry key="Pattern"><![CDATA[다음 패턴과 같아야 합니다. {0}]]></entry>
+	<entry key="Size"><![CDATA[{0} 과 {1} 사이의 크기여야 합니다.]]></entry>
+	<entry key="Email"><![CDATA[이메일 형식이 아닙니다.]]></entry>
+	<entry key="Length"><![CDATA[{0} 과 {1} 사이의 길이여야 합니다.]]></entry>
+	<entry key="NotBlank"><![CDATA[빈칸이 없어야 합니다.]]></entry>
+	<entry key="NotEmpty"><![CDATA[빈칸이 없어야 합니다.]]></entry>
+	<entry key="Range"><![CDATA[{0} 과 {1} 사이여야 합니다.]]></entry>
+	<entry key="Url"><![CDATA[URL 형식이 아닙니다.]]></entry>
+	<entry key="CreditCardnumber"><![CDATA[신용카드번호 형식이 아닙니다.]]></entry>
+	<entry key="ScriptAssert"><![CDATA[script expression "{0}" didn't evaluate to true]]></entry>
+	
+	<entry key="UpperCase">대문자여야 합니다.</entry>
+	<entry key="LowerCase">소문자여야 합니다.</entry>
+
+	<entry key="application.title">Groupware Project</entry>
+	<entry key="application.footer">By ORGOS</entry>
+	<entry key="application.backToTop">최상으로</entry>
+	<entry key="application.listButton">목록</entry>
+	<entry key="application.newButton">새글</entry>
+	<entry key="application.updateButton">수정</entry>
+	<entry key="application.editButton">수정</entry>
+	<entry key="application.saveButton">저장</entry>	
+	<entry key="application.resetButton">취소</entry>
+	<entry key="application.deleteButton">삭제</entry>
+	<entry key="application.prevButton">이전</entry>
+	<entry key="application.nextButton">다음</entry>
+	<entry key="application.yesButton">예</entry>
+	<entry key="application.noButton">아니오</entry>
+
+	<entry key="requiredChgDept1">상위부서를 현재 부서로 선택할 수 없습니다.</entry>
+	<entry key="requiredChgDept2">현재 부서의 하위부서로 선택할 수 없습니다.</entry>
+	
+	<entry key="common.date.sunday">일</entry>
+	<entry key="common.date.monday">월</entry>
+	<entry key="common.date.tuesday">화</entry>
+	<entry key="common.date.wednesday">수</entry>
+	<entry key="common.date.thursday">목</entry>
+	<entry key="common.date.friday">금</entry>
+	<entry key="common.date.saturday">토</entry>
+	
+	<entry key="common.date.year">년</entry>
+	<entry key="common.date.month">월</entry>
+	<entry key="common.date.day">일</entry>
+	
+	<entry key="common.date.solar">양력</entry>
+	<entry key="common.date.lunar">음력</entry>
+	
+	<entry key="time.elapsed.minutes">분전</entry>
+	<entry key="time.elapsed.hours">시간전</entry>
+	<entry key="time.elapsed.days">일전</entry>
+	
+	<entry key="filter.error.file.invalid">유효하지 않은 파일입니다.</entry>
+	
+	<entry key="action.success.create">저장되었습니다.</entry>
+	<entry key="action.success.update">저장되었습니다.</entry>
+	<entry key="action.success.delete">삭제되었습니다.</entry>
+	<entry key="action.error.unauthorized">작업에 대한 권한이 없습니다.</entry>
+	<entry key="action.error.filter">잘못된 파라미터입니다.</entry>
+	
+	<entry key="noData">데이터가 없습니다.</entry>
+	
+	<entry key="board.home.label.001">추가/수정 및 삭제할 게시판/게시함을 선택해 주세요</entry>
+	
+	<entry key="board.home.btn.save">저장</entry>
+	<entry key="board.home.btn.cancel">취소</entry>
+	
+	<entry key="board.home.btn.001">게시판 추가</entry>
+	<entry key="board.home.btn.002">게시판 수정</entry>
+	<entry key="board.home.btn.003">게시판 삭제</entry>
+	<entry key="board.home.btn.004">게시함 추가</entry>
+	<entry key="board.home.btn.005">게시함 수정</entry>
+	<entry key="board.home.btn.006">게시함 삭제</entry>
+	
+	<entry key="board.edit.label.001">게시판설정</entry>		
+	<entry key="board.edit.label.002">상위 게시함</entry>		
+	<entry key="board.edit.label.003">필수 입력 항목입니다.</entry>		
+	<entry key="board.edit.label.004">게시판명</entry>
+	<entry key="board.edit.label.0041">게시판설명</entry>
+	<entry key="board.edit.label.0042">사용여부</entry>
+	<entry key="board.edit.label.0043">다국어 등록 </entry>		
+	<entry key="board.edit.label.005">사용함</entry>		
+	<entry key="board.edit.label.006">사용 안 함</entry>		
+	<entry key="board.edit.label.007">예</entry>
+	<entry key="board.edit.label.007_1">게시물 등록</entry>
+	<entry key="board.edit.label.007_2">승인여부</entry>		
+	<entry key="board.edit.label.008">속성</entry>		
+	<entry key="board.edit.label.009">답글기능</entry>		
+	<entry key="board.edit.label.010">댓글기능</entry>		
+	<entry key="board.edit.label.011">추천기능</entry>		
+	<entry key="board.edit.label.012">조회이력기능</entry>		
+	<entry key="board.edit.label.013_1">추천기능</entry>
+	<entry key="board.edit.label.013_2">관리자만 보기</entry>		
+	<entry key="board.edit.label.014_1">조회이력기능</entry>
+	<entry key="board.edit.label.014_2">관리자만 보기</entry>		
+	<entry key="board.edit.label.015">이미지형 위젯</entry>		
+	<entry key="board.edit.label.016_1">순번 출력 </entry>
+	<entry key="board.edit.label.016_2">사용여부</entry>		
+	<entry key="board.edit.label.017">위젯 크기</entry>		
+	<entry key="board.edit.label.018">샘플이미지입니다.</entry>		
+	<entry key="board.edit.label.019">2X1 크기</entry>		
+	<entry key="board.edit.label.020">2X2 크기</entry>		
+	<entry key="board.edit.label.021">한건</entry>		
+	<entry key="board.edit.label.022">사진</entry>		
+	<entry key="board.edit.label.023">목록</entry>
+	<entry key="board.edit.label.023_1">위젯 이미지</entry>		
+	<entry key="board.edit.label.024">첨부파일</entry>		
+	<entry key="board.edit.label.025">위젯 타이틀</entry>		
+	<entry key="board.edit.label.026">버전관리기능</entry>		
+	<entry key="board.edit.label.027">잠금관리기능</entry>		
+	<entry key="board.edit.label.028">사용자</entry>		
+	<entry key="board.edit.label.029">사용자 설정</entry>		
+	<entry key="board.edit.label.030">모든 직원에게 읽기/쓰기 권한이 부여됩니다.</entry>		
+	<entry key="board.edit.label.031">관리자</entry>		
+	<entry key="board.edit.label.032">관리자 설정</entry>		
+	<entry key="board.edit.label.033">전사관리자는 자동으로 관리권한이 부여됩니다.</entry>		
+	<entry key="board.edit.label.034">관리자</entry>		
+	<entry key="board.edit.label.035">관리자</entry>		
+	<entry key="board.edit.label.036">관리자</entry>		
+	<entry key="board.edit.label.037">관리자</entry>		
+	<entry key="board.edit.label.038">관리자</entry>		
+	<entry key="board.edit.label.039">관리자</entry>		
+	<entry key="board.edit.label.040">관리자</entry>
+	<entry key="board.edit.label.041">선택하세요</entry>
+	
+	<entry key="i18n.edit.label.001">Locale 정보</entry>
+	<entry key="i18n.edit.label.002">Locale 메세지</entry>
+	
+	<!-- #3212 파일업로드 시 Exception문구 다국어 처리 -->
+	<entry key="exception.message.UnknownFileTypeException">알 수 없는 파일 형식입니다.</entry>
+	<entry key="exception.message.forbiddenFileExtensionException">허용하지 않는 파일 확장자 입니다.</entry>
+	
+</properties>

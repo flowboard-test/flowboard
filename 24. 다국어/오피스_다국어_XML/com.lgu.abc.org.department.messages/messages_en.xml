@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="action.success.create.DepartmentProfile">Department profile has been created.</entry>
+	<entry key="action.success.update.DepartmentProfile">Department profile has been updated.</entry>
+	<entry key="action.success.delete.DepartmentProfile">Department profile has been deleted.</entry>
+	
+	<entry key="org.department.profile.excel.sheet.name">DEPARTMENTS</entry>
+	<entry key="org.department.profile.excel.header.name">NAME</entry>
+	<entry key="org.department.profile.excel.header.description">DESCRIPTION</entry>
+	<entry key="org.department.profile.excel.header.parent">PARENT</entry>
+
+	<entry key="exception.message.IdenticalParentDepartmentException">The same department can't be parent.</entry>
+	<entry key="exception.message.CircularParentDepartmentException">departments has circular dependency.</entry>
+	<entry key="exception.message.ChildDepartmentExistException">departments has child department.</entry>
+	<entry key="exception.message.UserInDepartmentExistException">departments has users.</entry>
+	<entry key="exception.message.InvalidParentDepartmentException">Invalid parent department.</entry>
+	
+	<entry key="exception.message.DepartmentRoleCountExcessException">The number of {0} should not exceed {1}.</entry>
+</properties>

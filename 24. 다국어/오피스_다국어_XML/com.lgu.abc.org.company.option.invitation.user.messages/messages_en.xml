@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="action.success.create.InvitationUser">승인 처리되었습니다.	&lt;br&gt;초대한 사용자에게 메일 발송이 됩니다.</entry>
+	<entry key="action.success.update.InvitationUser">승인 처리되었습니다.	&lt;br&gt;초대한 사용자에게 메일 발송이 됩니다.</entry>
+	<entry key="action.success.delete.InvitationUser">거절하였습니다.</entry>
+
+	<entry key="exception.message.InvitationUserAlreadyProcessException">이미 처리된 아이디가 있습니다. 재시도 바랍니다.</entry>
+	<entry key="exception.message.InvitationUserDuplicateLoginIdException"> 아이디가 조직도에서 중복되어, 승인 실패했습니다.</entry>
+	<entry key="exception.message.InvitationUserCompanyAdministratorException">전사 관리자만 실행 가능합니다.</entry>
+
+</properties>

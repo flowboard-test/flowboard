@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="journal.counter.message.nothing">해당 업무목록이 없습니다.</entry>
+	<entry key="journal.feed.content.nodata">선택하신 업무는 삭제되어 확인이 불가합니다.</entry>
+	
+	<entry key="journal.excel.log.file.name">업무일지</entry>
+	<entry key="journal.excel.log.sheet.name">업무일지</entry>
+	
+	<entry key="journal.excel.report.file.name">업무보고</entry>
+	<entry key="journal.excel.report.sheet.name">업무보고</entry>
+	
+	<entry key="journal.excel.todo.file.name">할일</entry>
+	<entry key="journal.excel.todo.sheet.name">할일</entry>
+	
+	<entry key="journal.excel.request.file.name">작업요청</entry>
+	<entry key="journal.excel.request.sheet.name">작업요청</entry>
+		
+	<entry key="JNL.10091"><![CDATA[검색 키워드가 입력되지 않았습니다.]]></entry>
+</properties>

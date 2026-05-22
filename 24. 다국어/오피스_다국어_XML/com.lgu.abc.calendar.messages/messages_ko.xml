@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="exception.message.DefaultCalendarRemovalException">기본 캘린더는 삭제하실 수 없습니다.</entry>
+	
+	<entry key="calendar.counter.message.nothing">일정이 없습니다.</entry>
+	<entry key="calendar.feed.content.nodata">선택하신 일정이 삭제되어 확인이 불가능합니다.</entry>
+	<entry key="calendar.event.allday">종일</entry>
+
+	<entry key="sch_info.validDateTime">종료일시가 시작일시 보다 클 수 없습니다.</entry>
+
+	<entry key="sch.delBtn">삭제</entry>
+	<entry key="sch.copyBtn">복사</entry>
+	<entry key="sch.saveBtn">저장</entry>
+	<entry key="sch.cancelBtn">취소</entry>
+	<entry key="sch.closeBtn">닫기</entry>
+	<entry key="sch.usrAddBtn">추가</entry>
+	<entry key="sch.usrSearchBtn">조직도/주소록</entry>
+	
+	<entry key="sch_info.sche_tit">제목</entry>
+	<entry key="sch_info.sche_plce">장소</entry>
+	<entry key="sch_info.sche_strt_date">일시</entry>
+	<entry key="sch_info.open_yn">공개</entry>
+	<entry key="sch_info.open_public">공개</entry>
+	<entry key="sch_info.open_private">비공개</entry>
+	<entry key="sch_info.open_private_info">(비공개 시에도, 읽기이상의 권한을 가진 사람은 내용 확인이 가능합니다.)</entry>
+	<entry key="sch_info.aldy_yn">종일</entry>
+	<entry key="sch_info.rept_yn">반복</entry>
+	<entry key="sch_lbl.lbl_id">캘린더</entry>
+	
+	<entry key="regAtOnce">동시등록</entry>
+	
+	<entry key="sch_info.noti_typ_cd">알림</entry>
+	<entry key="sch_atdc_usr">참석자</entry>
+	<entry key="sch_info.sche_cont">내용</entry>
+</properties>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="action.success.move.AddressCard">연락처가 이동되었습니다.</entry>
+	<entry key="action.success.copy.AddressCard">연락처가 복사되었습니다.</entry>
+	
+	<entry key="exception.message.DefaultAddressBookRemovalException">기본 주소록은 삭제하실 수 없습니다.</entry>
+	<entry key="exception.message.AddressCardUnauthorizedUpdateException">연락처는 등록자만 수정할 수 있습니다.</entry>
+	<entry key="exception.message.AddressCardUnauthorizedMoveException">허용되지 않는 연락처 이동입니다.</entry>
+	<entry key="exception.message.AddressCardUnauthorizedCopyException">허용되지 않는 연락처 복사입니다.</entry>
+	<entry key="exception.message.AddressCardMovingToSameBookException">같은 주소록으로 이동할 수 없습니다.</entry>
+	<entry key="exception.message.AddressCardNoBookFoundException">존재하지 않는 주소록입니다.</entry>
+	
+	<entry key="address.card.excel.sheet.name">주소록</entry>
+	<entry key="address.card.excel.header.name">이름(*)</entry>
+	<entry key="address.card.excel.header.address.book.name">주소록명(*)</entry>
+	<entry key="address.card.excel.header.company">회사명</entry>
+	<entry key="address.card.excel.header.department">부서명</entry>
+	<entry key="address.card.excel.header.position">직위</entry>
+	<entry key="address.card.excel.header.email">이메일</entry>
+	<entry key="address.card.excel.header.mobile">휴대폰</entry>
+	<entry key="address.card.excel.header.fax">팩스번호</entry>
+	<entry key="address.card.excel.header.company.phone">회사전화</entry>
+	<entry key="address.card.excel.header.company.address">회사주소</entry>
+	<entry key="address.card.excel.header.home.address">자택주소</entry>
+	<entry key="address.card.excel.header.birthday.date">생일</entry>
+	<entry key="address.card.excel.header.birthday.lunar">생일(양/음력)</entry>
+	<entry key="address.card.excel.header.wedding.date">결혼기념일</entry>
+	<entry key="address.card.excel.header.wedding.lunar">결혼기념일(양/음력)</entry>
+	<entry key="address.card.excel.header.contact.other">기타 연락처</entry>
+	<entry key="address.card.excel.header.memo">메모</entry>
+	
+	<entry key="address.card.outlook.header.name">이름</entry>
+	<entry key="address.card.outlook.header.company">회사</entry>
+	<entry key="address.card.outlook.header.email">전자 우편</entry>
+	<entry key="address.card.outlook.header.mobile">휴대용 전화</entry>
+	<entry key="address.card.outlook.header.personal.phone">집 전화 번호</entry>
+	<entry key="address.card.outlook.header.company.phone">회사 기본 전화</entry>
+	
+	<entry key="address.card.express.header.name">전체 이름</entry>
+	<entry key="address.card.express.header.company">회사</entry>
+	<entry key="address.card.express.header.email">전자 메일 주소</entry>
+	<entry key="address.card.express.header.mobile">휴대폰</entry>
+	<entry key="address.card.express.header.personal.phone">집 전화</entry>
+	<entry key="address.card.express.header.company.phone">회사 전화</entry>
+	
+	<entry key="exception.mobile.message.AddressInformationNotFoundException">주소록 정보가 존재하지 않습니다.</entry>
+	<entry key="ADR.10091">검색 키워드가 입력되지 않았습니다.</entry>
+	<entry key="address.card.common.content.file.name.prefix">주소록_</entry>
+	
+	<entry key="address.book.transfer.save.fail">주소록 이전에 실패하였습니다.</entry>
+</properties>

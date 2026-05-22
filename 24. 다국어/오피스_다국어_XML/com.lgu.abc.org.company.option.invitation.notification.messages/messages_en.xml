@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="action.success.create.InvitationNotification">초대 메일을 발송하였습니다.</entry>
+
+	<entry key="exception.message.InvitationNotificationException">초대 메일 발송을 실패하였습니다.</entry>
+	<entry key="exception.message.InvitationNotificationCompanyAdministratorException">전사 관리자만 실행 가능합니다.</entry>
+
+</properties>

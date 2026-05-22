@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="PC.FAX.NO_H_001">미납 중지 상태입니다.</entry>
+<entry key="PC.FAX.NO_H_002">해지 상태입니다.</entry>
+<entry key="PC.FAX.NO_H_003">사용 중지 상태입니다.</entry>
+<entry key="PC.FAX.NO_H_004">가입 전 승인이 필요합니다.</entry>
+<entry key="PC.FAX.NO_H_005">로그인 할 수 없습니다.</entry>
+<entry key="PC.FAX.NO_H_006">수신번호</entry>
+</properties>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="exception.message.ApplicationRoleException">저장을 실패하였습니다.</entry>
+	<entry key="exception.message.ApplicationRoleLicenseException">라이선스 수를 초과하여 저장할 수 없습니다.</entry>
+	<entry key="exception.message.ApplicationRoleAdministratorException">관리자 권한이 없습니다.</entry>
+
+	<entry key="integration.application.api.200">정상 응답하였습니다.</entry>
+	<entry key="integration.application.api.400">잘못된 요청입니다.</entry>
+	<entry key="integration.application.api.500">내부 서버 오류가 발생했습니다.</entry>
+	<entry key="integration.application.api.900">라이선스 수를 초과하여 저장할 수 없습니다.</entry>
+	<entry key="integration.application.api.role.200">저장되었습니다.</entry>
+
+</properties>

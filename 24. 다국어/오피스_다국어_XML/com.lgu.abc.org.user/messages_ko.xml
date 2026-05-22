@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="org.user.chat.buddy.group.default">기본 그룹</entry>
+	<entry key="org.user.chat.counter.message.nothing">채팅 신청이 없습니다.</entry>
+	
+	<entry key="org.user.import.excel.success">{0}건이 성공적으로 저장되었습니다.</entry>
+	
+	<entry key="org.user.profile.excel.sheet.name">사용자</entry>
+	<entry key="org.user.profile.export.header.loginid">로그인 ID</entry>
+	<entry key="org.user.profile.export.header.name.korean">한글이름</entry>
+	<entry key="org.user.profile.export.header.name.english">영문이름</entry>
+	<entry key="org.user.profile.export.header.name.chinese">한자이름(중국)</entry>
+	<entry key="org.user.profile.export.header.name.chinesetw">한자이름(대만)</entry>
+	<entry key="org.user.profile.export.header.name.vietnam">베트남이름</entry>
+	<entry key="org.user.profile.export.header.birthdate.date">생년월일</entry>
+	<entry key="org.user.profile.export.header.birthdate.lunar">생년월일 음력여부</entry>
+	<entry key="org.user.profile.export.header.joined.date">입사일자</entry>
+	<entry key="org.user.profile.export.header.employeeid">사원번호</entry>
+	<entry key="org.user.profile.export.header.department">부서명</entry>
+	<entry key="org.user.profile.export.header.title">직책명</entry>
+	<entry key="org.user.profile.export.header.position">직위명</entry>
+	<entry key="org.user.profile.export.header.rank">급수</entry>
+	<entry key="org.user.profile.export.header.contact.personal.email">외부 이메일</entry>
+	<entry key="org.user.profile.export.header.contact.personal.mobile">휴대전화</entry>
+	<entry key="org.user.profile.export.header.contact.personal.home.zip">자택주소 우편번호</entry>
+	<entry key="org.user.profile.export.header.contact.personal.home.main">자택주소</entry>
+	<entry key="org.user.profile.export.header.contact.personal.home.detail">자택상세주소</entry>
+	<entry key="org.user.profile.export.header.contact.business.phone">회사전화</entry>
+	<entry key="org.user.profile.export.header.contact.business.extension">회사 내선번호</entry>
+	<entry key="org.user.profile.export.header.job.description">담당업무</entry>
+	<entry key="org.user.profile.export.header.department.manager">부서장 여부</entry>
+	<entry key="org.user.profile.export.header.freeuseryn">메신저 유저 여부</entry>
+	<entry key="org.user.profile.export.header.employeetype">직원 형태</entry>
+	<entry key="org.user.profile.export.header.jobcode">작업코드</entry>
+	<entry key="org.user.profile.export.header.password">비밀번호</entry>
+	
+	
+	<entry key="org.user.option.title">사용자 환경설정</entry>
+	<entry key="org.user.option.common.name">공통</entry>
+	<entry key="org.user.option.personal.name">개인정보 관리</entry>
+	<entry key="org.user.option.services.name">서비스 설정</entry>
+	<entry key="org.user.option.ui.name">화면 설정</entry>
+	<entry key="org.user.option.regional.name">국가별 설정</entry>
+	<entry key="org.user.option.notification.name">알림</entry>
+	<entry key="org.user.option.staff.name">담당자 지정</entry>
+	<entry key="org.user.option.access.name">웍스 접속 추가</entry>
+	<entry key="org.user.option.ui.main.name">메인화면 설정</entry>
+	<entry key="org.user.option.ui.skin.name">스킨 설정</entry>
+	<entry key="org.user.option.ui.pagesize.name">목록 개수 설정</entry>
+	<entry key="org.user.option.ui.skin">스킨</entry>
+	
+	<entry key="org.user.profile.suspended">사용자 계정이 삭제되었습니다.</entry>
+	<entry key="org.user.profile.resumed">사용자 계정이 복구되었습니다.</entry>
+	<entry key="org.user.profile.email.certification.success">인증을 완료하였습니다.</entry>
+	<entry key="org.user.profile.email.certification.failure">인증을 실패하였습니다.</entry>
+	<entry key="org.user.profile.email.certification.already">이미 인증되었습니다.</entry>
+	
+	<entry key="org.user.social.feed.content.nodata">내용이 삭제되었습니다.</entry>
+	<entry key="org.user.social.feed.content.forbidden">조회 권한이 없습니다.</entry>
+	<entry key="org.user.social.friend.requester.relation.exists">이미 친구 상태입니다.</entry>
+	<entry key="org.user.social.friend.counter.message.nothing">친구 신청이 없습니다.</entry>
+	
+	<entry key="exception.message.DepartmentNotFoundException">일치하는 부서를 찾을 수 없습니다.</entry>
+	<entry key="exception.message.DuplicateDepartmentException">중복된 부서가 존재합니다.</entry>
+	<entry key="exception.message.DuplicateLoginIdException">중복된 아이디 입력입니다. 다른 아이디로 입력해주세요.</entry>
+	<entry key="exception.message.EmailNotFoundException">이메일은 필수입니다.</entry>
+	<entry key="exception.message.InvalidBirthDateException">잘못된 생년월일 형식입니다. 19901010 과 같은 형식으로 입력하세요.</entry>
+	<entry key="exception.message.InvalidBusinessPhoneException">잘못된 회사 전화번호입니다. 070-4080-1234 와 같은 형식으로 입력하세요.</entry>
+	<entry key="exception.message.InvalidEmailException">잘못된 이메일 형식입니다. gildong@abc.com 과 같은 형식으로 입력하세요.</entry>
+	<entry key="exception.message.InvalidFaxException">잘못된 팩스 전화번호입니다. 070-4080-1234 와 같은 형식으로 입력하세요.</entry>
+	<entry key="exception.message.InvalidHomeAddressException">잘못된 주소 형식입니다. 우편번호를 110-111 과 같은 형식으로 입력하세요.</entry>
+	<entry key="exception.message.InvalidImportOperationException">잘못된 작업코드입니다. A(추가), U(수정), D(삭제) 중 하나를 입력하세요.</entry>
+	<entry key="exception.message.InvalidJoinDateException">잘못된 입사일자 형식입니다. 19901010 과 같은 형식으로 입력하세요.</entry>
+	<entry key="exception.message.InvalidMobileException">잘못된 휴대폰 형식입니다. 010-1234-2345 와 같은 형식으로 입력하세요.</entry>
+	<entry key="exception.message.InvalidPasswordException">잘못된 비밀번호 형식입니다. 비밀번호는 영문(대),영문(소),숫자,특수문자중 3가지를 혼용하여 작성하세요.</entry>
+	<entry key="exception.message.InvalidPasswordPatternException">잘못된 비밀번호 형식입니다. 동일문자 3번 이상, 연속된 문자열(123 또는 321, abc, cba 등) 3자 이상, 아이디와 같은 문자 3자 이상은 사용할 수 없습니다.</entry>
+	<entry key="exception.message.InvalidPhoneNumberException">잘못된 전화번호 형식입니다. 070-4080-1234 와 같은 형식으로 입력하세요.</entry>
+	<entry key="exception.message.InvalidRankException">잘못된 급수 형식입니다. 1 ~ 9 사이의 숫자로 입력하세요.</entry>
+	<entry key="exception.message.InvalidLoginIdException">잘못된 로그인 ID입니다. 영문 소문자,숫자,마침표를 사용하여 2글자 이상 20글자 이하를 입력하세요.</entry>
+	<entry key="exception.message.PasswordNotFoundException">비밀번호는 필수입니다.</entry>
+	<entry key="exception.message.PositionNotFoundException">일치하는 직위를 찾을 수 없습니다..</entry>
+	<entry key="exception.message.TitleNotFoundException">일치하는 직책을 찾을 수 없습니다.</entry>
+	<entry key="exception.message.UserNameNotFoundException">사용자 한글이름은 필수입니다.</entry>
+	<entry key="exception.message.UserNotFoundException">일치하는 사용자를 찾을 수 없습니다.</entry>
+	<entry key="exception.message.FreeUserCodeNotFoundException">메신저 사용자인지의 구분이 없습니다.</entry>
+	<entry key="exception.message.EmployeeTypeNotFoundException">직원형태 구분이 없습니다.</entry>
+	<entry key="exception.message.AlreadyExternalIdExists">중복된 아이디가 있어 등록에 실패하였습니다. 확인 후, 다시 시도 하시기 바랍니다.</entry>
+	
+	<entry key="exception.message.InvalidGoogleAccountException">유효하지 않은 구글 계정입니다.</entry>
+	<entry key="exception.message.InvalidUboxAccountException">유효하지 않은 U+ Box 계정입니다.</entry>
+	<entry key="exception.message.InvalidOnnetAccountException">유효하지 않은 이전 그룹웨어 계정입니다.</entry>
+	<entry key="exception.message.InvalidFaxAccountException">유효하지 않은 웹팩스 계정입니다.</entry>
+	
+	<entry key="exception.message.NoAvailableUserAccountException">허용 계정 수를 초과하였습니다.</entry>
+	<entry key="exception.message.NoAvailableFreeUserAccountException">메신저 허용 계정 수를 초과하였습니다.</entry>
+	<entry key="exception.message.DuplicatedLoginIdException">중복된 로그인 ID가 존재합니다.</entry>
+	<entry key="exception.message.InvalidUserDepartmentAssignmentException">유효하지 않은 부서입니다.</entry>
+	
+	<entry key="exception.message.FriendExistException">이미 친구 등록된 사용자입니다.</entry>
+	<entry key="exception.message.FriendRequestExistException">이미 친구 신청된 사용자입니다.</entry>
+	<entry key="exception.message.FriendRequestNotFoundException">친구 신청을 찾을 수 없습니다.</entry>
+	<entry key="exception.message.FriendAlreadyAcceptedException">친구 신청이 이미 수락되었습니다.</entry>
+	<entry key="exception.message.FriendAlreadyRejectedException">친구 신청이 이미 거부되었습니다.</entry>
+	
+	<entry key="exception.message.OperationCodeNotFoundException">작업코드 셀이 비었습니다.</entry>
+	<entry key="exception.message.EmployNumberNotFoundException">사원번호 셀이 비었습니다.</entry>
+	<entry key="exception.message.RegisteredTimeNotFoundException">날짜 셀이 비었습니다.</entry>
+	<entry key="exception.message.CardNumberNotFoundException">카드번호 셀이 비었습니다.</entry>
+	<entry key="exception.message.inTimeNotFoundException">출근시간 셀이 비었습니다.</entry>
+	<entry key="exception.message.AttendanceCodeException">정상출근 셀은 O 또는 X로 입력하여 주십시오.</entry>
+	<entry key="exception.message.DateFormatException">우측 주의사항의 날짜, 시간 형식을 확인하여 주십시오.</entry>
+	<entry key="exception.message.AttendanceTypeException">존재하는 부재 유형을 입력하여 주십시오.</entry>
+	<entry key="exception.message.UsrKeyNotMatchingException">입력한 사원번호에 해당하는 사용자 정보가 없습니다.</entry>
+
+	<entry key="exception.message.OutTimeNotFoundException">종료시간 셀이 비었습니다.</entry>
+	<entry key="exception.message.OutDateNotFoundException">종료일 셀이 비었습니다.</entry>
+	<entry key="exception.message.AbsenceTypeNotFoundException">근태유형 셀이 비었습니다.</entry>
+	<entry key="exception.message.AnnlMonTypeNotFoundException">차감휴가 셀이 비었습니다.</entry>
+	<entry key="exception.message.WrkTimeNotFoundException">근무시간 셀이 비었습니다.</entry>
+	<entry key="exception.message.ExtendWrkTypeNotFoundException">근무구분 셀이 비었습니다.</entry>
+	<entry key="exception.message.ReasonNotFoundException">사유 셀이 비었습니다.</entry>
+	
+	<entry key="exception.message.UploadTypeNotFoundException">근태정보, 부재, 연장근무 중 업로드유형 올바르게 입력해주세요.</entry>
+	<entry key="exception.message.NoRegisteredAbsenceTypeException">등록되지 않은 근태유형 정보입니다.</entry>
+	<entry key="exception.message.FailedAbsenceUploadException">부재정보 업로드 실패하였습니다.</entry>
+	<entry key="exception.message.FailedExtendWrkUploadException">연장근무정보 업로드 실패하였습니다.</entry>
+	<entry key="exception.message.WrkTimeFormatException">근무시간(분) 숫자만 입력해주세요.</entry>
+	<entry key="exception.message.ExtendWrkTypeFormatException">근무구분은 연장,야간,휴일,휴일(야간)중 하나를 선택하세요.</entry>
+	
+	<!-- 202206 백정훈 사번 중복오류 메세지 -->
+	<entry key="exception.message.DuplicateEmpyNoException">중복된 사번 입력입니다. 다른 사번으로 입력해주세요.</entry>
+	<entry key="exception.message.InvalidMessengerUserException"> 메신저 유저 여부를 Y 로 해서 재등록 하셔야 합니다.</entry>
+	
+	<entry key="action.success.create.FriendRequest">친구 신청되었습니다.</entry>
+	<entry key="action.success.accept.FriendRequest">친구로 등록되었습니다.</entry>
+	<entry key="action.success.reject.FriendRequest">친구 신청을 거부하였습니다.</entry>
+	
+	<!-- #1921 [오피스] 다수 웍스사이트 사용 고객 계열사 우회 사용 지원_사용자 전환 (PC웹작업) -->
+	<entry key="exception.message.AccessOptionConflictionException">이미 등록된 아이디입니다.</entry>
+	<entry key="exception.message.AccessOptionCorpUserException">사용자 정보가 존재하지 않습니다.&lt;br&gt;도메인이나 아이디를 확인해주세요.</entry>
+	<entry key="exception.message.AccessOptionOwnAccountException">본인 계정은 등록할 수 없습니다.</entry>
+	<entry key="exception.message.AccessOptionUserPasswordException">비밀번호가 일치하지 않습니다. 비밀번호를 확인해주세요.</entry>
+</properties>

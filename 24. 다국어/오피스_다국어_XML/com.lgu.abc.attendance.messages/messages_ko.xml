@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="attendance.absence.message.save.fail">저장에 실패하였습니다.</entry>
+	<entry key="attendance.absence.message.delete.fail">삭제에 실패하였습니다.</entry>
+	<entry key="attendance.absence.message.no.remain">휴가 잔여일이 없습니다.</entry>
+	
+	<entry key="attendance.extendwork.message.save.fail">저장에 실패하였습니다.</entry>
+	
+	<entry key="attendance.timecard.checkin">출근</entry>
+	<entry key="attendance.timecard.checkout">퇴근</entry>
+	
+	<entry key="attendance.statistics.header.name">이름</entry>
+	<entry key="attendance.statistics.department.header.name">부서명</entry>
+	<entry key="attendance.statistics.header.position">직위</entry>
+	<entry key="attendance.statistics.header.spot">직책</entry>
+	<entry key="attendance.statistics.header.workGroup">근무그룹</entry>
+	<entry key="attendance.statistics.header.users.count">인원수</entry>
+	<entry key="attendance.statistics.header.checkin">출근</entry>
+	<entry key="attendance.statistics.header.late">지각</entry>
+	<entry key="attendance.statistics.header.vacTotal">사용연차일_집계</entry>
+	
+	
+	<entry key="attendance.report.status.monthly.sheet.name">내 출근부</entry>
+	<entry key="attendance.report.status.department.sheet.name">근태현황</entry>
+	<entry key="attendance.report.statistics.offhistory.sheet.name">휴무내역</entry>
+	<entry key="attendance.report.statistics.attendancetotal.sheet.name">근태집계</entry>
+	<entry key="attendance.report.statistics.department.days.sheet.name">근태집계 - 일별</entry>
+	<entry key="attendance.report.statistics.department.months.sheet.name">근태집계 - 월별</entry>
+	<entry key="attendance.report.status.excel.header.date">날짜</entry>
+	<entry key="attendance.report.status.excel.header.attendance">출근</entry>
+	<entry key="attendance.report.status.excel.header.offwork">퇴근</entry>
+	<entry key="attendance.report.status.excel.header.absencestate">부재구분</entry>
+	<entry key="attendance.report.status.excel.header.reason">부재사유</entry>
+	<entry key="attendance.report.status.excel.header.baseWork">근무시간(기본)</entry>
+	<entry key="attendance.report.status.excel.header.extensionWork">근무시간(연장)</entry>
+	<entry key="attendance.report.status.excel.header.totalWork">근무시간(합계)</entry>
+	<entry key="attendance.report.status.excel.header.extensionDetails">근무내역(연장)</entry>
+	<entry key="attendance.report.status.excel.header.nighttimeDetails">근무내역(야간)</entry>
+	<entry key="attendance.report.status.excel.header.holidayDetails">근무내역(휴일)</entry>
+	<entry key="attendance.report.status.excel.header.holidayNightDetails">근무내역(휴일야간)</entry>
+	<entry key="attendance.report.status.excel.header.workingHours">누적 근무시간</entry>
+	<entry key="attendance.report.status.excel.header.sunday">일</entry>
+	<entry key="attendance.report.status.excel.header.monday">월</entry>
+	<entry key="attendance.report.status.excel.header.tuesday">화</entry>
+	<entry key="attendance.report.status.excel.header.wednesday">수</entry>
+	<entry key="attendance.report.status.excel.header.thursday">목</entry>
+	<entry key="attendance.report.status.excel.header.friday">금</entry>
+	<entry key="attendance.report.status.excel.header.saturday">토</entry>
+	<entry key="attendance.report.status.excel.header.week">주</entry>
+	<entry key="attendance.report.status.excel.header.resn">사유</entry>
+	<entry key="attendance.report.status.excel.header.gtwAddr">출근 주소</entry>
+	<entry key="attendance.report.status.excel.header.ltoAddr">퇴근 주소</entry>
+	<entry key="attendance.report.status.excel.header.gtwIp">출근 모바일 IP</entry>
+	<entry key="attendance.report.status.excel.header.ltoIp">퇴근 모바일 IP</entry>
+	
+	<entry key="exception.message.AbsenceTypeInUseException">부재 유형이 사용 중입니다.</entry>	
+	<entry key="exception.message.UnauthorizedAttendanceSubmissionException">출근부 작성 권한이 없습니다.</entry>	
+	<entry key="exception.message.IpNotAllowedException">접근이 허용되지 않은 IP입니다.</entry>	 
+	<entry key="exception.message.MultipleDepartmentAttendanceAdministratorException">부서 근태 관리자는 1명만 지정 가능합니다.</entry>
+	<entry key="exception.message.AnnualVacationDuplicatedException">이미 등록된 사용자가 있습니다.</entry>
+	<entry key="exception.message.AnnualVacationNotFoundException">휴가일관리에 등록되지 않은 사용자입니다.</entry>
+	<entry key="exception.message.InvalidAnnualVacationYearException">등록년도 형식이 일치하지 않습니다.(4자리숫자)</entry>
+	<entry key="exception.message.InvalidAnnualVacationDayException">0.125 단위의 날짜만 입력 가능합니다.</entry>
+	<entry key="exception.message.InvalidUsedDayException">총 휴가일보다 사용일을 크게 입력할 수 없습니다.</entry>
+	<entry key="exception.message.ShiftInfoDuplicatedException">는(은) 이미 등록되어있습니다.</entry>
+	<entry key="exception.message.OtherSystemNotAllowedException">U+근무시간관리 출퇴근 연동 중이므로 사용할 수 없습니다.</entry>
+	<entry key="exception.message.NotAllowedAttendance">U+근무시간관리 데이터 연동 중이므로 사용할 수 없습니다.</entry>
+	
+	<entry key="attendance.option.company.vacation.excel.company.file.name">전사휴가일목록</entry>
+	<entry key="attendance.option.company.vacation.excel.company.sheet.name">휴가일목록</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.loginId">ID(*)</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.annualVacationYear">년도(*)</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.user.name">이름</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.user.position">직위</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.user.department.name">부서</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.joinDate">입사일</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.monVctnTrgtYn">월차대상자</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.monAtmClcYn">월차자동계산</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.monVctnTotalDays">총월차(*)</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.monVctnUsedDays">사용월차(*)</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.monVctnRemainDays">잔여월차</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.annualVacationTotalDays">총연차(*)</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.annualVacationUsedDays">사용연차(*)</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.annualVacationRemainDays">잔여연차</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.totalDays">남은휴가일</entry>
+	
+	<entry key="attendance.option.company.vacation.excel.log.file.name">근태정보관리자수동변경로그</entry>
+	<entry key="attendance.option.company.vacation.excel.log.sheet.name">근태정보관리자수동변경로그</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.logDtime">일시</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.loginId">대상자아이디</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.user.name">대상자명</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.joinDate">대상자입사일</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.logCrud">로그구분</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.annualVacationTotalDays">총연차일수</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.annualVacationUsedDays">연차사용일수</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.monVctnTotalDays">총월차일수</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.monVctnUsedDays">월차사용일수</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.workerId">작업자아이디</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.workerName">작업자명</entry>
+	
+	<entry key="attendance.option.company.vacation.excel.all.log.file.name">년_근태정보변경이력</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.sheet.name">근태정보변경이력</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.logDtime">일시</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.loginId">대상자아이디</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.user.name">대상자명</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.joinDate">대상자입사일</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.logType">구분</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.annualVacationTotalDays">총연차일수</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.annualVacationUsedDays">연차사용일수</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.monVctnTotalDays">총월차일수</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.monVctnUsedDays">월차사용일수</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.workerId">작업자아이디</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.workerName">작업자명</entry>
+	
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.title"># 안내</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.targetUser">대상자 : 휴가일 관리 등록된 사용자</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.jobUser">작업자 : 수동 변경한 관리자</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.draft">근태신청(취소) : 신청 절차를 통한 변경</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.adminDelete">근태삭제 : 근태 관리자로 인하여 삭제</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.system">시스템 : 시스템에서 처리</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.batchAdjustment">일괄조정 : 관리자가 일괄조정으로 인한 변경</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.manualChange">수동변경 : 관리자가 직접 수정</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.addUser">사용자추가 : 사용자 추가로 생성</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.deleteUser">사용자삭제 : 사용자 삭제로 삭제</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.excelUpload">엑셀 업로드 : 관리자가 엑셀 업로드를 통한 변경</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.basicCreate">기초 연차 생성 : 관리자가 기초 연차 생성으로 인한 변경</entry>
+		
+	<entry key="attendance.option.user.vacation.excel.all.log.file.name">년_근태정보변경이력</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.sheet.name">근태정보변경이력</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.logDtime">일시</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.logType">구분</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.annualVacationTotalDays">총연차일수</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.annualVacationUsedDays">연차사용일수</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.monVctnTotalDays">총월차일수</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.monVctnUsedDays">월차사용일수</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.workerId">작업자아이디</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.workerName">작업자명</entry>	
+	
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.title"># 안내</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.jobUser">작업자 : 수동 변경한 관리자</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.draft">근태신청(취소) : 신청 절차를 통한 변경</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.adminDelete">근태삭제 : 근태 관리자로 인하여 삭제</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.system">시스템 : 시스템에서 처리</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.batchAdjustment">일괄조정 : 관리자가 일괄조정으로 인한 변경</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.manualChange">수동변경 : 관리자가 직접 수정</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.addUser">사용자추가 : 사용자 추가로 생성</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.deleteUser">사용자삭제 : 사용자 삭제로 삭제</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.excelUpload">엑셀 업로드 : 관리자가 엑셀 업로드를 통한 변경</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.basicCreate">기초 연차 생성 : 관리자가 기초 연차 생성으로 인한 변경</entry>
+	
+	
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.overtime">근태신청(취소)</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.system">시스템</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.batchAdjustment">일괄조정</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.manualChange">수동변경</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.addUser">사용자추가</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.deleteUser">사용자삭제</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.excelUpload">엑셀업로드</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.basicCreate">기초연차생성</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.adminDelete">근태삭제</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.etc">기타</entry>
+	
+	<entry key="attendance.option.company.vacation.excel.adjustment.file.name">조정내역</entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.sheet.name">조정목록</entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.user.name">이름</entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.user.position">직위</entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.user.department.name">부서</entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.adjDate">조정일</entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.adjDay">조정</entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.adjOpt">옵션</entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.vctnNm">휴가유형</entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.abstNm">근태유형</entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.useExpDate">사용기한</entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.adjMemo">내역</entry>
+	
+	<entry key="attendance.option.company.vacation.excel.user.admin.file.name">휴가일사용목록</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.sheet.name">휴가일목록</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.user.name">이름</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.user.position">직위</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.user.department.name">부서</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.appDate">신청일</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.vacation.date">사용날짜</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.wrkType">근태유형</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.annlMonType">연월차</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.usedDay">사용일수</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.reason">내역</entry>
+	
+	<entry key="attendance.option.company.vacation.excel.user.file.name">휴가일사용목록</entry>
+	<entry key="attendance.option.company.vacation.excel.user.sheet.name">휴가일목록</entry>
+	<entry key="attendance.option.company.vacation.excel.user.header.user.id">아이디</entry>
+	<entry key="attendance.option.company.vacation.excel.user.header.user.name">사용자</entry>
+	<entry key="attendance.option.company.vacation.excel.user.header.vacation.date">사용날짜</entry>
+	<entry key="attendance.option.company.vacation.excel.user.header.used.day">사용일수</entry>
+	<entry key="attendance.option.company.vacation.excel.user.header.reason">부재상태</entry>
+	
+	<entry key="attendance.option.company.shift.excel.file.name">근무그룹목록</entry>
+	<entry key="attendance.option.company.shift.excel.sheet.name">목록</entry>
+	<entry key="attendance.option.company.shift.excel.header.name">근무그룹명</entry>
+	<entry key="attendance.option.company.shift.excel.header.wrktype">근무구분</entry>
+	<entry key="attendance.option.company.shift.excel.header.gtw">출근시간</entry>
+	<entry key="attendance.option.company.shift.excel.header.lto">퇴근시간</entry>
+	<entry key="attendance.option.company.shift.excel.header.worker">근무자</entry>
+	<entry key="attendance.option.company.shift.excel.header.dscrt">설명</entry>
+	<entry key="attendance.option.company.shift.excel.header.useyn">사용여부</entry>
+	<entry key="attendance.option.company.shift.excel.header.applyday">적용기간</entry>
+	<entry key="attendance.option.company.shift.excel.header.week">근무요일</entry>
+	
+	<entry key="attendance.absence.excel.file.name">부재정보</entry>
+	<entry key="attendance.absence.excel.sheet.name">부재정보</entry>
+	<entry key="attendance.absence.excel.header.name">이름</entry>
+	<entry key="attendance.absence.excel.header.date">사용날짜</entry>
+    <entry key="attendance.absence.excel.header.appDate">신청일</entry>
+	<entry key="attendance.absence.excel.header.used.day">사용일수</entry>
+	<entry key="attendance.absence.excel.header.type.name">부재상태</entry>
+	<entry key="attendance.absence.excel.header.reason">사유</entry>
+	<entry key="attendance.absence.excel.header.position">직책</entry>
+	<entry key="attendance.absence.excel.header.spot">직위</entry>
+	<entry key="attendance.absence.excel.header.department">부서</entry>
+	<entry key="attendance.absence.excel.header.totalvacation">휴가일수</entry>
+	<entry key="attendance.absence.excel.header.remainvacation">잔여일수</entry>
+	
+	<entry key="attendance.absence.multi.excel.sheet.name">회사 출근부</entry>
+	<entry key="attendance.absence.multi.excel.header.name">이름</entry>
+	<entry key="attendance.absence.multi.excel.header.id">아이디</entry>
+	<entry key="attendance.absence.multi.excel.header.dept">부서</entry>
+	
+	<!-- ERP -->
+	<entry key="attendance.absence.erp.excel.file.name">근태,휴가입력 엑셀 업로드 양식</entry>
+	<entry key="attendance.absence.erp.excel.sheet.name">근태,휴가입력 엑셀 업로드 양식</entry>
+	<entry key="attendance.absence.erp.excel.header.index">순번</entry>
+	<entry key="attendance.absence.erp.excel.header.employeenumber">사원번호</entry>
+	<entry key="attendance.absence.erp.excel.header.employeename">사원명</entry>
+	<entry key="attendance.absence.erp.excel.header.date">일자</entry>
+	<entry key="attendance.absence.erp.excel.header.checkin">출근</entry>
+	<entry key="attendance.absence.erp.excel.header.checkout">퇴근</entry>
+	<entry key="attendance.absence.erp.excel.header.late">지각</entry>
+	<entry key="attendance.absence.erp.excel.header.early">조퇴</entry>
+	<entry key="attendance.absence.erp.excel.header.outing">외출</entry>
+	<entry key="attendance.absence.erp.excel.header.nocheckin">결근</entry>
+	<entry key="attendance.absence.erp.excel.header.vacationcode">휴가코드</entry>
+	<entry key="attendance.absence.erp.excel.header.vacation">휴가</entry>
+	<!-- ERP -->
+	
+	
+	<entry key="attendance.message.external.success">업데이트를 완료하였습니다.</entry>
+	<entry key="attendance.message.external.InvalidHeader">헤더 정보가 올바르지 않습니다.</entry>
+	<entry key="attendance.message.external.InvalidNotExistLoginId">아이디(이메일주소)를 다시 확인해주세요.</entry>
+	<entry key="attendance.message.external.InvalidAdministratorAuthority">관리자 권한이 없습니다.</entry>
+	<entry key="attendance.message.external.InvalidStopLoginId">로그인한 아이디는 삭제되었습니다.</entry>
+	<entry key="attendance.message.external.InvalidNotExitstAttendance">근태 정보가 존재하지 않습니다.</entry>
+	<entry key="attendance.message.external.InvalidAttendanceFormat">전송 형식이 올바르지 않습니다.</entry>
+	<entry key="attendance.message.external.InvalidAttendanceInformation">근태정보가 올바르지 않습니다.</entry>
+	<entry key="attendance.message.external.InvalidNotExistUser">존재하지 않는 사용자입니다.</entry>
+	<entry key="attendance.message.external.InvalidDateTime">잘못된 날짜/시간 형식입니다.</entry>
+	<entry key="attendance.message.external.InvalidDuplicateInsert">설정된 시간 중 동일한 시간이 이미 등록 되어 있습니다.</entry>
+	<entry key="attendance.message.external.InvalidNotExistCheckIn">출근등록 없이 퇴근등록은 불가능합니다.</entry>
+	<entry key="attendance.message.external.InvalidAttendanceCode">잘못된 근태 코드입니다.</entry>
+	<entry key="attendance.message.external.InvalidStopUser">삭제된 사용자입니다.</entry>
+	<entry key="attendance.message.external.InvalidCompanyUnpaid">그룹웨어 해지로 인해 서비스 이용이 불가능합니다.</entry>
+	<entry key="attendance.message.external.InvalidCompanyStop">고객님의 가입상태가 요금미납으로 인해 중지 처리되었습니다.</entry>
+	<entry key="attendance.message.external.InvalidCompanyPause">고객님의 가입상태가 일시정지 신청으로 인해 중지 처리되었습니다.</entry>
+	<entry key="attendance.message.external.NotUseStatExternal">캡스 사용 상태가 사용안함으로 설정되어있습니다.</entry>
+	<entry key="attendance.message.external.EnableUseExternal">캡스를 이용할 수 없습니다.</entry>
+	
+	<entry key="attendance.message.external.NotUseStatExternalSone">에스원세콤 사용 상태가 사용안함으로 설정되어있습니다.</entry>
+	<entry key="attendance.message.external.EnableUseExternalSone">에스원세콤을 이용할 수 없습니다.</entry>
+	<entry key="attendance.message.external.UpdateError">업데이트 중 오류가 발생하였습니다.</entry>
+	<entry key="attendance.message.external.TheSystemIsNotAvailable">U+근무시간관리 출퇴근 연동 중이므로 사용할 수 없습니다.</entry>
+	
+	<entry key="attendance.integration.action.success.save">성공적으로 저장되었습니다.</entry>
+	<entry key="attendance.integration.action.success.read">성공적으로 조회되었습니다.</entry>
+	<entry key="attendance.integration.action.success.notExitsAttendance">출퇴근 기록이 존재하지 않습니다.</entry>
+	<entry key="attendance.integration.action.success.duplicateCheckIn">이미 출근 기록이 존재합니다.</entry>
+	<entry key="attendance.integration.action.success.notExistsCheckIn">출근 없이 퇴근처리는 불가합니다.</entry>
+	<entry key="attendance.integration.action.success.dontCheckoutAfterMidnight">출근 기록이 없어 자정 후 퇴근을 할 수 없습니다.</entry>
+	<entry key="attendance.integration.action.success.notUseStatAttendance">근태관리 메뉴가 사용 안 함으로 설정되어 있습니다.</entry>
+	<entry key="attendance.integration.action.fail.exception">근태처리 도중 오류가 발생하였습니다.</entry>
+	
+	<entry key="attendance.integration.mobile.success.checkin">출근 처리 되었습니다.</entry>
+	<entry key="attendance.integration.mobile.success.checkinUpdate">출근 정보가 업데이트 되었습니다.</entry>
+	<entry key="attendance.integration.mobile.success.notExitsAttendance">금일 등록된 출근 정보가 없습니다. 출근 시간을 입력하세요.</entry>
+	<entry key="attendance.integration.mobile.success.checkout">퇴근 처리 되었습니다.</entry>
+	<entry key="attendance.integration.mobile.success.dontCheckoutAfterMidnight">출근 기록이 없어 자정 후 퇴근을 할 수 없습니다. 출근 시간을 입력하세요.</entry>
+	<entry key="attendance.integration.mobile.fail.notUseAttendance">모바일 출퇴근관리를 사용할 수 없습니다.</entry>
+	<entry key="attendance.integration.mobile.fail.useUplusSystem">U+근무시간관리 출퇴근 연동 중이므로 다른 프로그램으로 출퇴근처리를 할 수 없습니다.</entry>
+</properties>

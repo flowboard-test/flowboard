@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="messaging.text.requester.unavailable.count">Unavailable assigned count for messaging.</entry>
+	<entry key="messaging.text.requester.invalid.target">Target mobile number is invalid.</entry>
+</properties>

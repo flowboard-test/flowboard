@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="action.success.recommend.PhotoPicture">추천되었습니다.</entry>
+	<entry key="action.success.unrecommend.PhotoPicture">추천이 취소되었습니다.</entry>
+	<entry key="action.success.comment.PhotoPicture">댓글이 저장되었습니다.</entry>
+	<entry key="action.success.uncomment.PhotoPicture">댓글이 삭제되었습니다.</entry>
+	
+	<entry key="exception.message.PhotoAlbumNameDuplicateException">중복된 앨범 이름입니다.</entry>
+</properties>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="ksystem.exception.message.102001">ClientId or ClientSecret is not valid.</entry>	
+	<entry key="ksystem.exception.message.102002">The requested parameter is not valid.</entry>	
+	<entry key="ksystem.exception.message.102003">Groupware login information is missing.</entry>	
+	<entry key="ksystem.exception.message.102004">You are not a user logged in to Groupware.</entry>	
+	<entry key="ksystem.exception.message.102005">You do not have permission.</entry>	
+	<entry key="ksystem.exception.message.102006">Required value $1 is missing.</entry>	
+	<entry key="ksystem.exception.message.102007">No forms are found for groupware.</entry>	
+	<entry key="ksystem.exception.message.103002">Document Id is not valid.</entry>	
+	<entry key="ksystem.exception.message.999999">SYSTEM Error Occurred</entry>	
+</properties>

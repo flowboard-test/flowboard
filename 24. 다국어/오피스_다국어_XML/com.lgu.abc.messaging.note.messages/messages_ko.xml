@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="action.success.draft.Note">쪽지가 임시저장되었습니다.</entry>
+	<entry key="action.success.complement.Note">쪽지가 임시저장되었습니다.</entry>
+	<entry key="action.success.send.Note">쪽지가 발송되었습니다.</entry>
+	<entry key="action.success.read.Note">쪽지를 읽었습니다..</entry>
+	<entry key="action.success.forward.Note">쪽지가 발송되었습니다.</entry>
+	<entry key="action.success.seen.Note">쪽지가 읽음 상태로 변경되었습니다.</entry>
+	<entry key="action.success.unseen.Note">쪽지가 읽지 않음 상태로 변경되었습니다.</entry>
+	<entry key="action.success.store.Note">쪽지보관함에 쪽지가 보관되었습니다.</entry>
+	<entry key="action.success.trash.Note">쪽지가 삭제되었습니다.</entry>
+	<entry key="action.success.restore.Note">쪽지가 복원되었습니다.</entry>
+	<entry key="action.success.discard.Note">쪽지가 완전히 삭제되었습니다.</entry>
+	<entry key="action.success.trash.empty">휴지통을 비웠습니다.</entry>
+	
+	<entry key="messenger.action.fail.exception.Note">쪽지를 전송하는 도중 오류가 발생하였습니다.</entry>
+	<entry key="messenger.action.fail.exception.read.Note">쪽지를 읽는 도중 오류가 발생하였습니다.</entry>
+	<entry key="messenger.action.fail.exception.access.Note">잘못된 접근입니다.</entry>
+	<entry key="messenger.action.fail.exception.sender.Note">보내는 사람이 없거나 삭제된 사용자입니다.</entry>
+	<entry key="messenger.action.fail.exception.receiver.Note">받는 사람이 없거나 삭제된 사용자입니다.</entry>
+	<entry key="messenger.action.fail.nullReceiverId.Note">받는 사람이 비었습니다.</entry>
+	<entry key="messenger.action.fail.nullTitle.Note">제목이 비었습니다.</entry>
+	<entry key="messenger.action.fail.nullContents.Note">내용이 비었습니다.</entry>
+	<entry key="messenger.action.fail.emptyNoteId.Note">노트 ID가 없습니다.</entry>
+	<entry key="messenger.action.success.getFileVolume.Note">쪽지 첨부파일 용량 정보를 성공적으로 가져왔습니다.</entry>
+	
+	<entry key="note.counter.message.nothing">읽지 않은 쪽지가 없습니다.</entry>
+	<entry key="note.delivery.type.draft">임시저장</entry>
+	<entry key="note.delivery.type.sent">보낸쪽지</entry>
+	<entry key="note.delivery.type.received">받은쪽지</entry>
+	<entry key="note.property.subject.nodata">제목 없음</entry>
+	
+	<entry key="note.feed.content.nodata">선택하신 쪽지는 삭제 또는 휴지통에 있는 쪽지로 확인이 불가합니다.</entry>
+	
+	<!-- exeption message -->
+	<entry key="exception.message.NoteRecipientNotExistException">받는 사람이 없거나 삭제된 사용자입니다.</entry>
+
+	<entry key="NOT.10091"><![CDATA[검색 키워드가 입력되지 않았습니다.]]></entry>
+	
+</properties>

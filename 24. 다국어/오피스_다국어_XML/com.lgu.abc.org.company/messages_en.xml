@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="org.company.option.ui.name">UI</entry>
+	<entry key="org.company.option.env.name">Environment</entry>
+	<entry key="org.company.option.menu.name">Menu</entry>
+	<entry key="org.company.option.ip.name">IP</entry>
+	<entry key="org.company.option.popup.name">Popup</entry>
+	<entry key="org.company.option.link.name">Link</entry>
+	<entry key="org.company.option.shortcut.name">shortcut</entry>
+	<entry key="org.company.option.office.name">Office</entry>
+	<entry key="org.company.option.volume.name">Volume</entry>
+	<entry key="org.company.option.groupware.name">Groupware</entry>
+	<entry key="org.company.option.cowork.name">Cowork</entry>
+	<entry key="org.company.option.policy.name">Policy</entry>
+	<entry key="org.company.option.erp.name">U+ ERP Peristalsis</entry>
+	<entry key="org.company.option.erp.ylw">영림원 ERP Peristalsis</entry>
+	<entry key="org.company.option.attendance.workTime.name">U+ WorkTime Peristalsis</entry>
+	<entry key="org.company.option.services.name">Services</entry>
+	<entry key="org.company.option.dashboard.name">Dashboard</entry>
+	<entry key="org.company.option.usestate.name">Use State</entry>
+	<entry key="org.company.option.statistics.name">Statistics</entry>
+	<entry key="org.company.option.dns.name">AccessSetUp</entry>
+	<entry key="org.configuration.name">Organization</entry>
+	<entry key="org.company.option.mobile.ip.name">Mobile</entry>
+	<entry key="org.company.option.workstore.name">Groupware Store</entry>
+	<entry key="org.company.option.invitation.user.name">Invitation</entry>
+	
+	<entry key="org.company.option.backup.name">backup Management</entry>
+	<entry key="org.company.option.backup.setting.name">backup Management Setting</entry>
+	
+	<entry key="org.company.option.function.name">Function</entry>
+	<entry key="org.company.option.internet.telephone.name">Internet Phone</entry>
+	<entry key="org.company.option.hard.name">U+ WebHard Peristalsis</entry>
+	<entry key="org.company.option.fax.name">U+ WebFax Peristalsis</entry>
+	<entry key="org.company.option.document.name">U+ Electronic Document Peristalsis</entry>
+	
+	<entry key="org.company.report.statistics.sms.user.name">Name</entry>
+	<entry key="org.company.report.statistics.sms.user.smsSendCount">Sms Count</entry>
+	<entry key="org.company.report.statistics.sms.user.mmsSendCount">Mms Count</entry>
+	<entry key="org.company.report.statistics.sms.user.sendCount">Send Count</entry>
+	
+	<entry key="exception.message.NoCompanyAdministratorException">There should be one or more company administrators.</entry>
+</properties>

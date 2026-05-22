@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="action.success.create.DepartmentProfile">부서가 생성되었습니다.</entry>
+	<entry key="action.success.update.DepartmentProfile">부서가 수정되었습니다.</entry>
+	<entry key="action.success.delete.DepartmentProfile">부서가 삭제되었습니다.</entry>
+	
+	<entry key="org.department.profile.excel.sheet.name">부서</entry>
+	<entry key="org.department.profile.excel.header.name">부서명</entry>
+	<entry key="org.department.profile.excel.header.description">설명</entry>
+	<entry key="org.department.profile.excel.header.parent">상위 부서명</entry>
+	
+	<entry key="exception.message.IdenticalParentDepartmentException">자신을 부모로 가질 수 없습니다.</entry>
+	<entry key="exception.message.CircularParentDepartmentException">자신의 하위 부서를 부모로 가질 수 없습니다.</entry>
+	<entry key="exception.message.ChildDepartmentExistException">하위 부서가 있는 경우는 삭제하실 수 없습니다.</entry>
+	<entry key="exception.message.UserInDepartmentExistException">부서원이 있는 경우는 삭제하실 수 없습니다.</entry>
+	<entry key="exception.message.InvalidParentDepartmentException">유효하지 않은 상위 부서입니다.</entry>
+	
+	<entry key="exception.message.DepartmentRoleCountExcessException">{0}는 {1}명을 초과할 수 없습니다</entry>
+</properties>

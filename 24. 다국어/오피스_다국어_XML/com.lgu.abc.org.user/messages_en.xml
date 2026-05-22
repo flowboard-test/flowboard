@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="org.user.chat.buddy.group.default">Default Group</entry>
+	<entry key="org.user.chat.counter.message.nothing">No chat request</entry>
+
+	<entry key="org.user.import.excel.success">{0} rows have been successfully imported.</entry>
+	
+	<entry key="org.user.profile.excel.sheet.name">USERS</entry>
+	<entry key="org.user.profile.export.header.loginid">LOGIN ID</entry>
+	<entry key="org.user.profile.export.header.name.korean">KOREAN NANE</entry>
+	<entry key="org.user.profile.export.header.name.english">ENGLISH NANE</entry>
+	<entry key="org.user.profile.export.header.name.chinese">LANGUAGE1</entry>
+	<entry key="org.user.profile.export.header.name.chinesetw">LANGUAGE2</entry>
+	<entry key="org.user.profile.export.header.name.vietnam">LANGUAGE3</entry>
+	<entry key="org.user.profile.export.header.birthdate.date">BIRTHDATE</entry>
+	<entry key="org.user.profile.export.header.birthdate.lunar">BIRTHDATE LUNAR</entry>
+	<entry key="org.user.profile.export.header.joined.date">JOINED DATE</entry>
+	<entry key="org.user.profile.export.header.employeeid">EMPLOYEE ID</entry>
+	<entry key="org.user.profile.export.header.department">DEPARTMENT</entry>
+	<entry key="org.user.profile.export.header.title">TITLE</entry>
+	<entry key="org.user.profile.export.header.position">POSITION</entry>
+	<entry key="org.user.profile.export.header.rank">RANK</entry>
+	<entry key="org.user.profile.export.header.contact.personal.email">EMAIL</entry>
+	<entry key="org.user.profile.export.header.contact.personal.mobile">MOBILE</entry>
+	<entry key="org.user.profile.export.header.contact.personal.home.zip">HOME ZIP</entry>
+	<entry key="org.user.profile.export.header.contact.personal.home.main">HOME MAIN</entry>
+	<entry key="org.user.profile.export.header.contact.personal.home.detail">HOME DETAIL</entry>
+	<entry key="org.user.profile.export.header.contact.business.phone">BUSINESS PHONE</entry>
+	<entry key="org.user.profile.export.header.contact.business.extension">BUSINESS EXTENSION</entry>
+	<entry key="org.user.profile.export.header.job.description">JOB DESCRIPTION</entry>
+	<entry key="org.user.profile.export.header.department.manager">DEPARTMENT MANAGER</entry>
+	<entry key="org.user.profile.export.header.freeuseryn">MESSENGER USER</entry>
+	<entry key="org.user.profile.export.header.employeetype">EMPLOYEE TYPE</entry>
+	<entry key="org.user.profile.export.header.jobcode">JOB CODE</entry>
+	<entry key="org.user.profile.export.header.password">PASSWORD</entry>
+
+	<entry key="org.user.option.title">User Options</entry>
+	<entry key="org.user.option.common.name">Common</entry>
+	<entry key="org.user.option.personal.name">Personal</entry>
+	<entry key="org.user.option.services.name">Services</entry>
+	<entry key="org.user.option.ui.name">UI</entry>
+	<entry key="org.user.option.regional.name">Regional</entry>
+	<entry key="org.user.option.notification.name">Notification</entry>
+	<entry key="org.user.option.staff.name">Staff</entry>
+	<entry key="org.user.option.access.name">Add Works Access</entry>
+	<entry key="org.user.option.ui.main.name">Main Page</entry>
+	<entry key="org.user.option.ui.skin.name">Skin</entry>
+	<entry key="org.user.option.ui.pagesize.name">Page Size</entry>
+	<entry key="org.user.option.ui.skin">Skin</entry>
+	
+	<entry key="org.user.profile.suspended">User has been suspended.</entry>
+	<entry key="org.user.profile.resumed">User has been resumed.</entry>
+	<entry key="org.user.profile.email.certification.success">Authentication completed.</entry>
+	<entry key="org.user.profile.email.certification.failure">Authentication failed.</entry>
+	<entry key="org.user.profile.email.certification.already">Already authenticated.</entry>
+
+	<entry key="org.user.social.feed.content.nodata">Feed content has been deleted.</entry>
+	<entry key="org.user.social.feed.content.forbidden">Unauthorized feed content.</entry>
+	<entry key="org.user.social.friend.requester.relation.exists">The user is already your friend.</entry>
+	<entry key="org.user.social.friend.counter.message.nothing">No friend request</entry>
+	
+	<entry key="exception.message.DepartmentNotFoundException">No matched department exists.</entry>
+	<entry key="exception.message.DuplicateDepartmentException">Duplicate departments exist.</entry>
+	<entry key="exception.message.DuplicateLoginIdException">Duplicate LoginId exist.</entry>
+	<entry key="exception.message.EmailNotFoundException">Email is mandatory.</entry>
+	<entry key="exception.message.InvalidBirthDateException">Invalid birthday format.</entry>
+	<entry key="exception.message.InvalidBusinessPhoneException">Invalid business phone format.</entry>
+	<entry key="exception.message.InvalidEmailException">Invalid email format.</entry>
+	<entry key="exception.message.InvalidFaxException">Invalid fax format.</entry>
+	<entry key="exception.message.InvalidHomeAddressException">Invalid home address format.</entry>
+	<entry key="exception.message.InvalidImportOperationException">Invalid imported operation type.</entry>
+	<entry key="exception.message.InvalidJoinDateException">Invalid joined date format.</entry>
+	<entry key="exception.message.InvalidMobileException">Invalid mobile format.</entry>
+	<entry key="exception.message.InvalidPasswordException">Invalid password format.</entry>
+	<entry key="exception.message.InvalidPasswordPatternException">Invalid password format.</entry>
+	<entry key="exception.message.InvalidPhoneNumberException">Invalid phone number.</entry>
+	<entry key="exception.message.InvalidRankException">Invalid rank format.</entry>
+	<entry key="exception.message.InvalidLoginIdException">Invalid login id format.</entry>
+	<entry key="exception.message.PasswordNotFoundException">Password is mandatory.</entry>
+	<entry key="exception.message.PositionNotFoundException">No matched position exists.</entry>
+	<entry key="exception.message.TitleNotFoundException">No matched title exists.</entry>
+	<entry key="exception.message.UserNameNotFoundException">User name is mandatory.</entry>
+	<entry key="exception.message.UserNotFoundException">No matched user exists.</entry>
+	<entry key="exception.message.FreeUserCodeNotFoundException">No matched Messenger user exists.</entry>
+	<entry key="exception.message.EmployeeTypeNotFoundException">No matched employee type exists.</entry>
+	<entry key="exception.message.AlreadyExternalIdExists">Registration failed due to the addition of duplicate ID. Please upload after checking the file.</entry>
+	
+	<entry key="exception.message.InvalidGoogleAccountException">Invalid google account.</entry>
+	<entry key="exception.message.InvalidUboxAccountException">Invalid U+ Box account.</entry>
+	<entry key="exception.message.InvalidOnnetAccountException">Invalid Onnet account.</entry>
+	<entry key="exception.message.InvalidFaxAccountException">Invalid WebFax account.</entry>
+	
+	<entry key="exception.message.NoAvailableUserAccountException">No available user account.</entry>
+	<entry key="exception.message.NoAvailableFreeUserAccountException">No available messenger user account.</entry>
+	<entry key="exception.message.DuplicatedLoginIdException">Duplicated login id exists.</entry>
+	<entry key="exception.message.InvalidUserDepartmentAssignmentException">Invalid user department is assigned.</entry>
+		
+	<entry key="exception.message.FriendExistException">Friend already exists.</entry>
+	<entry key="exception.message.FriendRequestExistException">Friend request already exists.</entry>	
+	<entry key="exception.message.FriendRequestNotFoundException">Friend request does not exist.</entry>	
+	<entry key="exception.message.FriendAlreadyAcceptedException">Friend request had already been accepted.</entry>	
+	<entry key="exception.message.FriendAlreadyRejectedException">Friend request had already been rejected.</entry>
+	<!-- 202206 백정훈 사번 중복오류 메세지 -->
+	<entry key="exception.message.DuplicateEmpyNoException">Duplicate EmployeNo exist.</entry>
+	<entry key="exception.message.InvalidMessengerUserException"> 메신저 유저 여부를 Y 로 해서 재등록 하셔야 합니다.</entry>
+		
+	<entry key="action.success.create.FriendRequest">Friend request has been created.</entry>
+	<entry key="action.success.accept.FriendRequest">Friend request has been accepted.</entry>
+	<entry key="action.success.reject.FriendRequest">Friend request has been rejected.</entry>
+	
+	<!-- #1921 [오피스] 다수 웍스사이트 사용 고객 계열사 우회 사용 지원_사용자 전환 (PC웹작업) -->
+	<entry key="exception.message.AccessOptionConflictionException">This ID is already registered.</entry>
+	<entry key="exception.message.AccessOptionCorpUserException">User information does not exist.&lt;br&gt;Please check your domain or ID.</entry>
+	<entry key="exception.message.AccessOptionOwnAccountException">You cannot register your own account.</entry>
+	<entry key="exception.message.AccessOptionUserPasswordException">Passwords do not match. Please check your password.</entry>
+</properties>

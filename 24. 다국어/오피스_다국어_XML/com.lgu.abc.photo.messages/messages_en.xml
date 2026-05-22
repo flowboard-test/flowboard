@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="action.success.recommend.PhotoPicture">Photo is recommended.</entry>
+	<entry key="action.success.unrecommend.PhotoPicture">Recommendation is canceled.</entry>
+	<entry key="action.success.comment.PhotoPicture">Comment has been created.</entry>
+	<entry key="action.success.uncomment.PhotoPicture">Comment has been deleted.</entry>
+	
+	<entry key="exception.message.PhotoAlbumNameDuplicateException">Photo album name is duplicate.</entry>
+</properties>

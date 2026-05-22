@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="ajaxTest"><![CDATA[ajaxTest]]></entry>
+
+	<entry key="requiredMsg"><![CDATA[Registration is not possible because required fields are not entered.]]></entry>
+	<entry key="requiredKeyword"><![CDATA[Search keyword is not entered.]]></entry>
+	<entry key="stopWritingMsg"><![CDATA[Are you sure you want to stop writing?]]></entry>
+	<entry key="duplicateKey"><![CDATA[duplication key ]]></entry>
+	
+	<entry key="uploadSizeExceeded"><![CDATA[upload file size must be less than {0} bytes ]]></entry>
+	<entry key="uploadTypeMismatch"><![CDATA[upload file media-type must match {0} ]]></entry>
+	<entry key="uploadException"><![CDATA[upload failure {0} ]]></entry>
+	<entry key="uploadParsedException"><![CDATA[upload failure {0} ]]></entry>
+
+	<entry key="typeMismatch"><![CDATA[required type {1}]]></entry>
+
+	<entry key="AssertFalse"><![CDATA[must be false]]></entry>
+	<entry key="AssertTrue"><![CDATA[must be true]]></entry>
+	<entry key="DecimalMax"><![CDATA[must be less than or equal to {0}]]></entry>
+	<entry key="DecimalMin"><![CDATA[must be greater than or equal to {0}]]></entry>
+	<entry key="Digits"><![CDATA[numeric value out of bounds (<{0} digits>.<{1} digits> expected)]]></entry>
+	<entry key="Future"><![CDATA[must be in the future]]></entry>
+	<entry key="Max"><![CDATA[must be less than or equal to {0}]]></entry>
+	<entry key="Min"><![CDATA[must be greater than or equal to {0}]]></entry>
+	<entry key="NotNull"><![CDATA[may not be null]]></entry>
+	<entry key="Null"><![CDATA[must be null]]></entry>
+	<entry key="Past"><![CDATA[must be in the past]]></entry>
+	<entry key="Pattern"><![CDATA[must match "{0}"]]></entry>
+	<entry key="Size"><![CDATA[size must be between {0} and {1}]]></entry>
+	<entry key="Email"><![CDATA[not a well-formed email address]]></entry>
+	<entry key="Length"><![CDATA[length must be between {0} and {1}]]></entry>
+	<entry key="NotBlank"><![CDATA[may not be empty]]></entry>
+	<entry key="NotEmpty"><![CDATA[may not be empty]]></entry>
+	<entry key="Range"><![CDATA[must be between {0} and {1}]]></entry>
+	<entry key="URL"><![CDATA[must be a valid URL]]></entry>
+	<entry key="CreditCardNumber"><![CDATA[invalid credit card number]]></entry>
+	<entry key="ScriptAssert"><![CDATA[script expression "{0}" didn't evaluate to true]]></entry>
+	
+	<entry key="application.title">Groupware Project</entry>
+	<entry key="application.footer">By ORGOS</entry>
+	<entry key="application.backToTop">back to top</entry>
+	<entry key="application.listButton">LIST</entry>
+	<entry key="application.newButton">NEW</entry>
+	<entry key="application.updateButton">UPDATE</entry>
+	<entry key="application.editButton">EDIT</entry>
+	<entry key="application.saveButton">SAVE</entry>
+	<entry key="application.resetButton">RESET</entry>
+	<entry key="application.deleteButton">DELETE</entry>
+	<entry key="application.prevButton">Prev</entry>
+	<entry key="application.nextButton">Next</entry>
+	<entry key="application.yesButton">yes</entry>
+	<entry key="application.noButton">no</entry>	
+	
+	<entry key="requiredChgDept1">상위부서를 현재 부서로 선택할 수 없습니다.</entry>
+	<entry key="requiredChgDept2">현재 부서의 하위부서로 선택할 수 없습니다.</entry>
+	
+	<entry key="common.date.sunday">Sun</entry>
+	<entry key="common.date.monday">Mon</entry>
+	<entry key="common.date.tuesday">Tue</entry>
+	<entry key="common.date.wednesday">Wed</entry>
+	<entry key="common.date.thursday">Thu</entry>
+	<entry key="common.date.friday">Fri</entry>
+	<entry key="common.date.saturday">Sat</entry>
+	
+	<entry key="common.date.year"> </entry>
+	<entry key="common.date.month"> </entry>
+	<entry key="common.date.day"> </entry>
+	
+	<entry key="common.date.solar">Solar</entry>
+	<entry key="common.date.lunar">Lunar</entry>
+	
+	<entry key="time.elapsed.minutes"> mins ago</entry>
+	<entry key="time.elapsed.hours"> hours ago</entry>
+	<entry key="time.elapsed.days"> days ago</entry>
+	
+	<entry key="filter.error.file.invalid">Invalid file.</entry>
+	
+	<entry key="action.success.create">Item has been created.</entry>
+	<entry key="action.success.update">Item has been updated.</entry>
+	<entry key="action.success.delete">Item has been deleted.</entry>
+	<entry key="action.error.unauthorized">Not authorized request.</entry>
+	<entry key="action.error.filter">Invalid request.</entry>
+	
+	<entry key="noData">No data.</entry>
+	
+<entry key="board.home.label.001">Select the Board / Board box to add / modify and delete</entry>
+	
+	<entry key="board.home.btn.save">Save</entry>
+	<entry key="board.home.btn.cancel">Delete</entry>
+	
+	<entry key="board.home.btn.001">Add Board</entry>
+	<entry key="board.home.btn.002">Modify Board</entry>
+	<entry key="board.home.btn.003">Delete Board</entry>
+	<entry key="board.home.btn.004">Add Board box</entry>
+	<entry key="board.home.btn.005">Modify Board box</entry>
+	<entry key="board.home.btn.006">Delete Board box</entry>
+
+	<entry key="board.edit.label.001">Board Setting</entry>		
+	<entry key="board.edit.label.002">Upper Board box</entry>		
+	<entry key="board.edit.label.003">Required field</entry>		
+	<entry key="board.edit.label.004">Board Name</entry>
+	<entry key="board.edit.label.0041">Explanation</entry>
+	<entry key="board.edit.label.0042">Board Use</entry>
+	<entry key="board.edit.label.0043">Register Multi-language </entry>		
+	<entry key="board.edit.label.005">Use</entry>		
+	<entry key="board.edit.label.006">Not</entry>		
+	<entry key="board.edit.label.007">Yes</entry>
+	<entry key="board.edit.label.007_1">Post registration</entry>
+	<entry key="board.edit.label.007_2">approval Use</entry>		
+	<entry key="board.edit.label.008">Usable Function</entry>		
+	<entry key="board.edit.label.009">Reply</entry>		
+	<entry key="board.edit.label.010">Comment</entry>		
+	<entry key="board.edit.label.011">Like</entry>		
+	<entry key="board.edit.label.012">View History</entry>		
+	<entry key="board.edit.label.013_1">Like</entry>
+	<entry key="board.edit.label.013_2">Administrator only</entry>		
+	<entry key="board.edit.label.014_1">View History</entry>
+	<entry key="board.edit.label.014_2">Administrator only</entry>		
+	<entry key="board.edit.label.015">Image Widget</entry>		
+	<entry key="board.edit.label.016_1">Post Number </entry>
+	<entry key="board.edit.label.016_2">Use</entry>		
+	<entry key="board.edit.label.017">Widget size</entry>		
+	<entry key="board.edit.label.018">Sample image</entry>		
+	<entry key="board.edit.label.019">2X1 size</entry>		
+	<entry key="board.edit.label.020">2X2 size</entry>		
+	<entry key="board.edit.label.021">One thing</entry>		
+	<entry key="board.edit.label.022">Image</entry>		
+	<entry key="board.edit.label.023">List</entry>
+	<entry key="board.edit.label.023_1">Widget image</entry>		
+	<entry key="board.edit.label.024">Attach</entry>		
+	<entry key="board.edit.label.025">Widget title</entry>		
+	<entry key="board.edit.label.026">Post version</entry>		
+	<entry key="board.edit.label.027">Post lock</entry>		
+	<entry key="board.edit.label.028">User</entry>		
+	<entry key="board.edit.label.029">Organization</entry>		
+	<entry key="board.edit.label.030">All employees are granted read/write authority.</entry>		
+	<entry key="board.edit.label.031">Administrator</entry>		
+	<entry key="board.edit.label.032">Organization</entry>		
+	<entry key="board.edit.label.033">Company administrators are automatically granted the manage authority.</entry>		
+	<entry key="board.edit.label.034">Administrator</entry>		
+	<entry key="board.edit.label.035">Administrator</entry>		
+	<entry key="board.edit.label.036">Administrator</entry>		
+	<entry key="board.edit.label.037">Administrator</entry>		
+	<entry key="board.edit.label.038">Administrator</entry>		
+	<entry key="board.edit.label.039">Administrator</entry>		
+	<entry key="board.edit.label.040">Administrator</entry>
+	<entry key="board.edit.label.041">Select</entry>
+	
+	<entry key="i18n.edit.label.001">Locale Name</entry>
+	<entry key="i18n.edit.label.002">Locale Message</entry>
+	
+	<!-- #3212 파일업로드 시 Exception문구 다국어 처리 -->
+	<entry key="exception.message.UnknownFileTypeException">Unknown file type.</entry>
+	<entry key="exception.message.forbiddenFileExtensionException">This extension is not allowed.</entry>
+</properties>

@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="mail.counter.message.nothing">No mail messages to read</entry>
+	<entry key="mail.feed.content.nodata">Message has been deleted or moved into spam/trash folder.</entry>
+	
+	<entry key="exception.message.MailAliasNameDuplicateException">대표메일 이름이 이미 사용중입니다.</entry>
+	<entry key="exception.message.MailAliasEmailDuplicateException">대표메일 주소를 이미 사용중입니다.</entry>
+	<entry key="exception.message.MailAliasEmailMissedException">대표메일주소가 없습니다.</entry>
+	<entry key="exception.message.UserLoginIdExistException">대표메일주소가 사용자 아이디로 사용중입니다.</entry>
+	
+	<entry key="exception.message.MailUserExcessQuotaException">전체용량을 초과하므로 할당할 수 없습니다.</entry>
+
+	<entry key="exception.message.MailAliasLoginIdException">Login id conflicts one of mail aliases.</entry>
+	<entry key="exception.message.POP3IdExistException">Login id is already in use by the POP3 user</entry>
+	
+	<entry key="exception.message.MINTNoResponseException">저장하는데 실패하였습니다.</entry>
+	
+	<entry key="exception.message.POP3UserExcessLicenseException">POP3 라이센스수를 초과하여 추가할 수 없습니다.</entry>
+
+	<entry key="exception.message.MailImportConfigurationAccountDuplicateException">이미 등록된 정보입니다.</entry>
+	<entry key="exception.message.MailImportConfigurationMailBoxDuplicateException">이미 존재하는 편지함입니다.</entry>
+	<entry key="exception.message.MailImportConfigurationConnectionFailureException"><![CDATA[The account cannot be added if the POP3 settings of the external account to be brought are incorrect<br/>If the information of the external account is incorrect.<br/>Please check the information and try again.]]></entry>
+	<entry key="exception.message.MailImportConfigurationAuthorizationFailureException">권한이 없습니다.</entry>
+	<entry key="exception.message.MailImportConfigurationUIDFileException">오류가 발생했습니다.(MINT-UIDFile)</entry>
+	<entry key="exception.message.MailImportConfigurationRequestException">신청 중인 상태에서는 수정 또는 삭제할 수 없습니다.</entry>
+	<entry key="exception.message.MailImportConfigurationInprogressException">진행 중인 상태에서는 수정 또는 삭제할 수 없습니다.</entry>
+
+	<entry key="exception.message.MailImportLogNoConfigurationException">신청 또는 취소할 외부 메일이 없습니다.</entry>
+	<entry key="exception.message.MailImportLogAuthorizationFailureException">권한이 없습니다.</entry>
+	<entry key="exception.message.MailImportLogNoRequestException">신청 중인 외부 메일이 없습니다.</entry>
+	<entry key="exception.message.MailImportLogNotRequestException">신청 중인 상태가 아닙니다.</entry>
+	<entry key="exception.message.MailImportLogRequestException">현재 신청 중인 상태입니다.</entry>
+	<entry key="exception.message.MailImportLogInprogressException">현재 진행 중인 상태입니다.</entry>
+	<entry key="exception.message.MailImportLogBackUpException">메일 백업이 진행 중이면 신청할 수 없습니다.</entry>
+	<entry key="exception.message.MailImportLogHostNameException">오류가 발생했습니다.(MINT-HostName)</entry>
+	<entry key="exception.message.MailImportLogMailBoxException">신청 또는 진행 중인 저장편지함이 있으면 신청할 수 없습니다.</entry>
+	<entry key="mail.backup.request.validation.mailbox.empty">편지함 값이 비어있습니다.</entry>
+	<entry key="mail.backup.request.validation.mailbox.status.unavailable"><![CDATA[백업할려는 편지함이 존재하지 않습니다.]]></entry>
+	<entry key="mail.backup.request.validation.mailbox.status.available">편지함 백업이 신청되었습니다.</entry>
+	<entry key="mail.import.request.validation.mailbox.empty">편지함 값이 비어있습니다.</entry>
+	<entry key="mail.import.request.validation.mailbox.status.unavailable"><![CDATA[외부 메일 가져오기 기능의 신청 또는 진행 중인 편지함이 있으면<br/>진행할 수 없습니다.]]></entry>
+	<entry key="mail.import.request.validation.mailbox.status.available">진행 가능합니다.</entry>
+
+	<entry key="exception.message.POP3ConnectionFailedException">연결이 원활하지 않습니다.</entry>
+
+	<entry key="exception.message.NoMailCountryException">접속 국가는 한 국가 이상 설정해야 합니다.</entry>
+
+	<entry key="mail.addresscard.empty">주소값이 비어있습니다.</entry>
+	<entry key="mail.addresscard.add.success">Mail address added to Address</entry>	
+	<entry key="mail.addresscard.add.fail">주소록에 이미 존재하는 주소입니다.</entry>
+	
+	<entry key="mail.rawmail.send.success">Mail sent to the customer center.</entry>
+	<entry key="mail.rawmail.send.fail">고객센터로 메일발송이 실패하였습니다.</entry>
+		
+	<entry key="mail.user.quota.excel.sheet.name">메일사용자</entry>
+	<entry key="mail.user.quota.excel.header.name">이름</entry>
+	<entry key="mail.user.quota.excel.header.id">아이디</entry>
+	<entry key="mail.user.quota.excel.header.department">부서명</entry>
+	<entry key="mail.user.quota.excel.header.position">직위</entry>
+	<entry key="mail.user.quota.excel.header.state">상태</entry>
+	<entry key="mail.user.quota.excel.header.usage.quota">사용용량(MB)</entry>
+	<entry key="mail.user.quota.excel.header.allot.quota">할당용량(MB)</entry>
+	<entry key="mail.user.quota.excel.header.percent">사용율</entry>
+	<entry key="mail.user.state.ok">정상</entry>
+	<entry key="mail.user.state.suspend">중지</entry>
+	<entry key="mail.user.quota.common.content.file.name.prefix">메일사용량_</entry>
+	
+	<entry key="mail.user.not.exist.user">존재하지 않는 사용자입니다.</entry>
+	<entry key="mail.user.password.change.only.pop3User">POP3 전용 사용자만 변경이 가능합니다.</entry>
+	<entry key="mail.user.password.diffenent.OldPassword.currentPassword">입력한 현재 비밀번호가 저장된 비밀번호와 다릅니다.</entry>
+	<entry key="mail.user.password.same.NewPassword.currentPassword">변경할 비밀번호가 현재 비밀번호와 동일합니다.</entry>
+	<entry key="mail.user.password.change.success">비밀번호가 변경 되었습니다.</entry>
+
+	<entry key="pop3Account.common.result.400.company">회사를 찾을 수 없습니다.</entry>
+	<entry key="pop3Account.common.result.500">내부 서버 오류가 발생했습니다.</entry>
+	<entry key="pop3Account.common.result.900">메일을 사용하지 않습니다.</entry>
+	<entry key="pop3Account.update.result.200">저장되었습니다.</entry>
+	<entry key="pop3Account.update.result.400.domain">파라미터 domain : 잘못된 요청입니다.</entry>
+	<entry key="pop3Account.update.result.400.license">파라미터 license : 잘못된 요청입니다.</entry>
+	<entry key="pop3Account.update.result.901">실 사용되는 계정 수보다 적어서 저장할 수 없습니다.</entry>
+	<entry key="pop3Account.profile.result.200">정상 응답하였습니다.</entry>
+	<entry key="pop3Account.profile.result.400.domain">파라미터 domain : 잘못된 요청입니다.</entry>
+
+	<entry key="mail.subscription.multidomain.command.type.create">추가</entry>
+	<entry key="mail.subscription.multidomain.command.type.delete">삭제</entry>
+	<entry key="mail.subscription.multidomain.common.result.400.company">회사를 찾을 수 없습니다.</entry>
+	<entry key="mail.subscription.multidomain.common.result.400.domain">파라미터 domain : 잘못된 요청입니다.</entry>
+	<entry key="mail.subscription.multidomain.common.result.400.multidomain">파라미터 multiDomain : 잘못된 요청입니다.</entry>
+	<entry key="mail.subscription.multidomain.common.result.500">내부 서버 오류가 발생했습니다. 기술팀에 문의해주세요.</entry>
+	<entry key="mail.subscription.multidomain.common.result.900">메일을 사용하지 않습니다.</entry>
+	<entry key="mail.subscription.multidomain.common.result.901">기본 도메인에 대해 액션(추가/삭제 등)은 할 수 없습니다.</entry>
+	<entry key="mail.subscription.multidomain.create.result.200">저장되었습니다.</entry>
+	<entry key="mail.subscription.multidomain.create.result.902">추가하려는 멀티도메인이 중복됩니다.</entry>
+	<entry key="mail.subscription.multidomain.delete.result.200">삭제되었습니다.</entry>
+	<entry key="mail.subscription.multidomain.delete.result.903">삭제하려는 멀티도메인이 존재하지 않습니다.</entry>
+	<entry key="mail.subscription.multidomain.profile.result.200">정상 응답하였습니다.</entry>
+	
+	<entry key="smtp.log.excel.sheet.name">메일 발신 로그</entry>
+	<entry key="smtp.log.excel.header.date">시간</entry>
+	<entry key="smtp.log.excel.header.direction">외/내부발신</entry>
+	<entry key="smtp.log.excel.header.sendResult">발신</entry>
+	<entry key="smtp.log.excel.header.senderEmail">발신자주소</entry>
+	<entry key="smtp.log.excel.header.receiverEmail">수신자주소</entry>
+	<entry key="smtp.log.excel.header.mailSize">크기(KB)</entry>
+	<entry key="smtp.log.excel.header.mailSubject">제목</entry>
+	<entry key="smtp.log.content.file.name.prefix">메일 발신 로그_</entry>
+	
+	<entry key="mail.delete.all.sender.success">All emails have been deleted.</entry>	
+	<entry key="mail.delete.all.sender.fail">Failed to delete emails.</entry>
+	
+	<entry key="mail.delete.attachments.success"> attachments have been deleted.</entry>	
+	<entry key="mail.delete.attachments.fail">Failed to delete selected attachments.</entry>
+
+	<entry key="MAI.00001"><![CDATA[저장]]></entry>
+	<entry key="MAI.00002"><![CDATA[명함 추가]]></entry>
+	<entry key="MAI.00003"><![CDATA[카테고리 설정]]></entry>
+	<entry key="MAI.00004"><![CDATA[서비스업체명]]></entry>
+	<entry key="MAI.00005"><![CDATA[비밀번호]]></entry>
+	<entry key="MAI.00006"><![CDATA[아이디]]></entry>
+	<entry key="MAI.00007"><![CDATA[표시이름]]></entry>
+	<entry key="MAI.00008"><![CDATA[무한메일 추가]]></entry>
+	<entry key="MAI.00009"><![CDATA[사용]]></entry>
+	<entry key="MAI.00010"><![CDATA[사용 안 함]]></entry>
+	<entry key="MAI.00011"><![CDATA[중간 (광고/정보성 편지 및 서버에서 스팸으로 판단한 편지)]]></entry>
+	<entry key="MAI.00012"><![CDATA[낮음 (일부 광고성 편지도 수신됨)]]></entry>
+	<entry key="MAI.00013"><![CDATA[즉시삭제]]></entry>
+	<entry key="MAI.00014"><![CDATA[휴지통에 저장]]></entry>
+	<entry key="MAI.00015"><![CDATA[스팸편지함으로 저장]]></entry>
+	<entry key="MAI.00016"><![CDATA[수신 거부 주소 및 도메인]]></entry>
+	<entry key="MAI.00017"><![CDATA[추가]]></entry>
+	<entry key="MAI.00018"><![CDATA[삭제]]></entry>
+	<entry key="MAI.00019"><![CDATA[서버설정]]></entry>
+	<entry key="MAI.00020"><![CDATA[서버주소]]></entry>
+	<entry key="MAI.00021"><![CDATA[서버포트]]></entry>
+	<entry key="MAI.00022"><![CDATA[원본 저장]]></entry>
+	<entry key="MAI.00023"><![CDATA[메일주소]]></entry>
+	<entry key="MAI.00024"><![CDATA[외부메일 추가]]></entry>
+	<entry key="MAI.00025"><![CDATA[대표메일 주소]]></entry>
+	<entry key="MAI.00026"><![CDATA[수신자 메일목록]]></entry>
+	<entry key="MAI.00027"><![CDATA[대표메일 등록]]></entry>
+	<entry key="MAI.00028"><![CDATA[처리]]></entry>
+	<entry key="MAI.00029"><![CDATA[응답 내용]]></entry>
+	<entry key="MAI.00030"><![CDATA[비밀번호 확인]]></entry>
+	<entry key="MAI.00031"><![CDATA[이름]]></entry>
+	<entry key="MAI.00032"><![CDATA[메일용량]]></entry>
+	<entry key="MAI.00033"><![CDATA[전체 용량]]></entry>
+	<entry key="MAI.00034"><![CDATA[남은 용량]]></entry>
+	<entry key="MAI.00035"><![CDATA[메일 계정]]></entry>
+	<entry key="MAI.00036"><![CDATA[개]]></entry>
+	<entry key="MAI.00037"><![CDATA[용량 설정]]></entry>
+	<entry key="MAI.00038"><![CDATA[할당]]></entry>
+	<entry key="MAI.00039"><![CDATA[사용자]]></entry>
+	<entry key="MAI.00040"><![CDATA[할당 용량]]></entry>
+	<entry key="MAI.00041"><![CDATA[보내기]]></entry>
+	<entry key="MAI.00042"><![CDATA[임시저장]]></entry>
+	<entry key="MAI.00043"><![CDATA[취소]]></entry>
+	<entry key="MAI.00044"><![CDATA[다시작성]]></entry>
+	<entry key="MAI.00045"><![CDATA[예약발송]]></entry>
+	<entry key="MAI.00046"><![CDATA[새창]]></entry>
+	<entry key="MAI.00047"><![CDATA[발송 계정]]></entry>
+	<entry key="MAI.00048"><![CDATA[유니코드]]></entry>
+	<entry key="MAI.00049"><![CDATA[한국어]]></entry>
+	<entry key="MAI.00050"><![CDATA[일본어]]></entry>
+	<entry key="MAI.00051"><![CDATA[중국어 간체]]></entry>
+	<entry key="MAI.00052"><![CDATA[중국어 번체]]></entry>
+	<entry key="MAI.00053"><![CDATA[개별발송]]></entry>
+	<entry key="MAI.00054"><![CDATA[조직도]]></entry>
+	<entry key="MAI.00055"><![CDATA[주소록]]></entry>
+	<entry key="MAI.00056"><![CDATA[숨은참조]]></entry>
+	<entry key="MAI.00057"><![CDATA[받는사람]]></entry>
+	<entry key="MAI.00058"><![CDATA[참조]]></entry>
+	<entry key="MAI.00059"><![CDATA[제목]]></entry>
+	<entry key="MAI.00060"><![CDATA[중요]]></entry>
+	<entry key="MAI.00061"><![CDATA[약속 잡기]]></entry>
+	<entry key="MAI.00062"><![CDATA[약속]]></entry>
+	<entry key="MAI.00063"><![CDATA[첨부파일]]></entry>
+	<entry key="MAI.00064"><![CDATA[메일양식]]></entry>
+	<entry key="MAI.00065"><![CDATA[신규]]></entry>
+	<entry key="MAI.00066"><![CDATA[편집]]></entry>
+	<entry key="MAI.00067"><![CDATA[인쇄]]></entry>
+	<entry key="MAI.00068"><![CDATA[인쇄도움말]]></entry>
+	<entry key="MAI.00069"><![CDATA[닫기]]></entry>
+	<entry key="MAI.00070"><![CDATA[첨부파일]]></entry>
+	<entry key="MAI.00071"><![CDATA[레이블]]></entry>
+	
+	<entry key="MAI.00072"><![CDATA[답장]]></entry>
+	<entry key="MAI.00073"><![CDATA[전체답장]]></entry>
+	<entry key="MAI.00074"><![CDATA[전달]]></entry>
+	<entry key="MAI.00075"><![CDATA[수신거부]]></entry>
+	<entry key="MAI.00076"><![CDATA[읽지않음]]></entry>
+	<entry key="MAI.00077"><![CDATA[원문보기]]></entry>
+	<entry key="MAI.00078"><![CDATA[주소록 추가]]></entry>
+	<entry key="MAI.00079"><![CDATA[수신거부]]></entry>
+
+	<entry key="MAI.00080"><![CDATA[받은날짜]]></entry>
+	<entry key="MAI.00081"><![CDATA[보낸날짜]]></entry>
+	<entry key="MAI.00082"><![CDATA[받는사람]]></entry>
+	
+	<entry key="MAI.00083"><![CDATA[일반 첨부파일]]></entry>
+	<entry key="MAI.00084"><![CDATA[모두저장]]></entry>
+	<entry key="MAI.00085"><![CDATA[보낸사람]]></entry>
+	
+	<entry key="MAI.00086"><![CDATA[사용자 편지함]]></entry>
+	<entry key="MAI.00087"><![CDATA[무한메일함]]></entry>
+	
+	<entry key="MAI.00088"><![CDATA[TEXT 편집기]]></entry>
+	<entry key="MAI.00089"><![CDATA[HTML 편집기]]></entry>
+
+	<entry key="MAI.00090"><![CDATA[새 창 쓰기]]></entry>
+	<entry key="MAI.00091"><![CDATA[새 탭 쓰기]]></entry>
+	<entry key="MAI.00092"><![CDATA[쓰기 방법]]></entry>
+	<entry key="MAI.00093"><![CDATA[편집기 종류]]></entry>
+	
+	<entry key="MAI.00094"><![CDATA[기본 메일 주소]]></entry>
+	<entry key="MAI.00095"><![CDATA[숨은참조 표시]]></entry>
+
+	<entry key="MAI.00096"><![CDATA[목록 설정]]></entry>
+	<entry key="MAI.00097"><![CDATA[쓰기 설정]]></entry>
+	<entry key="MAI.00098"><![CDATA[서명]]></entry>
+	<entry key="MAI.00099"><![CDATA[무한메일 설정]]></entry>
+	<entry key="MAI.00100"><![CDATA[외부메일 설정]]></entry>
+	<entry key="MAI.00101"><![CDATA[편지함 관리]]></entry>
+	<entry key="MAI.00102"><![CDATA[수신거부]]></entry>
+	<entry key="MAI.00103"><![CDATA[자동응답]]></entry>
+	<entry key="MAI.00104"><![CDATA[자동분류]]></entry>
+	
+	<entry key="MAI.00105"><![CDATA[메일계정 등록]]></entry>
+	<entry key="MAI.00106"><![CDATA[목록 다운로드]]></entry>
+	
+	<entry key="MAI.00107"><![CDATA[사용 메일 계정수]]></entry>
+	
+	<entry key="MAI.00108"><![CDATA[정상]]></entry>
+	<entry key="MAI.00109"><![CDATA[중지]]></entry>
+	
+	<entry key="MAI.00110"><![CDATA[사용용량]]></entry>
+
+	<entry key="MAI.00111"><![CDATA[계정구분]]></entry>
+	<entry key="MAI.00112"><![CDATA[메일상태]]></entry>
+	
+	<entry key="MAI.00113"><![CDATA[차단해제]]></entry>
+	<entry key="MAI.00114"><![CDATA[비우기]]></entry>
+	<entry key="MAI.00115"><![CDATA[수신거부]]></entry>
+	
+	<entry key="MAI.00116"><![CDATA[명함사용]]></entry>
+	
+	<entry key="MAI.00117"><![CDATA[수정]]></entry>
+	
+	<entry key="MAI.00118"><![CDATA[명함추가]]></entry>
+	<entry key="MAI.00119"><![CDATA[명함수정]]></entry>
+	
+	<entry key="MAI.00120"><![CDATA[받은 편지함]]></entry>
+	<entry key="MAI.00121"><![CDATA[별표 편지함]]></entry>
+	<entry key="MAI.00122"><![CDATA[보낸 편지함]]></entry>
+	<entry key="MAI.00123"><![CDATA[임시 보관함]]></entry>
+	<entry key="MAI.00124"><![CDATA[예약 발송함]]></entry>
+	<entry key="MAI.00125"><![CDATA[휴지통]]></entry>
+	<entry key="MAI.00126"><![CDATA[스팸 편지함]]></entry>
+	
+	<entry key="MAI.00127"><![CDATA[편지작성]]></entry>
+	<entry key="MAI.00128"><![CDATA[수신확인]]></entry>
+	
+	<entry key="MAI.00129"><![CDATA[전체 메일용량]]></entry>
+	<entry key="MAI.00130"><![CDATA[시스템 편지함]]></entry>
+	<entry key="MAI.00131"><![CDATA[편지함 이름]]></entry>
+	<entry key="MAI.00132"><![CDATA[편지통수]]></entry>
+	<entry key="MAI.00133"><![CDATA[개인 편지함]]></entry>
+	<entry key="MAI.00134"><![CDATA[편지함 추가]]></entry>
+
+	<entry key="MAI.00135"><![CDATA[전체 메일]]></entry>
+	<entry key="MAI.00136"><![CDATA[읽지않은 메일]]></entry>
+	<entry key="MAI.00137"><![CDATA[읽은 메일]]></entry>
+	<entry key="MAI.00138"><![CDATA[읽음]]></entry>
+	<entry key="MAI.00139"><![CDATA[읽지않음]]></entry>
+	<entry key="MAI.00140"><![CDATA[일정 등록]]></entry>
+	<entry key="MAI.00141"><![CDATA[할일 요청]]></entry>
+	<entry key="MAI.00142"><![CDATA[PC로 저장]]></entry>
+	<entry key="MAI.00143"><![CDATA[크기]]></entry>
+	<entry key="MAI.00144"><![CDATA[보낸사람/제목]]></entry>
+	<entry key="MAI.00145"><![CDATA[날짜/크기]]></entry>
+	<entry key="MAI.00146"><![CDATA[확인날짜]]></entry>
+	<entry key="MAI.00147"><![CDATA[예약날짜]]></entry>
+	<entry key="MAI.00148"><![CDATA[보관날짜]]></entry>
+	<entry key="MAI.00149"><![CDATA[이동]]></entry>
+	<entry key="MAI.00150"><![CDATA[읽음상태]]></entry>
+	<entry key="MAI.00151"><![CDATA[추가기능]]></entry>
+	<entry key="MAI.00152"><![CDATA[표시 이름]]></entry>
+	<entry key="MAI.00153"><![CDATA[서비스 업체명]]></entry>
+	<entry key="MAI.00154"><![CDATA[무한메일계정 추가]]></entry>
+	<entry key="MAI.00155"><![CDATA[무한메일계정 수정]]></entry>
+	
+	<entry key="MAI.00156"><![CDATA[다음]]></entry>
+	<entry key="MAI.00157"><![CDATA[네이버]]></entry>
+	<entry key="MAI.00158"><![CDATA[네이트]]></entry>
+	<entry key="MAI.00159"><![CDATA[지메일]]></entry>
+	<entry key="MAI.00160"><![CDATA[드림위즈]]></entry>
+	<entry key="MAI.00161"><![CDATA[천리안]]></entry>
+	<entry key="MAI.00162"><![CDATA[야후]]></entry>
+	
+	<entry key="MAI.00163"><![CDATA[외부메일서버]]></entry>
+	<entry key="MAI.00164"><![CDATA[외부메일계정 추가]]></entry>
+	<entry key="MAI.00165"><![CDATA[외부메일계정 수정]]></entry>
+	
+	<entry key="MAI.00166"><![CDATA[사용자 선택]]></entry>
+	<entry key="MAI.00167"><![CDATA[대표메일주소 등록]]></entry>
+	<entry key="MAI.00168"><![CDATA[대표메일주소 수정]]></entry>
+	
+	<entry key="MAI.00169"><![CDATA[제목이]]></entry>
+	<entry key="MAI.00170"><![CDATA[발송 주소가]]></entry>
+	
+	<entry key="MAI.00171"><![CDATA[를 포함하는 경우]]></entry>
+	<entry key="MAI.00172"><![CDATA[인 경우]]></entry>
+	<entry key="MAI.00173"><![CDATA[없는 경우]]></entry>
+	
+	<entry key="MAI.00174"><![CDATA[삭제하기]]></entry>
+	<entry key="MAI.00175"><![CDATA[으로 이동]]></entry>
+	<entry key="MAI.00176"><![CDATA[영문, 숫자로만 되어 있으면]]></entry>
+	
+	<entry key="MAI.00177"><![CDATA[자동분류 등록]]></entry>
+	<entry key="MAI.00178"><![CDATA[자동분류 수정]]></entry>
+	<entry key="MAI.00179"><![CDATA[작성화면으로 돌아가기]]></entry>
+	<entry key="MAI.00180"><![CDATA[그냥 보내기]]></entry>
+	
+	<entry key="MAI.00181"><![CDATA[수신자 선택]]></entry>
+	<entry key="MAI.00182"><![CDATA[참조자 선택]]></entry>
+	
+	<entry key="MAI.00183"><![CDATA[양식으로 저장]]></entry>
+	<entry key="MAI.00184"><![CDATA[카테고리 편집]]></entry>
+	
+	<entry key="MAI.00185"><![CDATA[시작일시]]></entry>
+	<entry key="MAI.00186"><![CDATA[종료일시]]></entry>
+	<entry key="MAI.00187"><![CDATA[약속장소]]></entry>
+	
+	<entry key="MAI.00189"><![CDATA[확인]]></entry>
+	
+	<entry key="MAI.00190"><![CDATA[공통 메일용량 설정]]></entry>
+	<entry key="MAI.00191"><![CDATA[안녕하세요.]]></entry>
+	
+	<entry key="MAI.00192"><![CDATA[개인별 메일용량 설정]]></entry>
+	<entry key="MAI.00193"><![CDATA[사용 설정]]></entry>
+	<entry key="MAI.00194"><![CDATA[스팸처리 등급]]></entry>
+	<entry key="MAI.00195"><![CDATA[거부된 편지 처리]]></entry>
+	<entry key="MAI.00196"><![CDATA[사용 기간]]></entry>
+	<entry key="MAI.00197"><![CDATA[분류조건]]></entry>
+	<entry key="MAI.00198"><![CDATA[명함]]></entry>
+	
+	<entry key="MAI.00199"><![CDATA[별표 편지함]]></entry>
+	<entry key="MAI.00200"><![CDATA[수신허용]]></entry>
+	<entry key="MAI.00201"><![CDATA[수신 허용 주소 및 도메인]]></entry>
+	
+	<entry key="MAI.00202"><![CDATA[메일]]></entry>
+	
+	<entry key="MAI.00203"><![CDATA[숨은 참조자 선택]]></entry>
+	<entry key="MAI.00204"><![CDATA[사용량]]></entry>
+	<entry key="MAI.00205"><![CDATA[환경설정]]></entry>
+	
+	<entry key="MAI.00206"><![CDATA[알림]]></entry>
+	<entry key="MAI.00207"><![CDATA[인코딩]]></entry>
+	<entry key="MAI.00208"><![CDATA[양식이름]]></entry>
+	<entry key="MAI.00209"><![CDATA[재전송]]></entry>
+	<entry key="MAI.00210"><![CDATA[전체편지함]]></entry>
+	<entry key="MAI.00211"><![CDATA[전체]]></entry>
+	
+	<entry key="MAI.00212"><![CDATA[검색]]></entry>
+	
+	<entry key="MAI.00213"><![CDATA[포함하는 단어]]></entry>
+	<entry key="MAI.00214"><![CDATA[기간]]></entry>
+	<entry key="MAI.00215"><![CDATA[조건 초기화]]></entry>
+
+	<entry key="MAI.00216"><![CDATA[핫메일]]></entry>
+	<entry key="MAI.00217"><![CDATA[직접선택]]></entry>
+	
+	<entry key="MAI.00218"><![CDATA[보관기간]]></entry>
+	
+	<entry key="MAI.00219"><![CDATA[일]]></entry>
+	
+	<entry key="MAI.00220"><![CDATA[읽지않음]]></entry>
+	
+	<entry key="MAI.00221"><![CDATA[일부안읽음]]></entry>
+	<entry key="MAI.00222"><![CDATA[모두읽음]]></entry>
+	
+	<entry key="MAI.00223"><![CDATA[검색결과]]></entry>
+	
+	<entry key="MAI.00224"><![CDATA[주]]></entry>
+	<entry key="MAI.00225"><![CDATA[개월]]></entry>
+	<entry key="MAI.00226"><![CDATA[년]]></entry>
+	
+	<entry key="MAI.00227"><![CDATA[알림 메일제외]]></entry>
+	
+	<entry key="MAI.00228"><![CDATA[관련 메일 대화형 보기]]></entry>
+	<entry key="MAI.00229"><![CDATA[전송실패:]]></entry>
+	
+	<entry key="MAI.00230"><![CDATA[외]]></entry><!-- 송태훈 외 3명 -->
+	<entry key="MAI.00231"><![CDATA[명]]></entry><!-- 송태훈 외 3명 -->
+	
+	<entry key="MAI.00232"><![CDATA[목록 순서]]></entry>
+	
+	<entry key="MAI.00233"><![CDATA[사용자 이름]]></entry>
+	<entry key="MAI.00234"><![CDATA[적용하기]]></entry>
+	<entry key="MAI.00235"><![CDATA[설정날짜]]></entry>
+	
+	<entry key="MAI.00236"><![CDATA[포워딩]]></entry>
+	
+	<entry key="MAI.00237"><![CDATA[포워딩 메일 주소]]></entry>
+	<entry key="MAI.00238"><![CDATA[포워딩 처리]]></entry>
+	<entry key="MAI.00239"><![CDATA[포워딩 기간]]></entry>
+	<entry key="MAI.00240"><![CDATA[서버에 복사본 남김]]></entry>
+	
+	<entry key="MAI.00241"><![CDATA[저장할 편지함]]></entry>
+	<entry key="MAI.00242"><![CDATA[표시이름]]></entry>
+	<entry key="MAI.00243"><![CDATA[조직도]]></entry>
+	<entry key="MAI.00244"><![CDATA[가져오기]]></entry>
+	
+	<entry key="MAI.00245"><![CDATA[포워딩 등록]]></entry>
+	
+	<entry key="MAI.00246"><![CDATA[가져오는 중...]]></entry>
+	
+	<entry key="MAI.00247"><![CDATA[발송 취소]]></entry>
+	<entry key="MAI.00248"><![CDATA[분류 추가]]></entry>
+	<entry key="MAI.00249"><![CDATA[포워딩 등록]]></entry>
+	
+	<entry key="MAI.00250"><![CDATA[모든 편지 전달]]></entry>
+	<entry key="MAI.00251"><![CDATA[인 경우만 전달(예:abc@host.com)]]></entry>
+	<entry key="MAI.00252"><![CDATA[발송 도메인이]]></entry>
+	
+	<entry key="MAI.00253"><![CDATA[포함되어 있을 경우 전달]]></entry>
+	
+	<entry key="MAI.00254"><![CDATA[기간제한 없음]]></entry>
+	<entry key="MAI.00255"><![CDATA[기간선택(설정된 기간동안만 포워딩)]]></entry>
+	
+	<entry key="MAI.00256"><![CDATA[남김]]></entry>
+	<entry key="MAI.00257"><![CDATA[남기지 않음]]></entry>
+	
+	<entry key="MAI.00258"><![CDATA[제목에]]></entry>
+	<entry key="MAI.00259"><![CDATA[포함되어 있으면]]></entry>
+	<entry key="MAI.00260"><![CDATA[대표메일 주소가]]></entry>
+	<entry key="MAI.00261"><![CDATA[제목이 없으면]]></entry>
+	<entry key="MAI.00262"><![CDATA[제목이 영문, 숫자로만 되어 있으면]]></entry>
+	<entry key="MAI.00263"><![CDATA[(제목 없음)]]></entry>
+	<entry key="MAI.00264"><![CDATA[사용율]]></entry>
+	<entry key="MAI.00265"><![CDATA[할당용량]]></entry>
+	<entry key="MAI.00266"><![CDATA[[약속 메일]]]></entry>
+	
+	<entry key="MAI.00267"><![CDATA[할일 등록]]></entry>
+	<entry key="MAI.00268"><![CDATA[대표메일 이름]]></entry>	  
+	<entry key="MAI.00269"><![CDATA[수신자]]></entry>	  
+	
+	<entry key="MAI.00270"><![CDATA[인 경우만 전달(예:@host.com)]]></entry>
+	
+	<entry key="MAI.00271"><![CDATA[완전 삭제]]></entry>
+	<entry key="MAI.00272"><![CDATA[메일 업로드]]></entry>
+	
+	<entry key="MAI.00273"><![CDATA[외부 메일 가져오기]]></entry>
+	
+	<entry key="MAI.00274"><![CDATA[새 편지함]]></entry>
+	
+	<entry key="MAI.00275"><![CDATA[U+ BOX에 메일 보관 전사 설정]]></entry>
+	<entry key="MAI.002751"><![CDATA[발송 메일주소 사용권한 설정]]></entry>
+	
+	<entry key="MAI.00276"><![CDATA[업로드]]></entry>
+	
+	<entry key="MAI.00277"><![CDATA[메일 자동 저장]]></entry>
+	<entry key="MAI.00278"><![CDATA[편지함 동기화]]></entry>
+	
+	<entry key="MAI.10000"><![CDATA[명함을 삭제하시겠습니까?]]></entry>
+	<entry key="MAI.10001"><![CDATA[설정이 저장되었습니다.]]></entry>
+	<entry key="MAI.10002"><![CDATA[메일함의 모든 내용이 삭제됩니다. 삭제하시겠습니까?]]></entry>
+	<entry key="MAI.10003"><![CDATA[메일함의 모든 메일도 함께 삭제됩니다. 삭제하시겠습니까?]]></entry>
+	<entry key="MAI.10004"><![CDATA[메일에 지정된 해당 레이블은 모두 해제됩니다. 레이블을 삭제하시겠습니까?]]></entry>
+	<entry key="MAI.10005"><![CDATA[무한메일 정보를 삭제하시겠습니까?]]></entry>
+	<entry key="MAI.10006"><![CDATA[접속에 실패하였습니다. 접속정보를 확인하세요.]]></entry>
+	<entry key="MAI.10007"><![CDATA[대표메일을 삭제하시겠습니까?]]></entry>
+	<entry key="MAI.10008"><![CDATA[설정을 삭제하시겠습니까?]]></entry>
+	<entry key="MAI.10009"><![CDATA[메일이 성공적으로 발송되었습니다.]]></entry>
+	<entry key="MAI.10010"><![CDATA[첨부파일을 확인해주세요.]]></entry>
+	<entry key="MAI.10011"><![CDATA[제목과 본문에 포함된 '첨부'라는 단어를 기준으로 첨부 파일이 누락되었음을 판단하여 제안드립니다.]]></entry>
+	<entry key="MAI.10012"><![CDATA[파일이 업로드 중입니다. 업로드 뒤에 다시 시도해 주세요.]]></entry>
+	<entry key="MAI.10013"><![CDATA[임시보관함에 저장되었습니다.]]></entry>
+	<entry key="MAI.10014"><![CDATA[예약편지는 변경할 수 없습니다.]]></entry>
+	<entry key="MAI.10015"><![CDATA[메일양식이 추가되었습니다.]]></entry>
+	<entry key="MAI.10016"><![CDATA[수신거부 목록에 추가되었습니다.]]></entry>
+	<entry key="MAI.10017"><![CDATA[아이디가 중복되었습니다.]]></entry>
+	<entry key="MAI.10018"><![CDATA[주의 : 변경 시 전체 사용자들에게 일괄적으로 기본용량이 할당됩니다.]]></entry>
+	<entry key="MAI.10019"><![CDATA[할당된 용량을 초과합니다.]]></entry>
+	<entry key="MAI.10020"><![CDATA[메일을 삭제하시겠습니까?]]></entry>
+	<entry key="MAI.10021"><![CDATA[회사에 할당된 유저수를 초과하여, 더이상 유저를 생성할 수 없습니다.]]></entry>
+	
+	<entry key="MAI.10022"><![CDATA[수신거부 주소로 등록 되었습니다.]]></entry>
+	<entry key="MAI.10023"><![CDATA[스팸해제 되었습니다.]]></entry>
+	<entry key="MAI.10024"><![CDATA[수신거부 목록에 등록되었습니다.]]></entry>
+	
+	<entry key="MAI.10025"><![CDATA[Mail address added to Address]]></entry>
+	
+	<entry key="MAI.10026"><![CDATA[단일선택 시에만 가능한 기능입니다.]]></entry>
+	<entry key="MAI.10027"><![CDATA[메일이 삭제되었습니다.]]></entry>
+	
+	<entry key="MAI.10028"><![CDATA[메일 전송 중 오류가 발생하였습니다.]]></entry>
+	
+	<entry key="MAI.10029"><![CDATA[이름이 정상적으로 입력되지 않았습니다.]]></entry>
+	
+	<entry key="MAI.10030"><![CDATA[메일제목이 입력되지 않았습니다.]]></entry>
+	
+	<entry key="MAI.10031"><![CDATA[받는사람이 입력되지 않았습니다.]]></entry>
+	
+	<entry key="MAI.10032"><![CDATA[아이디가 입력되지 않았습니다.]]></entry>
+	<entry key="MAI.10033"><![CDATA[패스워드가 입력되지 않았습니다.]]></entry>
+	<entry key="MAI.10034"><![CDATA[표시이름이 입력되지 않았습니다.]]></entry>
+	
+	<entry key="MAI.10035"><![CDATA[이미 존재하는 주소입니다.]]></entry>
+	
+	<entry key="MAI.10036"><![CDATA[서버주소가 입력되지 않았습니다.]]></entry>
+	<entry key="MAI.10037"><![CDATA[서버포트가 입력되지 않았습니다.]]></entry>
+	<entry key="MAI.10038"><![CDATA[아이디가 입력되지 않았습니다.]]></entry>
+	<entry key="MAI.10039"><![CDATA[패스워드가 입력되지 않았습니다.]]></entry>
+	
+	<entry key="MAI.10040"><![CDATA[양식함의 내용도 모두 삭제됩니다. 삭제하시겠습니까?]]></entry>
+	
+	<entry key="MAI.10041"><![CDATA[메일주소가 입력되지 않았습니다.]]></entry>
+	
+	<entry key="MAI.10042"><![CDATA[메일이 전송중입니다.]]></entry>
+	
+	<entry key="MAI.10043"><![CDATA[메일서버에 접속할 수 없습니다.]]></entry>
+	
+	<entry key="MAI.10044"><![CDATA[메일을 발송하였습니다.]]></entry>
+	
+	<entry key="MAI.10045"><![CDATA[으로 이동하시겠습니까?]]></entry>
+	
+	<entry key="MAI.10046"><![CDATA[잘못된 이메일주소가 포함되어 있습니다. 그냥 보내시겠습니까?]]></entry>
+	<entry key="MAI.10047"><![CDATA[양식 이름을 입력하세요.]]></entry>
+	
+	<entry key="MAI.10048"><![CDATA[작성중인 내용이 선택한 양식으로 교체됩니다. 계속 진행하시겠습니까?]]></entry>
+	
+	<entry key="MAI.10049"><![CDATA[주소록에 이미 존재하는 메일 주소입니다.]]></entry>
+	
+	<entry key="MAI.10050"><![CDATA[이미 존재하는 편지함입니다.]]></entry>
+	<entry key="MAI.10051"><![CDATA[이미 존재하는 레이블입니다.]]></entry>
+	
+	<entry key="MAI.10052"><![CDATA[주소형식이 잘못되었습니다.]]></entry>
+	
+	<entry key="MAI.10053"><![CDATA[필수내용이 모두 입력되지 않았습니다.]]></entry>
+	
+	<entry key="MAI.10054"><![CDATA[올바른 이메일 주소가 없습니다. 이메일 주소를 확인하세요.]]></entry>
+	<entry key="MAI.10055"><![CDATA[레이블이 적용되었습니다.]]></entry>
+	<entry key="MAI.10056"><![CDATA[요청하신 작업 도중 오류가 발생하였습니다.]]></entry>
+	
+	<entry key="MAI.10057"><![CDATA[내용이 입력되지 않았습니다.]]></entry>
+	<entry key="MAI.10058"><![CDATA[잘못된 이메일 주소입니다.]]></entry>
+	
+	<entry key="MAI.10059"><![CDATA[수신확인을 삭제하시겠습니까?]]></entry>
+	<entry key="MAI.10060"><![CDATA[수신확인이 삭제되었습니다.]]></entry>
+	
+	<entry key="MAI.10061"><![CDATA[컬럼명을 좌우로 움직여 순서를 설정하세요.]]></entry>
+	
+	<entry key="MAI.10062"><![CDATA[메일이 이동되었습니다.]]></entry>
+	
+	<entry key="MAI.10063"><![CDATA[사용자 편지함 이름이 변경되었습니다.]]></entry>
+	<entry key="MAI.10064"><![CDATA[레이블명이 변경되었습니다.]]></entry>
+	
+	<entry key="MAI.10065"><![CDATA[개인 편지함이 추가되었습니다.]]></entry>
+	<entry key="MAI.10066"><![CDATA[레이블이 추가되었습니다.]]></entry>
+	
+	<entry key="MAI.10067"><![CDATA[사용자 편지함이 삭제되었습니다.]]></entry>
+	<entry key="MAI.10068"><![CDATA[레이블이 삭제되었습니다.]]></entry>
+	
+	<entry key="MAI.10069"><![CDATA[양식함이 삭제되었습니다.]]></entry>
+	<entry key="MAI.10070"><![CDATA[양식함이 추가되었습니다.]]></entry>
+	
+	<entry key="MAI.10071"><![CDATA[선택한 메일함의 모든 메일이 삭제되었습니다.]]></entry>
+	
+	<entry key="MAI.10072"><![CDATA[메일이 없습니다.]]></entry>
+	
+	<entry key="MAI.10073"><![CDATA[자동분류 정보가 삭제되었습니다.]]></entry>
+	
+	<entry key="MAI.10074"><![CDATA[대표메일 주소가 입력되지 않았습니다.]]></entry>
+	<entry key="MAI.10075"><![CDATA[수신자 메일주소가 입력되지 않았습니다.]]></entry>
+	
+	<entry key="MAI.10076"><![CDATA[수신거부 목록이 삭제되었습니다.]]></entry>
+	<entry key="MAI.10077"><![CDATA[사용자 상태가 변경되었습니다.]]></entry>
+	
+	<entry key="MAI.10078"><![CDATA[예약시간이 현재보다 이전입니다.]]></entry>
+	<entry key="MAI.10079"><![CDATA[수신거부 하시겠습니까?]]></entry>
+	
+	<entry key="MAI.10080"><![CDATA[메일을 회수하시겠습니까?]]></entry>
+	
+	<entry key="MAI.10081"><![CDATA[메일발송을 취소 하시겠습니까?]]></entry>
+	
+	<entry key="MAI.10082"><![CDATA[예약메일이 등록되었습니다.]]></entry>
+	
+	<entry key="MAI.10083"><![CDATA[이미 등록된 메일 주소입니다.]]></entry>
+	<entry key="MAI.10084"><![CDATA[회수 가능한 수신자가 없습니다.]]></entry>
+	<entry key="MAI.10085"><![CDATA[명함이 삭제되었습니다.]]></entry>
+	
+	<entry key="MAI.10086"><![CDATA[외부메일 정보를 삭제하시겠습니까?]]></entry>
+	<entry key="MAI.10087"><![CDATA[무한메일 정보를 삭제하였습니다.]]></entry>
+	<entry key="MAI.10088"><![CDATA[외부메일 정보를 삭제하였습니다.]]></entry>
+	<entry key="MAI.10089"><![CDATA[기본 용량을 변경하시겠습니까?]]></entry>
+	
+	<entry key="MAI.10090"><![CDATA[외부 메일은 회신이 불가능합니다.]]></entry>
+	<entry key="MAI.10091"><![CDATA[검색 키워드가 입력되지 않았습니다.]]></entry>
+	
+	<entry key="MAI.10092"><![CDATA[일부 수신자에게 메일발송 시 오류가 발생하였습니다.]]></entry>
+	<entry key="MAI.10093"><![CDATA[최근주소]]></entry>
+	
+	<entry key="MAI.10094"><![CDATA[수신자 메일목록 추가]]></entry>
+	<entry key="MAI.10295"><![CDATA[POP3/SMTP 설정]]></entry>
+	
+	<entry key="MAI.10297"><![CDATA[네이버]]></entry>
+	<entry key="MAI.10298"><![CDATA[다음]]></entry>
+	<entry key="MAI.10299"><![CDATA[구글]]></entry>
+	<entry key="MAI.10300"><![CDATA[직접입력]]></entry>
+</properties>

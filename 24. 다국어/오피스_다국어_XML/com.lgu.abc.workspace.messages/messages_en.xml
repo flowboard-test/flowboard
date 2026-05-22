@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="action.success.create.WorkspaceFavorite">Workspace favorite has been added.</entry>
+	<entry key="action.success.delete.WorkspaceFavorite">Workspace favorite has been removed.</entry>
+
+	<entry key="action.success.request.WorkspaceMember">Workspace member has been requested.</entry>
+	<entry key="action.success.approve.WorkspaceMember">Workspace member has been approved.</entry>
+	<entry key="action.success.reject.WorkspaceMember">Workspace member has been rejected.</entry>
+	<entry key="action.success.expel.WorkspaceMember">Workspace member has been expelled.</entry>
+	<entry key="action.success.leave.WorkspaceMember">Workspace member has been left.</entry>
+	<entry key="action.success.submanager.WorkspaceMember">Workspace member has been promoted to a submanager.</entry>
+	<entry key="action.success.leader.WorkspaceMember">Workspace member has been promoted to a leader.</entry>
+	<entry key="action.success.demote.WorkspaceMember">Workspace member has been demoted to a member.</entry>
+	<entry key="action.success.inherit.WorkspaceMember">Workspace manager has been inherited.</entry>
+	
+	<entry key="action.success.open.WorkspaceProfile">Workspace opening requested.</entry>
+	<entry key="action.success.approve.WorkspaceProfile">Workspace request has been approved.</entry>
+	<entry key="action.success.reject.WorkspaceProfile">Workspace request has been rejected.</entry>
+	<entry key="action.success.close.WorkspaceProfile">Workspace has been closed.</entry>
+	<entry key="action.success.restore.WorkspaceProfile">Workspace has been restored.</entry>
+	
+	<entry key="exception.message.TeamWorkspaceDuplicationException">Team Workspace already exists.</entry>
+	
+	<entry key="exception.message.WorkspaceManagerMovementException">Workspace manager cannot be moved.</entry>
+	<entry key="exception.message.WorkspaceMemberJoiningUnrequestableException">Workspace member joining request is not allowed.</entry>
+	<entry key="exception.message.WorkspaceMemberAlreadyJoinedException">You are already a member of the workspace.</entry>	
+	
+	<entry key="exception.message.WorkspaceMemberAlreadyApprovedException">A member has already been approved.</entry>
+	<entry key="exception.message.WorkspaceMemberAlreadyLeftException">A member has already been left.</entry>
+	<entry key="exception.message.WorkspaceMemberAlreadyRejectedException">A member has already been rejected.</entry>
+	<entry key="exception.message.WorkspaceMemberStateTransferException">Invalid workspace member state transfer.</entry>
+	<entry key="exception.message.WorkspaceMemberExpelException">Only members are allowed to be expelled.</entry>
+	<entry key="exception.message.WorkspaceManagerLeavingException">A manager cannot leave until inherit to another user.</entry>
+	
+	<entry key="exception.message.WorkspaceMemberSubManagerPromotionException">A manager cannot become a submanager.</entry>
+	<entry key="exception.message.WorkspaceMemberLeaderPromotionException">A manager cannot become a leader.</entry>
+	<entry key="exception.message.WorkspaceMemberManagerDemotionException">A manager cannot be demoted to a member.</entry>
+	<entry key="exception.message.WorkspaceMemberInheritException">A manager cannot inherit to herself.</entry>
+</properties>

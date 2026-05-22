@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="attendance.absence.message.save.fail">Save failed.</entry>
+	<entry key="attendance.absence.message.delete.fail">Delete failed.</entry>
+	<entry key="attendance.absence.message.no.remain">No remain.</entry>
+	
+	<entry key="attendance.extendwork.message.save.fail">Save failed.</entry>
+	
+	<entry key="attendance.timecard.checkin">In</entry>
+	<entry key="attendance.timecard.checkout">Out</entry>
+	
+	<entry key="attendance.statistics.header.name">Name</entry>
+	<entry key="attendance.statistics.department.header.name">Department</entry>
+	<entry key="attendance.statistics.header.position">Position</entry>
+	<entry key="attendance.statistics.header.spot">spot</entry>
+	<entry key="attendance.statistics.header.users.count">User Count</entry>
+	<entry key="attendance.statistics.header.checkin">Check In</entry>
+	<entry key="attendance.statistics.header.late">Late</entry>
+	<entry key="attendance.statistics.header.vacTotal">UsedVaction_Total</entry>
+
+	<entry key="attendance.report.status.sheet.name">MyTimeCard</entry>
+	<entry key="attendance.report.status.department.sheet.name">Attendance Tracking</entry>
+	<entry key="attendance.report.statistics.offhistory.sheet.name">OffHistory</entry>
+	<entry key="attendance.report.statistics.attendancetotal.sheet.name">Attendance Total</entry>
+	<entry key="attendance.report.statistics.department.days.sheet.name">Attendance Total - Day</entry>
+	<entry key="attendance.report.statistics.department.months.sheet.name">Attendance Total - Months</entry>
+	<entry key="attendance.report.status.excel.header.attendance">Attendance</entry>
+	<entry key="attendance.report.status.excel.header.offwork">Off Work</entry>
+	<entry key="attendance.report.status.excel.header.absencestate">AbsenceState</entry>
+	<entry key="attendance.report.status.excel.header.reason">Reason</entry>
+	<entry key="attendance.report.status.excel.header.baseWork">baseWork</entry>
+	<entry key="attendance.report.status.excel.header.extensionWork">extensionWork</entry>
+	<entry key="attendance.report.status.excel.header.totalWork">totalWork</entry>
+	<entry key="attendance.report.status.excel.header.extensionDetails">extensionDetails</entry>
+	<entry key="attendance.report.status.excel.header.nighttimeDetails">nighttimeDetails</entry>
+	<entry key="attendance.report.status.excel.header.holidayDetails">holidayDetails</entry>
+	<entry key="attendance.report.status.excel.header.holidayNightDetails">holidayNightDetails</entry>
+	<entry key="attendance.report.status.excel.header.resn">Reason</entry>
+	<entry key="attendance.report.status.excel.header.gtwAddr">Attendance Address</entry>
+	<entry key="attendance.report.status.excel.header.ltoAddr">Off Work Address</entry>
+	<entry key="attendance.report.status.excel.header.gtwIp">Attendance mobile IP</entry>
+	<entry key="attendance.report.status.excel.header.ltoIp">Off Work mobile IP</entry>
+	
+	<entry key="exception.message.AbsenceTypeInUseException">Absence type is in use.</entry>
+	<entry key="exception.message.UnauthorizedAttendanceSubmissionException">Submission is not authorized.</entry>
+	<entry key="exception.message.IpNotAllowedException">Accessing ip is not allowed.</entry>
+	<entry key="exception.message.MultipleDepartmentAttendanceAdministratorException">Only one department administrator allowed.</entry>
+	<entry key="exception.message.AnnualVacationDuplicatedException">User already exists.</entry>
+	<entry key="exception.message.AnnualVacationNotFoundException">You are not registered</entry>
+	<entry key="exception.message.InvalidAnnualVacationYearException">Year type mismatch.</entry>
+	<entry key="exception.message.InvalidAnnualVacationDayException">Day type mismatch.</entry>
+	<entry key="exception.message.InvalidUsedDayException">Day type mismatch.</entry>
+	
+	<entry key="attendance.option.company.vacation.excel.company.file.name">WorkVacationList</entry>
+	<entry key="attendance.option.company.vacation.excel.company.sheet.name">VacationList</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.loginId">ID(*)</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.annualVacationYear">년도(*)</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.user.name">이름</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.user.position">직위</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.user.department.name">부서</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.joinDate">입사일</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.monVctnTrgtYn">월차대상자</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.monAtmClcYn">월차자동계산</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.monVctnTotalDays">총월차(*)</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.monVctnUsedDays">사용월차(*)</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.monVctnRemainDays">잔여월차</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.annualVacationTotalDays">총연차(*)</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.annualVacationUsedDays">사용연차(*)</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.annualVacationRemainDays">잔여연차</entry>
+	<entry key="attendance.option.company.vacation.excel.company.header.totalDays">남은휴가일</entry>
+	
+	<entry key="attendance.option.company.vacation.excel.log.file.name">근태정보관리자수동변경로그</entry>
+	<entry key="attendance.option.company.vacation.excel.log.sheet.name">근태정보관리자수동변경로그</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.logDtime">일시</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.loginId">대상자아이디</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.user.name">대상자명</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.joinDate">대상자입사일</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.logCrud">로그구분</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.annualVacationTotalDays">총연차일수</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.annualVacationUsedDays">연차사용일수</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.monVctnTotalDays">총월차일수</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.monVctnUsedDays">월차사용일수</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.workerId">작업자아이디</entry>
+	<entry key="attendance.option.company.vacation.excel.log.header.workerName">작업자명</entry>
+	
+	<entry key="attendance.option.company.vacation.excel.all.log.file.name">Year_Record of change in attendance</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.sheet.name">Record of change in attendance</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.logDtime">Date</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.loginId">Target ID</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.user.name">Target Name</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.joinDate">Target's date of employment</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.logType">Division</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.annualVacationTotalDays">Total annual leave days</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.annualVacationUsedDays">Annual leave used days</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.monVctnTotalDays">Total monthly leave days</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.monVctnUsedDays">Monthly leave used days</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.workerId">Worker ID</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.workerName">Worker Name</entry>
+	
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.title"># Information</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.targetUser">Target audience : Users registered with Holiday Management</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.jobUser">Worker : Administrator changed manually</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.draft">Overtime(cancel) : Change through the application process</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.adminDelete">Delete Attendance : Delete due to Attendance Manager</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.system">System : Processing by System</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.batchAdjustment">Batch adjustment : Administrator changes due to batch adjustment</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.manualChange">Changed manually : Administrator modifications</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.addUser">Add User : Create additional users</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.deleteUser">Delete User : Delete as User Deletion</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.excelUpload">Upload Excel : Administrator changes due to Upload Excel</entry>
+	<entry key="attendance.option.company.vacation.excel.all.log.header.comment.basicCreate">Create basic annual leave : Administrator changes due to Create basic annual leave</entry>	
+		
+	<entry key="attendance.option.user.vacation.excel.all.log.file.name">Year_Record of change in attendance</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.sheet.name">Record of change in attendance</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.logDtime">Date</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.logType">Division</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.annualVacationTotalDays">Total annual leave days</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.annualVacationUsedDays">Annual leave used days</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.monVctnTotalDays">Total monthly leave days</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.monVctnUsedDays">Monthly leave used days</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.workerId">Worker ID</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.workerName">Worker Name</entry>	
+	
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.title"># Information</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.jobUser">Worker : Administrator changed manually</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.draft">Overtime(cancel) : Change through the application process</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.adminDelete">Delete Attendance : Delete due to Attendance Manager</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.system">System : Processing by System</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.batchAdjustment">Batch adjustment : Administrator changes due to batch adjustment</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.manualChange">Changed manually : Administrator modifications</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.addUser">Add User : Create additional users</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.deleteUser">Delete User : Delete as User Deletion</entry>		
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.excelUpload">Upload Excel : Administrator changes due to Upload Excel</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.header.comment.basicCreate">Create basic annual leave : Administrator changes due to Create basic annual leave</entry>
+	
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.overtime">Overtime(cancel)</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.system">System</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.batchAdjustment">Batch Adjustment</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.manualChange">Changed manually</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.addUser">Add User</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.deleteUser">Delete User</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.excelUpload">Upload Excel</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.basicCreate">Create basic annual leave</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.adminDelete">Delete Attendance</entry>
+	<entry key="attendance.option.user.vacation.excel.all.log.content.division.etc">Etc</entry>
+	
+	<entry key="attendance.option.company.vacation.excel.adjustment.file.name"></entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.sheet.name"></entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.user.name"></entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.user.position"></entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.user.department.name"></entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.adjDate"></entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.adjDate"></entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.adjOpt"></entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.vctnNm">Vacation Type</entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.abstNm">Attendance Type</entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.useExpDate">Expiration Date</entry>
+	<entry key="attendance.option.company.vacation.excel.adjustment.header.adjMemo"></entry>
+	
+	<entry key="attendance.option.company.vacation.excel.user.admin.file.name">휴가일사용목록</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.sheet.name">휴가일목록</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.user.name">이름</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.user.position">직위</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.user.department.name">부서</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.appDate">신청일</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.vacation.date">사용날짜</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.wrkType">근태유형</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.annlMonType">연월차</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.usedDay">사용일수</entry>
+	<entry key="attendance.option.company.vacation.excel.user.admin.header.reason">내역</entry>
+	
+	<entry key="attendance.option.company.vacation.excel.user.file.name">휴가일사용목록</entry>
+	<entry key="attendance.option.company.vacation.excel.user.sheet.name">휴가일목록</entry>
+	<entry key="attendance.option.company.vacation.excel.user.header.user.id">아이디</entry>
+	<entry key="attendance.option.company.vacation.excel.user.header.user.name">사용자</entry>
+	<entry key="attendance.option.company.vacation.excel.user.header.vacation.date">사용날짜</entry>
+	<entry key="attendance.option.company.vacation.excel.user.header.used.day">사용일수</entry>
+	<entry key="attendance.option.company.vacation.excel.user.header.reason">부재상태</entry>
+	
+	<entry key="attendance.absence.excel.file.name">AbsenceList</entry>
+	<entry key="attendance.absence.excel.sheet.name">AbsenceList</entry>
+	<entry key="attendance.absence.excel.header.name">Name</entry>
+	<entry key="attendance.absence.excel.header.date">Date</entry>
+	<entry key="attendance.absence.excel.header.appDate">Registered</entry>
+	<entry key="attendance.absence.excel.header.used.day">Used Day</entry>
+	<entry key="attendance.absence.excel.header.type.name">Type</entry>
+	<entry key="attendance.absence.excel.header.reason">Reason</entry>
+	<entry key="attendance.absence.excel.header.position">Position</entry>
+	<entry key="attendance.absence.excel.header.spot">Spot</entry>
+	<entry key="attendance.absence.excel.header.department">Department</entry>
+	<entry key="attendance.absence.excel.header.totalvacation">Total Vacation</entry>
+	<entry key="attendance.absence.excel.header.remainvacation">Remaining vacations</entry>
+	
+	<entry key="attendance.absence.multi.excel.sheet.name">Company Attendance</entry>
+	<entry key="attendance.absence.multi.excel.header.name">Name</entry>
+	<entry key="attendance.absence.multi.excel.header.id">ID</entry>
+	<entry key="attendance.absence.multi.excel.header.dept">Department</entry>	
+	
+	<!-- ERP -->
+	<entry key="attendance.absence.erp.excel.file.name">U+ERP Data</entry>
+	<entry key="attendance.absence.erp.excel.sheet.name">U+ERP Data</entry>
+ 	<entry key="attendance.absence.erp.excel.header.index">Index</entry>
+	<entry key="attendance.absence.erp.excel.header.employeenumber">Employee number</entry>
+	<entry key="attendance.absence.erp.excel.header.employeename">Employee name</entry>
+	<entry key="attendance.absence.erp.excel.header.date">Date</entry>
+	<entry key="attendance.absence.erp.excel.header.day">Day of the week</entry>	
+	<entry key="attendance.absence.erp.excel.header.checkin">Work Checkin</entry>
+	<entry key="attendance.absence.erp.excel.header.checkout">Work Checkout</entry>
+	<entry key="attendance.absence.erp.excel.header.total">Work Time Total</entry>
+	<entry key="attendance.absence.erp.excel.header.normal">Normal working</entry>
+	<entry key="attendance.absence.erp.excel.header.workextension">Work Extension</entry>
+	<entry key="attendance.absence.erp.excel.header.worknighttime">Work Night Time</entry>
+	<entry key="attendance.absence.erp.excel.header.vacationworknormal">Vacation Normal working</entry>
+	<entry key="attendance.absence.erp.excel.header.vacationworkextension">Vacation Extension working</entry>
+	<entry key="attendance.absence.erp.excel.header.vacationworknighttime">Vacation </entry>
+	<entry key="attendance.absence.erp.excel.header.late">Late</entry>
+	<entry key="attendance.absence.erp.excel.header.early">Early</entry>
+	<entry key="attendance.absence.erp.excel.header.outing">Outing</entry>
+	<entry key="attendance.absence.erp.excel.header.notcheckin">Not Checkin</entry>
+ 	<entry key="attendance.absence.erp.excel.header.vacationcode">Vacation Code</entry>
+	<entry key="attendance.absence.erp.excel.header.vacation">Vacation</entry>
+	<!-- ERP -->
+	
+	<entry key="attendance.option.company.shift.excel.file.name">WorkGroupList</entry>
+	<entry key="attendance.option.company.shift.excel.sheet.name">List</entry>
+	<entry key="attendance.option.company.shift.excel.header.name">Group name</entry>
+	<entry key="attendance.option.company.shift.excel.header.wrktype">Group type</entry>
+	<entry key="attendance.option.company.shift.excel.header.gtw">Attendance</entry>
+	<entry key="attendance.option.company.shift.excel.header.lto">Checkout</entry>
+	<entry key="attendance.option.company.shift.excel.header.worker">Worker</entry>
+	<entry key="attendance.option.company.shift.excel.header.dscrt">Desc</entry>
+	<entry key="attendance.option.company.shift.excel.header.useyn">Use</entry>
+	<entry key="attendance.option.company.shift.excel.header.applyday">Apply period</entry>
+	<entry key="attendance.option.company.shift.excel.header.week">Week</entry>
+	
+</properties>

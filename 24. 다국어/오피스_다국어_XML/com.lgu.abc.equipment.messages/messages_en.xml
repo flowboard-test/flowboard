@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="action.success.create.EquipmentReservation">Reservation made. Available after admin's approval.</entry>
+	<entry key="action.success.update.EquipmentReservation">Equipment reservation is updated.</entry>
+	<entry key="action.success.reservation.EquipmentReservation">Reservation made. Available at selected times.</entry>
+	<entry key="action.success.cancel.EquipmentReservation">Equipment reservation is canceled.</entry>
+	<entry key="action.success.approval.EquipmentReservation">Equipment reservation is approved.</entry>
+	<entry key="action.success.rejection.EquipmentReservation">Equipment reservation is rejected.</entry>
+
+	<entry key="exception.message.EquipmentReservationExistException">Reservations exist.</entry>
+	<entry key="exception.message.EquipmentExistException">Equipments exist.</entry>
+	<entry key="exception.message.EquipmentTypeExistException">Equipment types exist.</entry>
+	<entry key="exception.message.EquipmentAdministratorNotExistException">Equipemnt Administrators should be assigned.</entry>
+
+	<entry key="exception.message.InvalidEquipmentRentalPeriodException">Invalid rental period.</entry>
+	<entry key="exception.message.EquipmentReservationConflictionException">Reservation conflicted.</entry>
+	<entry key="exception.message.EquipmentReservationAlreadyApprovedException">Reservation already approved.</entry>
+	<entry key="exception.message.EquipmentReservationAlreadyRejectedException">Reservation already rejected.</entry>
+	<entry key="exception.message.EquipmentReservationAlreadyCancelledException">Reservation already cancelled.</entry>
+</properties>

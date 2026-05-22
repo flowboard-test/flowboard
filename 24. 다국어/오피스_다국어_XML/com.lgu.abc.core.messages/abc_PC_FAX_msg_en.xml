@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="PC.FAX.NO_H_001">Account suspended due to unpaid charges.</entry>
+<entry key="PC.FAX.NO_H_002">Account canceled.</entry>
+<entry key="PC.FAX.NO_H_003">Account suspended.</entry>
+<entry key="PC.FAX.NO_H_004">Approval is required before signing up.</entry>
+<entry key="PC.FAX.NO_H_005">Unable to Login</entry>
+<entry key="PC.FAX.NO_H_006">Receiving Number</entry>
+</properties>

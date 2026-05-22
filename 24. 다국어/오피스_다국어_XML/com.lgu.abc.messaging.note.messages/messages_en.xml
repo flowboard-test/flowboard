@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="action.success.draft.Note">Note saved to the Outbox.</entry>
+	<entry key="action.success.complement.Note">Note saved to the Outbox.</entry>
+	<entry key="action.success.send.Note">Note sent.</entry>
+	<entry key="action.success.forward.Note">Note sent.</entry>
+	<entry key="action.success.seen.Note">Notes have been changed to be seen.</entry>
+	<entry key="action.success.unseen.Note">Notes have been changed to be unseen.</entry>
+	<entry key="action.success.store.Note">Notes have been stored.</entry>
+	<entry key="action.success.trash.Note">Notes have been deleted.</entry>
+	<entry key="action.success.restore.Note">Notes have been restored.</entry>
+	<entry key="action.success.discard.Note">Notes have been discarded.</entry>
+	<entry key="action.success.trash.empty">All notes in the Trash deleted.</entry>
+	
+	<entry key="note.counter.message.nothing">No notes to read</entry>
+	<entry key="note.delivery.type.draft">Draft</entry>
+	<entry key="note.delivery.type.sent">Sent</entry>
+	<entry key="note.delivery.type.received">Received</entry>
+	<entry key="note.property.subject.nodata">No subject</entry>
+	
+	<entry key="exception.message.NoteRecipientNotExistException">Recipient is not exist.</entry>
+</properties>

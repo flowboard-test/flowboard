@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<entry key="board.listTitle"><![CDATA[listTitle]]></entry>
+	<entry key="board.saveTitle"><![CDATA[saveTitle]]></entry>
+	<entry key="board.editTitle"><![CDATA[editTitle]]></entry>
+	<entry key="board.showTitle"><![CDATA[viewTitle]]></entry>	
+	
+	<entry key="board.yesButton"><![CDATA[yes]]></entry>
+	<entry key="board.noButton"><![CDATA[no]]></entry>
+	
+	<entry key="board.atclSeq"><![CDATA[atclSeq]]></entry>
+	<entry key="board.brdSeq"><![CDATA[brdSeq]]></entry>
+	<entry key="board.wrtUsrKey"><![CDATA[wrtUsrKey]]></entry>
+	<entry key="board.keepTermCd"><![CDATA[keepTermCd]]></entry>
+	<entry key="board.keepExpiDate"><![CDATA[keepExpiDate]]></entry>
+	<entry key="board.postNotiYN"><![CDATA[postNotiYN]]></entry>
+	<entry key="board.impoAncmtYN"><![CDATA[impoAncmtYN]]></entry>
+	<entry key="board.ancmtTitle"><![CDATA[impotentTerm]]></entry>
+	<entry key="board.ancmtStrtDate"><![CDATA[ancmtStrtDate]]></entry>
+	<entry key="board.ancmtExpiDate"><![CDATA[ancmtExpiDate]]></entry>
+	<entry key="board.atclTit"><![CDATA[atclTit]]></entry>
+	<entry key="board.atclCont"><![CDATA[atclCont]]></entry>
+	<entry key="board.hitCnt"><![CDATA[hitCnt]]></entry>
+	<entry key="board.recomCnt"><![CDATA[recomCnt]]></entry>
+	<entry key="board.atchFileCnt"><![CDATA[atchFileCnt]]></entry>
+	<entry key="board.brdAtclSeq"><![CDATA[brdAtclSeq]]></entry>
+	<entry key="board.rplyAtclSeq"><![CDATA[rplyAtclSeq]]></entry>
+	<entry key="board.atclSeqDpth"><![CDATA[atclSeqDpth]]></entry>
+	<entry key="board.tempStrgYN"><![CDATA[tempStrgYN]]></entry>
+	<entry key="board.delYN"><![CDATA[delYN]]></entry>
+	<entry key="board.tag"><![CDATA[tag]]></entry>
+	<entry key="board.regDtime"><![CDATA[regDtime]]></entry>
+	<entry key="board.regUsrKey"><![CDATA[regUsrKey]]></entry>
+	<entry key="board.modDtime"><![CDATA[modDtime]]></entry>
+	<entry key="board.modUsrKey"><![CDATA[modUsrKey]]></entry>
+	
+</properties>
