@@ -7,8 +7,7 @@ export const config = {
   host: process.env.HOST || '0.0.0.0',
 
   database: {
-    url: process.env.DATABASE_URL ||
-      'postgresql://postgres:postgres@localhost:5432/flowboard',
+    url: process.env.DATABASE_URL || '',
     poolMin: parseInt(process.env.DB_POOL_MIN || '2', 10),
     poolMax: parseInt(process.env.DB_POOL_MAX || '10', 10),
   },

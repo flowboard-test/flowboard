@@ -5,9 +5,9 @@ let db: Knex;
 
 export function getDb(): Knex {
   if (!db) {
-    const isProduction = config.nodeEnv === 'production';
+    const usePostgres = config.database.url && config.database.url.startsWith('postgresql');
     db = knex(
-      isProduction
+      usePostgres
         ? {
             client: 'pg',
             connection: config.database.url,
