@@ -9,7 +9,10 @@ import { authenticate } from '../../shared/middleware/authenticate';
 import { z } from 'zod';
 
 const authRoutes: FastifyPluginAsync = async (app) => {
-  app.post('/register', async (request, reply) => {
+  // 로그인/회원가입은 분당 10회로 제한 (brute force 방어)
+  app.post('/register', {
+    config: { rateLimit: { max: 10, timeWindow: '1 minute' } },
+  }, async (request, reply) => {
     const input = registerSchema.parse(request.body);
     const user = await authService.register(input);
     const token = generateToken({ userId: user.id, email: user.email });
@@ -25,7 +28,9 @@ const authRoutes: FastifyPluginAsync = async (app) => {
     });
   });
 
-  app.post('/login', async (request, reply) => {
+  app.post('/login', {
+    config: { rateLimit: { max: 5, timeWindow: '1 minute' } },
+  }, async (request, reply) => {
     const input = loginSchema.parse(request.body);
     const user = await authService.login(input);
     const token = generateToken({ userId: user.id, email: user.email });

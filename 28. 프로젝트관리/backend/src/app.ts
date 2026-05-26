@@ -1,5 +1,7 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
+import helmet from '@fastify/helmet';
+import rateLimit from '@fastify/rate-limit';
 import { config } from './shared/config';
 import { errorHandler } from './shared/middleware/errorHandler';
 
@@ -8,9 +10,21 @@ export async function buildApp() {
     logger: {
       level: config.nodeEnv === 'production' ? 'info' : 'debug',
     },
+    trustProxy: true,
   });
 
-  // Plugins
+  // Security headers
+  await app.register(helmet, {
+    contentSecurityPolicy: false,
+  });
+
+  // Rate limiting (분당 100회)
+  await app.register(rateLimit, {
+    max: 100,
+    timeWindow: '1 minute',
+  });
+
+  // CORS
   await app.register(cors, {
     origin: config.nodeEnv === 'production'
       ? [/\.vercel\.app$/, /\.onrender\.com$/, /localhost/]
