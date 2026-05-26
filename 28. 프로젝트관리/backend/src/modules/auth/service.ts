@@ -46,10 +46,24 @@ export class AuthService {
       throw AppError.unauthorized('이메일 또는 비밀번호가 올바르지 않습니다');
     }
 
+    // 휴면 계정 체크
+    if (user.is_dormant) {
+      throw AppError.forbidden(
+        'ACCOUNT_DORMANT',
+        '휴면 계정입니다. 고객센터에 문의하여 계정을 복구하세요.'
+      );
+    }
+
     const isValid = await verifyPassword(input.password, user.password_hash);
     if (!isValid) {
       throw AppError.unauthorized('이메일 또는 비밀번호가 올바르지 않습니다');
     }
+
+    // 마지막 로그인 시간 갱신 + 휴면 해제
+    await db('users').where('id', user.id).update({
+      last_login_at: db.fn.now(),
+      is_dormant: false,
+    });
 
     return {
       id: user.id,
