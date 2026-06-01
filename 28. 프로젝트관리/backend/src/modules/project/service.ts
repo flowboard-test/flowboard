@@ -207,6 +207,7 @@ export class ProjectService {
         'users.email',
         'users.name',
         'users.avatar_url',
+        'users.last_login_at',
         'project_members.role',
         'project_members.joined_at'
       );
