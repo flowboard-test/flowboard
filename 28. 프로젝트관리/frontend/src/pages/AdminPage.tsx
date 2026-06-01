@@ -327,7 +327,6 @@ function UploadTab() {
 
 function PositionTab() {
   const [name, setName] = useState('');
-  const [level, setLevel] = useState(0);
   const queryClient = useQueryClient();
 
   const { data: positions } = useQuery<any[]>({
@@ -355,9 +354,7 @@ function PositionTab() {
       <div className="flex gap-2 mb-4 bg-white border rounded-lg p-3">
         <input type="text" value={name} onChange={(e) => setName(e.target.value)}
           placeholder="직위명 (예: 팀장)" className="border rounded px-2 py-1 text-sm flex-1" />
-        <input type="number" value={level} onChange={(e) => setLevel(Number(e.target.value))}
-          placeholder="순서" className="border rounded px-2 py-1 text-sm w-20" title="높을수록 상위" />
-        <button onClick={() => addMut.mutate({ name, level })} disabled={!name.trim()}
+        <button onClick={() => addMut.mutate({ name, level: positions?.length || 0 })} disabled={!name.trim()}
           className="px-4 py-1 bg-blue-500 text-white rounded text-sm disabled:opacity-50">추가</button>
       </div>
 
@@ -399,7 +396,6 @@ function PositionTab() {
 }
 function RankTab() {
   const [name, setName] = useState('');
-  const [level, setLevel] = useState(0);
   const queryClient = useQueryClient();
 
   const { data: ranks } = useQuery<any[]>({
@@ -424,10 +420,8 @@ function RankTab() {
       <p className="text-xs text-gray-500 mb-3">부장, 차장, 과장, 대리, 주임 등 직책을 관리합니다.</p>
       <div className="flex gap-2 mb-4">
         <input type="text" value={name} onChange={(e) => setName(e.target.value)}
-          placeholder="직책명" className="border rounded px-2 py-1 text-sm flex-1" />
-        <input type="number" value={level} onChange={(e) => setLevel(Number(e.target.value))}
-          placeholder="레벨" className="border rounded px-2 py-1 text-sm w-16" />
-        <button onClick={() => addMut.mutate({ name, level })} disabled={!name.trim()}
+          placeholder="직책명 (예: 부장)" className="border rounded px-2 py-1 text-sm flex-1" />
+        <button onClick={() => addMut.mutate({ name, level: ranks?.length || 0 })} disabled={!name.trim()}
           className="px-3 py-1 bg-blue-500 text-white rounded text-xs disabled:opacity-50">추가</button>
       </div>
       <div className="space-y-1">
