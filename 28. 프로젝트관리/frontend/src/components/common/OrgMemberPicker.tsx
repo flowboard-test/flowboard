@@ -46,6 +46,29 @@ export function OrgMemberPicker({ onSelect, onClose, excludeIds = [] }: OrgMembe
     onClose();
   }
 
+  function selectAll() {
+    const allUsers: SelectedUser[] = [];
+    if (orgTree) {
+      orgTree.departments?.forEach((dept: any) => {
+        dept.users?.forEach((u: any) => {
+          if (!excludeIds.includes(u.id) && !allUsers.some((s) => s.id === u.id)) {
+            allUsers.push({ id: u.id, name: u.name, email: u.email });
+          }
+        });
+      });
+      orgTree.unassigned?.forEach((u: any) => {
+        if (!excludeIds.includes(u.id) && !allUsers.some((s) => s.id === u.id)) {
+          allUsers.push({ id: u.id, name: u.name, email: u.email });
+        }
+      });
+    }
+    setSelected(allUsers);
+  }
+
+  function deselectAll() {
+    setSelected([]);
+  }
+
   function isChecked(userId: string) {
     return selected.some((s) => s.id === userId);
   }
@@ -74,6 +97,16 @@ export function OrgMemberPicker({ onSelect, onClose, excludeIds = [] }: OrgMembe
               className={`px-3 py-1 rounded text-xs
                 ${activeTab === 'search' ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}>
               검색
+            </button>
+            <button onClick={selectAll}
+              className="px-3 py-1 rounded text-xs bg-green-100 text-green-700
+                hover:bg-green-200 ml-auto">
+              전체 선택
+            </button>
+            <button onClick={deselectAll}
+              className="px-3 py-1 rounded text-xs bg-gray-100 text-gray-600
+                hover:bg-gray-200">
+              전체 해제
             </button>
           </div>
           {activeTab === 'search' && (
