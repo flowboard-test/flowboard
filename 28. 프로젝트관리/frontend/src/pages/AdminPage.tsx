@@ -136,16 +136,16 @@ function OrgTree({ orgData, selectedId, onSelect }: any) {
     setExpandedDepts(next);
   }
 
-  async function handleDropUser(_userId: string, deptName: string) {
-    // 사용자의 부서를 변경하는 API 호출
-    await apiClient('/auth/me', {
-      method: 'PUT',
-      body: JSON.stringify({ name: '' }), // placeholder
-    });
-    // 실제로는 user_profiles의 department를 변경해야 함
-    // 간단히 알림만 표시
-    alert(`사용자를 "${deptName}" 부서로 이동했습니다 (서버 연동 필요)`);
-    queryClient.invalidateQueries({ queryKey: ['admin-org'] });
+  async function handleDropUser(userId: string, deptName: string) {
+    try {
+      await apiClient(`/admin/users/${userId}/department`, {
+        method: 'PUT',
+        body: JSON.stringify({ department: deptName }),
+      });
+      queryClient.invalidateQueries({ queryKey: ['admin-org'] });
+    } catch {
+      alert('부서 이동에 실패했습니다');
+    }
     setDragOverDept(null);
   }
 

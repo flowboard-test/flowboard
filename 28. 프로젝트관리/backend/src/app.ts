@@ -47,6 +47,23 @@ export async function buildApp() {
     return reply.status(204).send();
   });
 
+  // 관리자: 사용자 부서 변경
+  app.put('/api/admin/users/:id/department', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { department } = request.body as { department: string };
+    const { getDb } = require('./shared/database/connection');
+    const { v4: uid } = require('uuid');
+    const db = getDb();
+
+    const profile = await db('user_profiles').where('user_id', id).first();
+    if (profile) {
+      await db('user_profiles').where('user_id', id).update({ department });
+    } else {
+      await db('user_profiles').insert({ id: uid(), user_id: id, department });
+    }
+    return reply.send({ message: '부서가 변경되었습니다' });
+  });
+
   // 직위 관리
   app.get('/api/admin/positions', async (_req, reply) => {
     const { getDb } = require('./shared/database/connection');
