@@ -38,7 +38,7 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
   if (!isOpen) {
     return (
       <button onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 right-4 w-12 h-12 bg-blue-500
+        className="fixed bottom-20 right-4 w-12 h-12 bg-blue-500
           text-white rounded-full shadow-lg hover:bg-blue-600
           flex items-center justify-center text-lg z-30">
         💬
@@ -47,7 +47,7 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 w-80 h-96 bg-white border
+    <div className="fixed bottom-20 right-4 w-80 h-96 bg-white border
       rounded-lg shadow-xl flex flex-col z-30">
       <div className="p-3 border-b flex justify-between items-center
         bg-blue-500 text-white rounded-t-lg">
