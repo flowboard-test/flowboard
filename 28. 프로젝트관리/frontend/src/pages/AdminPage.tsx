@@ -350,23 +350,49 @@ function PositionTab() {
     <div className="p-6 max-w-lg">
       <h2 className="text-sm font-semibold mb-3">직위 관리</h2>
       <p className="text-xs text-gray-500 mb-3">팀장, 선임, 사원 등 조직 내 직위를 관리합니다.</p>
-      <div className="flex gap-2 mb-4">
+
+      {/* 추가 폼 */}
+      <div className="flex gap-2 mb-4 bg-white border rounded-lg p-3">
         <input type="text" value={name} onChange={(e) => setName(e.target.value)}
-          placeholder="직위명" className="border rounded px-2 py-1 text-sm flex-1" />
+          placeholder="직위명 (예: 팀장)" className="border rounded px-2 py-1 text-sm flex-1" />
         <input type="number" value={level} onChange={(e) => setLevel(Number(e.target.value))}
-          placeholder="레벨" className="border rounded px-2 py-1 text-sm w-16" />
+          placeholder="순서" className="border rounded px-2 py-1 text-sm w-20" title="높을수록 상위" />
         <button onClick={() => addMut.mutate({ name, level })} disabled={!name.trim()}
-          className="px-3 py-1 bg-blue-500 text-white rounded text-xs disabled:opacity-50">추가</button>
+          className="px-4 py-1 bg-blue-500 text-white rounded text-sm disabled:opacity-50">추가</button>
       </div>
-      <div className="space-y-1">
-        {positions?.map((p: any) => (
-          <div key={p.id} className="flex items-center gap-2 bg-white border rounded px-3 py-2">
-            <span className="text-sm flex-1">{p.name}</span>
-            <span className="text-xs text-gray-400">Lv.{p.level}</span>
-            <button onClick={() => delMut.mutate(p.id)}
-              className="text-xs text-red-400 hover:text-red-600">삭제</button>
-          </div>
-        ))}
+
+      {/* 등록된 직위 목록 */}
+      <div className="bg-white border rounded-lg overflow-hidden">
+        <div className="px-3 py-2 bg-gray-50 border-b">
+          <span className="text-xs font-medium text-gray-600">
+            등록된 직위 ({positions?.length || 0}개)
+          </span>
+        </div>
+        {positions && positions.length > 0 ? (
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b bg-gray-50">
+                <th className="text-left px-3 py-1.5 text-xs">순서</th>
+                <th className="text-left px-3 py-1.5 text-xs">직위명</th>
+                <th className="text-right px-3 py-1.5 text-xs">관리</th>
+              </tr>
+            </thead>
+            <tbody>
+              {positions.map((p: any, i: number) => (
+                <tr key={p.id} className="border-b hover:bg-gray-50">
+                  <td className="px-3 py-2 text-gray-400">{i + 1}</td>
+                  <td className="px-3 py-2 font-medium">{p.name}</td>
+                  <td className="px-3 py-2 text-right">
+                    <button onClick={() => delMut.mutate(p.id)}
+                      className="text-xs text-red-400 hover:text-red-600">삭제</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p className="p-4 text-center text-xs text-gray-400">등록된 직위가 없습니다</p>
+        )}
       </div>
     </div>
   );
