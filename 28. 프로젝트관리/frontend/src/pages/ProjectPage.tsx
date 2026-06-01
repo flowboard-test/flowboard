@@ -12,6 +12,7 @@ import { DashboardView } from '@/components/dashboard/DashboardView';
 import { CardDetailPanel } from '@/components/card/CardDetailPanel';
 import { WorkflowSetup } from '@/components/board/WorkflowSetup';
 import { ProjectChat } from '@/components/chat/ProjectChat';
+import { GuestInvite } from '@/components/project/GuestInvite';
 import { useEffect, useState } from 'react';
 
 export function ProjectPage() {
@@ -149,6 +150,12 @@ export function ProjectPage() {
 
       {viewMode === 'board' && board?.columns && (
         <WorkflowSetup projectId={id!} columns={board.columns} />
+      )}
+
+      {viewMode === 'board' && (
+        <div className="px-4 pb-4">
+          <GuestInvite projectId={id!} />
+        </div>
       )}
 
       <ProjectChat projectId={id!} />
