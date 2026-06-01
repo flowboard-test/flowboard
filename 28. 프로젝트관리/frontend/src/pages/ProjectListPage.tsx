@@ -169,17 +169,30 @@ export function ProjectListPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {projects?.map((project) => (
-          <Link key={project.id} to={`/projects/${project.id}`}
-            className="block bg-white border rounded-lg p-4 hover:shadow-md
-              transition-shadow">
-            <h3 className="font-semibold">{project.name}</h3>
-            <p className="text-sm text-gray-500 mt-1 line-clamp-2">
-              {project.description || '설명 없음'}
-            </p>
-            <p className="text-xs text-gray-400 mt-2">
-              {new Date(project.created_at).toLocaleDateString('ko-KR')}
-            </p>
-          </Link>
+          <div key={project.id} className="bg-white border rounded-lg p-4
+            hover:shadow-md transition-shadow relative group">
+            <Link to={`/projects/${project.id}`} className="block">
+              <h3 className="font-semibold">{project.name}</h3>
+              <p className="text-sm text-gray-500 mt-1 line-clamp-2">
+                {project.description || '설명 없음'}
+              </p>
+              <p className="text-xs text-gray-400 mt-2">
+                {new Date(project.created_at).toLocaleDateString('ko-KR')}
+              </p>
+            </Link>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                if (confirm('프로젝트를 삭제하시겠습니까?')) {
+                  apiClient(`/projects/${project.id}`, { method: 'DELETE' })
+                    .then(() => queryClient.invalidateQueries({ queryKey: ['projects'] }));
+                }
+              }}
+              className="absolute top-2 right-2 text-xs text-gray-300
+                hover:text-red-500 opacity-0 group-hover:opacity-100">
+              삭제
+            </button>
+          </div>
         ))}
       </div>
 

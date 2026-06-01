@@ -4,6 +4,8 @@ import { apiClient } from '@/api/client';
 import { useUiStore } from '@/stores/uiStore';
 import { SubtaskList } from './SubtaskList';
 import { CardEditForm } from './CardEditForm';
+import { CommentSection } from './CommentSection';
+import { FileAttachment } from './FileAttachment';
 
 interface CardDetailPanelProps {
   cardId: string;
@@ -137,6 +139,9 @@ export function CardDetailPanel({ cardId, projectId }: CardDetailPanelProps) {
         {/* 하위 업무 */}
         <SubtaskList cardId={cardId} projectId={projectId} />
 
+        {/* 첨부파일 */}
+        <FileAttachment cardId={cardId} />
+
         {/* 완료 처리 버튼 */}
         {card.status !== 'done' && (
           <div className="space-y-2">
@@ -242,6 +247,9 @@ export function CardDetailPanel({ cardId, projectId }: CardDetailPanelProps) {
             </div>
           </div>
         )}
+
+        {/* 댓글 */}
+        <CommentSection cardId={cardId} />
         </>
         )}
       </div>
