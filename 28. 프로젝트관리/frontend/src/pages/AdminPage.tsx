@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/api/client';
 import { useAuthStore } from '@/stores/authStore';
@@ -75,7 +75,21 @@ export function AdminPage() {
             <div className="p-2">
               <OrgTree orgData={orgData}
                 selectedId={selectedUser?.id}
-                onSelect={(u: any) => { setSelectedUser(u); setRightPanel('user'); }} />
+                onSelect={(u: any) => { setSelectedUser(u); setRightPanel('user'); }}
+                onMoveUser={async (userId: string, deptName: string) => {
+                  try {
+                    await apiClient(`/admin/users/${userId}/department`, {
+                      method: 'PUT',
+                      body: JSON.stringify({ department: deptName }),
+                    });
+                    queryClient.invalidateQueries({ queryKey: ['admin-org'] });
+                    if (selectedUser?.id === userId) {
+                      setSelectedUser({ ...selectedUser, department: deptName });
+                    }
+                  } catch {
+                    alert('부서 이동에 실패했습니다');
+                  }
+                }} />
             </div>
           </div>
 
@@ -120,10 +134,9 @@ export function AdminPage() {
 }
 
 // === 조직도 트리 ===
-function OrgTree({ orgData, selectedId, onSelect }: any) {
+function OrgTree({ orgData, selectedId, onSelect, onMoveUser }: any) {
   const [expandedDepts, setExpandedDepts] = useState<Set<string>>(new Set());
   const [dragOverDept, setDragOverDept] = useState<string | null>(null);
-  const queryClient = useQueryClient();
 
   const sortedDepts = [...(orgData?.departments || [])].sort(
     (a: any, b: any) => a.name.localeCompare(b.name, 'ko')
@@ -137,15 +150,7 @@ function OrgTree({ orgData, selectedId, onSelect }: any) {
   }
 
   async function handleDropUser(userId: string, deptName: string) {
-    try {
-      await apiClient(`/admin/users/${userId}/department`, {
-        method: 'PUT',
-        body: JSON.stringify({ department: deptName }),
-      });
-      queryClient.invalidateQueries({ queryKey: ['admin-org'] });
-    } catch {
-      alert('부서 이동에 실패했습니다');
-    }
+    await onMoveUser(userId, deptName);
     setDragOverDept(null);
   }
 
@@ -252,13 +257,13 @@ function UserDetailForm({ user, onUpdate }: { user: any; onUpdate: () => void })
   });
 
   // user 변경 시 폼 리셋
-  useState(() => {
+  useEffect(() => {
     setForm({
       name: user.name || '', email: user.email || '',
       department: user.department || '', position: user.position || '',
       phone: user.phone || '',
     });
-  });
+  }, [user.id, user.department]);
 
   return (
     <div className="p-6 max-w-2xl">
@@ -325,6 +330,7 @@ function UploadTab() {
   const [file, setFile] = useState<File | null>(null);
   const [msg, setMsg] = useState('');
   const token = useAuthStore((s) => s.token);
+
   async function upload() {
     if (!file) return;
     const fd = new FormData(); fd.append('file', file);
@@ -333,18 +339,74 @@ function UploadTab() {
     });
     setMsg('업로드 완료 (처리 중)');
   }
+
+  function downloadSample() {
+    const header = '이름,이메일,부서,직위,전화번호';
+    const rows = [
+      '홍길동,hong@company.com,개발팀,시니어,010-1234-5678',
+      '김영희,kim@company.com,기획팀,팀장,010-2345-6789',
+      '이철수,lee@company.com,디자인팀,선임,010-3456-7890',
+      '박민수,park@company.com,QA팀,매니저,010-4567-8901',
+      '정수진,jung@company.com,마케팅팀,대리,010-5678-9012',
+    ];
+    const csv = '\uFEFF' + header + '\n' + rows.join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = '조직도_업로드_양식.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div className="p-6 max-w-lg">
       <h2 className="text-sm font-semibold mb-3">조직도 엑셀 업로드</h2>
-      <p className="text-xs text-gray-500 mb-2">
-        형식: 이름, 이메일, 부서, 직위, 전화번호 (CSV/XLSX)
-      </p>
-      <input type="file" accept=".xlsx,.csv"
-        onChange={(e) => setFile(e.target.files?.[0] || null)} className="text-xs" />
-      <button onClick={upload} disabled={!file}
-        className="ml-2 px-3 py-1 bg-blue-500 text-white rounded text-xs
-          disabled:opacity-50">업로드</button>
-      {msg && <p className="text-xs text-green-600 mt-2">{msg}</p>}
+
+      <div className="bg-white border rounded-lg p-4 mb-4">
+        <h3 className="text-xs font-medium mb-2">업로드 양식</h3>
+        <table className="w-full text-xs border mb-3">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="border px-2 py-1">이름*</th>
+              <th className="border px-2 py-1">이메일*</th>
+              <th className="border px-2 py-1">부서</th>
+              <th className="border px-2 py-1">직위</th>
+              <th className="border px-2 py-1">전화번호</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="text-gray-400">
+              <td className="border px-2 py-1">홍길동</td>
+              <td className="border px-2 py-1">hong@company.com</td>
+              <td className="border px-2 py-1">개발팀</td>
+              <td className="border px-2 py-1">시니어</td>
+              <td className="border px-2 py-1">010-1234-5678</td>
+            </tr>
+          </tbody>
+        </table>
+        <button onClick={downloadSample}
+          className="px-3 py-1.5 bg-green-500 text-white rounded text-xs
+            hover:bg-green-600">
+          📥 샘플 양식 다운로드 (CSV)
+        </button>
+      </div>
+
+      <div className="bg-white border rounded-lg p-4">
+        <h3 className="text-xs font-medium mb-2">파일 업로드</h3>
+        <p className="text-xs text-gray-500 mb-2">
+          CSV 또는 XLSX 파일을 선택하세요. (* 필수 항목)
+        </p>
+        <div className="flex gap-2 items-center">
+          <input type="file" accept=".xlsx,.csv"
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
+            className="text-xs" />
+          <button onClick={upload} disabled={!file}
+            className="px-3 py-1.5 bg-blue-500 text-white rounded text-xs
+              disabled:opacity-50">업로드</button>
+        </div>
+        {msg && <p className="text-xs text-green-600 mt-2">{msg}</p>}
+      </div>
     </div>
   );
 }
