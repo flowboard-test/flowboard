@@ -137,16 +137,30 @@ export function AdminPage() {
 function OrgTree({ orgData, selectedId, onSelect, onMoveUser }: any) {
   const [expandedDepts, setExpandedDepts] = useState<Set<string>>(new Set());
   const [dragOverDept, setDragOverDept] = useState<string | null>(null);
+  const [deptOrder, setDeptOrder] = useState<string[]>([]);
 
-  const sortedDepts = [...(orgData?.departments || [])].sort(
-    (a: any, b: any) => a.name.localeCompare(b.name, 'ko')
-  );
+  const sortedDepts = [...(orgData?.departments || [])];
+  // 사용자 정의 순서가 있으면 적용, 없으면 가나다순
+  const orderedDepts = deptOrder.length > 0
+    ? deptOrder.map((id) => sortedDepts.find((d: any) => d.id === id)).filter(Boolean)
+    : sortedDepts.sort((a: any, b: any) => a.name.localeCompare(b.name, 'ko'));
 
   function toggleDept(deptId: string) {
     const next = new Set(expandedDepts);
     if (next.has(deptId)) next.delete(deptId);
     else next.add(deptId);
     setExpandedDepts(next);
+  }
+
+  function handleDeptDrop(draggedId: string, targetId: string) {
+    if (draggedId === targetId) return;
+    const ids = orderedDepts.map((d: any) => d.id);
+    const fromIdx = ids.indexOf(draggedId);
+    const toIdx = ids.indexOf(targetId);
+    if (fromIdx === -1 || toIdx === -1) return;
+    ids.splice(fromIdx, 1);
+    ids.splice(toIdx, 0, draggedId);
+    setDeptOrder(ids);
   }
 
   async function handleDropUser(userId: string, deptName: string) {
@@ -158,7 +172,7 @@ function OrgTree({ orgData, selectedId, onSelect, onMoveUser }: any) {
     <div className="text-xs">
       <div className="font-medium text-gray-700 mb-2 px-1">🏢 FlowBoard</div>
 
-      {sortedDepts.map((dept: any) => (
+      {orderedDepts.map((dept: any) => (
         <div key={dept.id} className="ml-3 mb-0.5"
           draggable
           onDragStart={(e) => {
@@ -176,6 +190,9 @@ function OrgTree({ orgData, selectedId, onSelect, onMoveUser }: any) {
             if (type === 'user') {
               const userId = e.dataTransfer.getData('userId');
               handleDropUser(userId, dept.name);
+            } else if (type === 'dept') {
+              const draggedId = e.dataTransfer.getData('deptId');
+              handleDeptDrop(draggedId, dept.id);
             }
             setDragOverDept(null);
           }}>
