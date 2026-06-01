@@ -13,6 +13,7 @@ import { CardDetailPanel } from '@/components/card/CardDetailPanel';
 import { WorkflowSetup } from '@/components/board/WorkflowSetup';
 import { ProjectChat } from '@/components/chat/ProjectChat';
 import { GuestInvite } from '@/components/project/GuestInvite';
+import { MemberPanel } from '@/components/project/MemberPanel';
 import { useEffect, useState } from 'react';
 
 export function ProjectPage() {
@@ -132,16 +133,19 @@ export function ProjectPage() {
         ))}
       </div>
 
-      <div className="flex-1 overflow-hidden">
-        {viewMode === 'board' && <BoardView />}
-        {viewMode === 'list' && (
-          <ListView cards={allCards} columns={board?.columns || []} />
-        )}
-        {viewMode === 'gantt' && <GanttView cards={allCards} />}
-        {viewMode === 'calendar' && <CalendarView cards={allCards} />}
-        {viewMode === 'dashboard' && (
-          <DashboardView data={dashboard} cards={allCards} members={members || []} />
-        )}
+      <div className="flex-1 overflow-hidden flex">
+        <div className="flex-1 overflow-hidden">
+          {viewMode === 'board' && <BoardView />}
+          {viewMode === 'list' && (
+            <ListView cards={allCards} columns={board?.columns || []} />
+          )}
+          {viewMode === 'gantt' && <GanttView cards={allCards} />}
+          {viewMode === 'calendar' && <CalendarView cards={allCards} />}
+          {viewMode === 'dashboard' && (
+            <DashboardView data={dashboard} cards={allCards} members={members || []} />
+          )}
+        </div>
+        <MemberPanel projectId={id!} />
       </div>
 
       {selectedCardId && (
