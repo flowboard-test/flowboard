@@ -3,40 +3,28 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/api/client';
 import { useAuthStore } from '@/stores/authStore';
 
-type AdminTab = 'users' | 'org' | 'monitor';
+type AdminTab = 'org' | 'position' | 'rank' | 'permission' | 'upload';
 
 export function AdminPage() {
-  const [tab, setTab] = useState<AdminTab>('users');
+  const [tab, setTab] = useState<AdminTab>('org');
+  const [selectedUser, setSelectedUser] = useState<any>(null);
+  const [search, setSearch] = useState('');
+  const queryClient = useQueryClient();
 
   const tabs = [
-    { key: 'users', label: '사용자 관리' },
-    { key: 'org', label: '조직 관리' },
-    { key: 'monitor', label: '서비스 관제' },
+    { key: 'org', label: '조직도 관리' },
+    { key: 'position', label: '직위 관리' },
+    { key: 'rank', label: '직책 관리' },
+    { key: 'permission', label: '권한 관리' },
+    { key: 'upload', label: '조직도 업로드' },
   ] as const;
 
-  return (
-    <div className="p-4 max-w-5xl mx-auto">
-      <h1 className="text-xl font-bold mb-4">관리자</h1>
-      <div className="flex gap-2 mb-4 border-b pb-2">
-        {tabs.map((t) => (
-          <button key={t.key} onClick={() => setTab(t.key)}
-            className={`px-4 py-2 rounded-t text-sm
-              ${tab === t.key ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}>
-            {t.label}
-          </button>
-        ))}
-      </div>
-      {tab === 'users' && <UserManagement />}
-      {tab === 'org' && <OrgManagement />}
-      {tab === 'monitor' && <ServiceMonitor />}
-    </div>
-  );
-}
+  const { data: orgData } = useQuery<any>({
+    queryKey: ['admin-org'],
+    queryFn: () => apiClient('/auth/organization'),
+  });
 
-function UserManagement() {
-  const [search, setSearch] = useState('');
-
-  const { data: users } = useQuery<any[]>({
+  const { } = useQuery<any[]>({
     queryKey: ['admin-users', search],
     queryFn: () => apiClient('/auth/users', {
       params: search ? { search } : undefined,
@@ -44,172 +32,317 @@ function UserManagement() {
   });
 
   return (
-    <div>
-      <div className="flex gap-2 mb-3">
-        <input type="text" value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="이름/이메일 검색"
-          className="border rounded px-3 py-1.5 text-sm flex-1" />
-      </div>
-      <div className="bg-white border rounded-lg overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="text-left px-3 py-2 text-xs">이름</th>
-              <th className="text-left px-3 py-2 text-xs">이메일</th>
-              <th className="text-left px-3 py-2 text-xs">마지막 로그인</th>
-              <th className="text-left px-3 py-2 text-xs">상태</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users?.map((u: any) => (
-              <tr key={u.id} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2">{u.name}</td>
-                <td className="px-3 py-2 text-gray-500">{u.email}</td>
-                <td className="px-3 py-2 text-xs text-gray-400">
-                  {u.last_login_at
-                    ? new Date(u.last_login_at).toLocaleString('ko-KR')
-                    : '-'}
-                </td>
-                <td className="px-3 py-2">
-                  <span className={`text-xs px-1.5 py-0.5 rounded
-                    ${u.is_dormant ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}`}>
-                    {u.is_dormant ? '휴면' : '활성'}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p className="text-xs text-gray-400 mt-2">총 {users?.length || 0}명</p>
-    </div>
-  );
-}
-
-function OrgManagement() {
-  const [file, setFile] = useState<File | null>(null);
-  const [uploadMsg, setUploadMsg] = useState('');
-  const [deptName, setDeptName] = useState('');
-  const queryClient = useQueryClient();
-  const token = useAuthStore((s) => s.token);
-
-  const { data: departments } = useQuery<any>({
-    queryKey: ['admin-departments'],
-    queryFn: () => apiClient('/auth/organization'),
-  });
-
-  async function handleExcelUpload() {
-    if (!file) return;
-    const formData = new FormData();
-    formData.append('file', file);
-    const res = await fetch('/api/admin/upload-org', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${token}` },
-      body: formData,
-    });
-    const data = await res.json();
-    setUploadMsg(data.message || '업로드 완료');
-    queryClient.invalidateQueries({ queryKey: ['admin-departments'] });
-    setFile(null);
-  }
-
-  const addDept = useMutation({
-    mutationFn: (name: string) =>
-      apiClient('/auth/organization/departments', {
-        method: 'POST',
-        body: JSON.stringify({ name }),
-      }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin-departments'] });
-      setDeptName('');
-    },
-  });
-
-  return (
-    <div className="space-y-4">
-      {/* 엑셀 대량 등록 */}
-      <div className="bg-white border rounded-lg p-4">
-        <h3 className="text-sm font-semibold mb-2">조직도 엑셀 대량 등록</h3>
-        <p className="text-xs text-gray-500 mb-2">
-          엑셀 형식: 이름, 이메일, 부서, 직급, 전화번호
-        </p>
-        <div className="flex gap-2">
-          <input type="file" accept=".xlsx,.csv"
-            onChange={(e) => setFile(e.target.files?.[0] || null)}
-            className="text-xs" />
-          <button onClick={handleExcelUpload} disabled={!file}
-            className="px-3 py-1 bg-blue-500 text-white rounded text-xs
-              disabled:opacity-50">업로드</button>
-        </div>
-        {uploadMsg && <p className="text-xs text-green-600 mt-1">{uploadMsg}</p>}
-      </div>
-
-      {/* 부서 관리 */}
-      <div className="bg-white border rounded-lg p-4">
-        <h3 className="text-sm font-semibold mb-2">부서 관리</h3>
-        <div className="flex gap-2 mb-3">
-          <input type="text" value={deptName}
-            onChange={(e) => setDeptName(e.target.value)}
-            placeholder="새 부서명"
-            className="border rounded px-2 py-1 text-sm flex-1" />
-          <button onClick={() => addDept.mutate(deptName)}
-            disabled={!deptName.trim()}
-            className="px-3 py-1 bg-blue-500 text-white rounded text-xs
-              disabled:opacity-50">추가</button>
-        </div>
-        <div className="space-y-1">
-          {departments?.departments?.map((d: any) => (
-            <div key={d.id} className="flex items-center gap-2 px-2 py-1
-              bg-gray-50 rounded text-xs">
-              <span className="flex-1">{d.name}</span>
-              <span className="text-gray-400">{d.users?.length || 0}명</span>
-            </div>
+    <div className="h-full flex flex-col">
+      {/* 상단 탭 */}
+      <div className="border-b bg-white px-4">
+        <div className="flex gap-0">
+          {tabs.map((t) => (
+            <button key={t.key} onClick={() => setTab(t.key)}
+              className={`px-4 py-2.5 text-sm border-b-2 -mb-px
+                ${tab === t.key
+                  ? 'border-blue-500 text-blue-600 font-medium'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'}`}>
+              {t.label}
+            </button>
           ))}
         </div>
       </div>
+
+      {tab === 'org' && (
+        <div className="flex-1 flex overflow-hidden">
+          {/* 좌측: 조직도 트리 */}
+          <div className="w-64 border-r bg-white overflow-y-auto">
+            {/* 버튼 바 */}
+            <div className="p-2 border-b flex gap-1">
+              <AddDeptButton />
+              <AddUserButton />
+            </div>
+            {/* 검색 */}
+            <div className="p-2 border-b">
+              <input type="text" value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="이름/아이디/부서/직위"
+                className="w-full border rounded px-2 py-1 text-xs" />
+            </div>
+            {/* 트리 */}
+            <div className="p-2">
+              <OrgTree orgData={orgData}
+                selectedId={selectedUser?.id}
+                onSelect={setSelectedUser} />
+            </div>
+          </div>
+
+          {/* 우측: 사용자 상세 폼 */}
+          <div className="flex-1 overflow-y-auto bg-gray-50">
+            {selectedUser ? (
+              <UserDetailForm user={selectedUser}
+                onUpdate={() => {
+                  queryClient.invalidateQueries({ queryKey: ['admin-users'] });
+                  queryClient.invalidateQueries({ queryKey: ['admin-org'] });
+                }} />
+            ) : (
+              <div className="flex items-center justify-center h-full
+                text-gray-400 text-sm">
+                좌측에서 사용자를 선택하세요
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {tab === 'upload' && <UploadTab />}
+      {tab === 'permission' && <PermissionTab />}
+      {tab === 'position' && <PositionTab />}
+      {tab === 'rank' && <RankTab />}
     </div>
   );
 }
 
-function ServiceMonitor() {
-  const { data: stats } = useQuery<any>({
-    queryKey: ['admin-stats'],
-    queryFn: () => apiClient('/admin/stats'),
-    refetchInterval: 10000,
+// === 조직도 트리 ===
+function OrgTree({ orgData, selectedId, onSelect }: any) {
+  return (
+    <div className="text-xs">
+      <div className="font-medium text-gray-700 mb-1">🏢 FlowBoard</div>
+      {orgData?.departments?.map((dept: any) => (
+        <div key={dept.id} className="ml-3 mb-1">
+          <div className="font-medium text-gray-600 py-0.5">
+            📁 {dept.name}
+          </div>
+          {dept.users?.map((u: any) => (
+            <div key={u.id}
+              onClick={() => onSelect(u)}
+              className={`ml-4 py-0.5 px-1 rounded cursor-pointer
+                ${selectedId === u.id ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100'}`}>
+              👤 {u.name} {u.position || ''}
+            </div>
+          ))}
+        </div>
+      ))}
+      {orgData?.unassigned?.length > 0 && (
+        <div className="ml-3 mb-1">
+          <div className="font-medium text-gray-400 py-0.5">📁 부서미지정</div>
+          {orgData.unassigned.map((u: any) => (
+            <div key={u.id}
+              onClick={() => onSelect(u)}
+              className={`ml-4 py-0.5 px-1 rounded cursor-pointer
+                ${selectedId === u.id ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100'}`}>
+              👤 {u.name}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// === 사용자 상세 폼 ===
+function UserDetailForm({ user, onUpdate }: { user: any; onUpdate: () => void }) {
+  const [form, setForm] = useState({
+    name: user.name || '',
+    email: user.email || '',
+    department: user.department || '',
+    position: user.position || '',
+    phone: user.phone || '',
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: (data: any) =>
+      apiClient(`/auth/me`, { method: 'PUT', body: JSON.stringify(data) }),
+    onSuccess: onUpdate,
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: () => apiClient(`/admin/users/${user.id}`, { method: 'DELETE' }),
+    onSuccess: onUpdate,
+  });
+
+  // user 변경 시 폼 리셋
+  useState(() => {
+    setForm({
+      name: user.name || '', email: user.email || '',
+      department: user.department || '', position: user.position || '',
+      phone: user.phone || '',
+    });
   });
 
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <StatCard label="전체 사용자" value={stats?.totalUsers || 0} />
-        <StatCard label="활성 사용자" value={stats?.activeUsers || 0} color="green" />
-        <StatCard label="휴면 계정" value={stats?.dormantUsers || 0} color="red" />
-        <StatCard label="전체 프로젝트" value={stats?.totalProjects || 0} color="blue" />
+    <div className="p-6 max-w-2xl">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-sm font-semibold">사용자 정보</h2>
+        <div className="flex gap-2">
+          <button onClick={() => updateMutation.mutate({ name: form.name })}
+            className="px-3 py-1 bg-blue-500 text-white rounded text-xs">
+            저장</button>
+          <button onClick={() => {
+            if (confirm('이 사용자를 삭제하시겠습니까?'))
+              deleteMutation.mutate();
+          }}
+            className="px-3 py-1 bg-red-500 text-white rounded text-xs">
+            삭제</button>
+        </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <StatCard label="전체 업무" value={stats?.totalCards || 0} />
-        <StatCard label="완료 업무" value={stats?.completedCards || 0} color="green" />
-        <StatCard label="오늘 로그인" value={stats?.todayLogins || 0} color="blue" />
-        <StatCard label="이번 주 생성" value={stats?.weeklyCards || 0} />
+
+      <div className="bg-white border rounded-lg p-4 space-y-3">
+        <FormRow label="사용자 ID" value={user.id} readonly />
+        <FormRow label="이메일*" value={form.email}
+          onChange={(v) => setForm({ ...form, email: v })} />
+        <FormRow label="한글이름*" value={form.name}
+          onChange={(v) => setForm({ ...form, name: v })} />
+        <FormRow label="소속부서" value={form.department}
+          onChange={(v) => setForm({ ...form, department: v })} />
+        <FormRow label="직위" value={form.position}
+          onChange={(v) => setForm({ ...form, position: v })} />
+        <FormRow label="휴대전화" value={form.phone}
+          onChange={(v) => setForm({ ...form, phone: v })} />
+        <FormRow label="마지막 로그인"
+          value={user.last_login_at
+            ? new Date(user.last_login_at).toLocaleString('ko-KR')
+            : '없음'} readonly />
+        <FormRow label="상태"
+          value={user.is_dormant ? '휴면' : '활성'} readonly />
       </div>
     </div>
   );
 }
 
-function StatCard({ label, value, color = 'gray' }: {
-  label: string; value: number; color?: string;
+function FormRow({ label, value, onChange, readonly }: {
+  label: string; value: string; onChange?: (v: string) => void; readonly?: boolean;
 }) {
-  const colors: Record<string, string> = {
-    gray: 'text-gray-800',
-    green: 'text-green-600',
-    red: 'text-red-600',
-    blue: 'text-blue-600',
-  };
   return (
-    <div className="bg-white border rounded-lg p-3 text-center">
-      <p className={`text-2xl font-bold ${colors[color]}`}>{value}</p>
-      <p className="text-xs text-gray-500">{label}</p>
+    <div className="flex items-center gap-3">
+      <label className="w-24 text-xs text-gray-600 shrink-0 text-right">
+        {label}
+      </label>
+      {readonly ? (
+        <span className="text-sm text-gray-500">{value}</span>
+      ) : (
+        <input type="text" value={value}
+          onChange={(e) => onChange?.(e.target.value)}
+          className="flex-1 border rounded px-2 py-1 text-sm" />
+      )}
     </div>
+  );
+}
+
+// === 부서 추가 버튼 ===
+function AddDeptButton() {
+  const [show, setShow] = useState(false);
+  const [name, setName] = useState('');
+  const queryClient = useQueryClient();
+  const addDept = useMutation({
+    mutationFn: (n: string) =>
+      apiClient('/auth/organization/departments', {
+        method: 'POST', body: JSON.stringify({ name: n }),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-org'] });
+      setName(''); setShow(false);
+    },
+  });
+  if (!show) return (
+    <button onClick={() => setShow(true)}
+      className="px-2 py-1 bg-gray-100 rounded text-xs hover:bg-gray-200">
+      부서 추가
+    </button>
+  );
+  return (
+    <div className="flex gap-1">
+      <input type="text" value={name} onChange={(e) => setName(e.target.value)}
+        placeholder="부서명" className="border rounded px-1 py-0.5 text-xs w-20" />
+      <button onClick={() => addDept.mutate(name)}
+        className="px-1 py-0.5 bg-blue-500 text-white rounded text-xs">확인</button>
+      <button onClick={() => setShow(false)}
+        className="px-1 py-0.5 border rounded text-xs">취소</button>
+    </div>
+  );
+}
+
+// === 사용자 추가 버튼 ===
+function AddUserButton() {
+  const [show, setShow] = useState(false);
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const queryClient = useQueryClient();
+  const addUser = useMutation({
+    mutationFn: (data: { email: string; name: string }) =>
+      apiClient('/auth/register', {
+        method: 'POST',
+        body: JSON.stringify({ ...data, password: 'password123' }),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-users'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-org'] });
+      setEmail(''); setName(''); setShow(false);
+    },
+  });
+  if (!show) return (
+    <button onClick={() => setShow(true)}
+      className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs
+        hover:bg-blue-200">
+      사용자 추가
+    </button>
+  );
+  return (
+    <div className="flex gap-1 flex-wrap">
+      <input type="text" value={name} onChange={(e) => setName(e.target.value)}
+        placeholder="이름" className="border rounded px-1 py-0.5 text-xs w-16" />
+      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+        placeholder="이메일" className="border rounded px-1 py-0.5 text-xs w-28" />
+      <button onClick={() => addUser.mutate({ email, name })}
+        className="px-1 py-0.5 bg-blue-500 text-white rounded text-xs">등록</button>
+      <button onClick={() => setShow(false)}
+        className="px-1 py-0.5 border rounded text-xs">취소</button>
+    </div>
+  );
+}
+
+// === 기타 탭 (간단 구현) ===
+function UploadTab() {
+  const [file, setFile] = useState<File | null>(null);
+  const [msg, setMsg] = useState('');
+  const token = useAuthStore((s) => s.token);
+  async function upload() {
+    if (!file) return;
+    const fd = new FormData(); fd.append('file', file);
+    await fetch('/api/admin/upload-org', {
+      method: 'POST', headers: { Authorization: `Bearer ${token}` }, body: fd,
+    });
+    setMsg('업로드 완료 (처리 중)');
+  }
+  return (
+    <div className="p-6 max-w-lg">
+      <h2 className="text-sm font-semibold mb-3">조직도 엑셀 업로드</h2>
+      <p className="text-xs text-gray-500 mb-2">
+        형식: 이름, 이메일, 부서, 직위, 전화번호 (CSV/XLSX)
+      </p>
+      <input type="file" accept=".xlsx,.csv"
+        onChange={(e) => setFile(e.target.files?.[0] || null)} className="text-xs" />
+      <button onClick={upload} disabled={!file}
+        className="ml-2 px-3 py-1 bg-blue-500 text-white rounded text-xs
+          disabled:opacity-50">업로드</button>
+      {msg && <p className="text-xs text-green-600 mt-2">{msg}</p>}
+    </div>
+  );
+}
+
+function PositionTab() {
+  return (
+    <div className="p-6"><p className="text-sm text-gray-500">
+      직위 관리 (팀장, 선임, 사원 등) - 추후 구현
+    </p></div>
+  );
+}
+function RankTab() {
+  return (
+    <div className="p-6"><p className="text-sm text-gray-500">
+      직책 관리 (부장, 차장, 과장 등) - 추후 구현
+    </p></div>
+  );
+}
+function PermissionTab() {
+  return (
+    <div className="p-6"><p className="text-sm text-gray-500">
+      권한 관리 (역할별 접근 권한 설정) - 추후 구현
+    </p></div>
   );
 }

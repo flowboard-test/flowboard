@@ -38,6 +38,15 @@ export async function buildApp() {
   // Health check
   app.get('/health', async () => ({ status: 'ok' }));
 
+  // 관리자: 사용자 삭제
+  app.delete('/api/admin/users/:id', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { getDb } = require('./shared/database/connection');
+    const db = getDb();
+    await db('users').where('id', id).del();
+    return reply.status(204).send();
+  });
+
   // 관리자 통계 API
   app.get('/api/admin/stats', async (request, reply) => {
     const { getDb } = require('./shared/database/connection');
