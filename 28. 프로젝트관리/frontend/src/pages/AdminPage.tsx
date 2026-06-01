@@ -9,6 +9,7 @@ export function AdminPage() {
   const [tab, setTab] = useState<AdminTab>('org');
   const [selectedUser, setSelectedUser] = useState<any>(null);
   const [search, setSearch] = useState('');
+  const [rightPanel, setRightPanel] = useState<'user' | 'addDept' | 'addUser' | null>(null);
   const queryClient = useQueryClient();
 
   const tabs = [
@@ -54,8 +55,14 @@ export function AdminPage() {
           <div className="w-64 border-r bg-white overflow-y-auto">
             {/* 버튼 바 */}
             <div className="p-2 border-b flex gap-1">
-              <AddDeptButton />
-              <AddUserButton />
+              <button onClick={() => { setRightPanel('addDept'); setSelectedUser(null); }}
+                className="px-2 py-1 bg-gray-100 rounded text-xs hover:bg-gray-200">
+                부서 추가
+              </button>
+              <button onClick={() => { setRightPanel('addUser'); setSelectedUser(null); }}
+                className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200">
+                사용자 추가
+              </button>
             </div>
             {/* 검색 */}
             <div className="p-2 border-b">
@@ -68,22 +75,36 @@ export function AdminPage() {
             <div className="p-2">
               <OrgTree orgData={orgData}
                 selectedId={selectedUser?.id}
-                onSelect={setSelectedUser} />
+                onSelect={(u: any) => { setSelectedUser(u); setRightPanel('user'); }} />
             </div>
           </div>
 
-          {/* 우측: 사용자 상세 폼 */}
+          {/* 우측: 상세 폼 */}
           <div className="flex-1 overflow-y-auto bg-gray-50">
-            {selectedUser ? (
+            {rightPanel === 'user' && selectedUser && (
               <UserDetailForm user={selectedUser}
                 onUpdate={() => {
                   queryClient.invalidateQueries({ queryKey: ['admin-users'] });
                   queryClient.invalidateQueries({ queryKey: ['admin-org'] });
                 }} />
-            ) : (
+            )}
+            {rightPanel === 'addDept' && (
+              <AddDeptForm onDone={() => {
+                queryClient.invalidateQueries({ queryKey: ['admin-org'] });
+                setRightPanel(null);
+              }} />
+            )}
+            {rightPanel === 'addUser' && (
+              <AddUserForm onDone={() => {
+                queryClient.invalidateQueries({ queryKey: ['admin-users'] });
+                queryClient.invalidateQueries({ queryKey: ['admin-org'] });
+                setRightPanel(null);
+              }} />
+            )}
+            {!rightPanel && (
               <div className="flex items-center justify-center h-full
                 text-gray-400 text-sm">
-                좌측에서 사용자를 선택하세요
+                좌측에서 사용자를 선택하거나 추가 버튼을 클릭하세요
               </div>
             )}
           </div>
@@ -100,27 +121,63 @@ export function AdminPage() {
 
 // === 조직도 트리 ===
 function OrgTree({ orgData, selectedId, onSelect }: any) {
+  const [expandedDepts, setExpandedDepts] = useState<Set<string>>(new Set());
+
+  // 부서를 가나다순 정렬
+  const sortedDepts = [...(orgData?.departments || [])].sort(
+    (a: any, b: any) => a.name.localeCompare(b.name, 'ko')
+  );
+
+  function toggleDept(deptId: string) {
+    const next = new Set(expandedDepts);
+    if (next.has(deptId)) next.delete(deptId);
+    else next.add(deptId);
+    setExpandedDepts(next);
+  }
+
   return (
     <div className="text-xs">
-      <div className="font-medium text-gray-700 mb-1">🏢 FlowBoard</div>
-      {orgData?.departments?.map((dept: any) => (
-        <div key={dept.id} className="ml-3 mb-1">
-          <div className="font-medium text-gray-600 py-0.5">
-            📁 {dept.name}
+      <div className="font-medium text-gray-700 mb-2 px-1">🏢 FlowBoard</div>
+
+      {/* 부서 목록 (가나다순, 드래그 가능) */}
+      {sortedDepts.map((dept: any) => (
+        <div key={dept.id} className="ml-3 mb-0.5"
+          draggable
+          onDragStart={(e) => e.dataTransfer.setData('deptId', dept.id)}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => {
+            e.preventDefault();
+            // 드래그앤드롭 순서 변경 (시각적 피드백)
+          }}>
+          <div
+            onClick={() => toggleDept(dept.id)}
+            className="flex items-center gap-1 py-1 px-1 rounded
+              cursor-pointer hover:bg-gray-100">
+            <span>{expandedDepts.has(dept.id) ? '📂' : '📁'}</span>
+            <span className="font-medium text-gray-600">{dept.name}</span>
+            <span className="text-gray-400 ml-auto">
+              {dept.users?.length || 0}
+            </span>
           </div>
-          {dept.users?.map((u: any) => (
+
+          {/* 부서 펼침 시 소속 사용자 표시 */}
+          {expandedDepts.has(dept.id) && dept.users?.map((u: any) => (
             <div key={u.id}
               onClick={() => onSelect(u)}
               className={`ml-4 py-0.5 px-1 rounded cursor-pointer
                 ${selectedId === u.id ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100'}`}>
-              👤 {u.name} {u.position || ''}
+              👤 {u.name} {u.position ? `(${u.position})` : ''}
             </div>
           ))}
         </div>
       ))}
+
+      {/* 부서미지정 (펼침 가능) */}
       {orgData?.unassigned?.length > 0 && (
-        <div className="ml-3 mb-1">
-          <div className="font-medium text-gray-400 py-0.5">📁 부서미지정</div>
+        <div className="ml-3 mt-2">
+          <div className="font-medium text-gray-400 py-1 px-1">
+            📁 부서미지정 ({orgData.unassigned.length})
+          </div>
           {orgData.unassigned.map((u: any) => (
             <div key={u.id}
               onClick={() => onSelect(u)}
@@ -225,77 +282,6 @@ function FormRow({ label, value, onChange, readonly }: {
 }
 
 // === 부서 추가 버튼 ===
-function AddDeptButton() {
-  const [show, setShow] = useState(false);
-  const [name, setName] = useState('');
-  const queryClient = useQueryClient();
-  const addDept = useMutation({
-    mutationFn: (n: string) =>
-      apiClient('/auth/organization/departments', {
-        method: 'POST', body: JSON.stringify({ name: n }),
-      }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin-org'] });
-      setName(''); setShow(false);
-    },
-  });
-  if (!show) return (
-    <button onClick={() => setShow(true)}
-      className="px-2 py-1 bg-gray-100 rounded text-xs hover:bg-gray-200">
-      부서 추가
-    </button>
-  );
-  return (
-    <div className="flex gap-1">
-      <input type="text" value={name} onChange={(e) => setName(e.target.value)}
-        placeholder="부서명" className="border rounded px-1 py-0.5 text-xs w-20" />
-      <button onClick={() => addDept.mutate(name)}
-        className="px-1 py-0.5 bg-blue-500 text-white rounded text-xs">확인</button>
-      <button onClick={() => setShow(false)}
-        className="px-1 py-0.5 border rounded text-xs">취소</button>
-    </div>
-  );
-}
-
-// === 사용자 추가 버튼 ===
-function AddUserButton() {
-  const [show, setShow] = useState(false);
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const queryClient = useQueryClient();
-  const addUser = useMutation({
-    mutationFn: (data: { email: string; name: string }) =>
-      apiClient('/auth/register', {
-        method: 'POST',
-        body: JSON.stringify({ ...data, password: 'password123' }),
-      }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin-users'] });
-      queryClient.invalidateQueries({ queryKey: ['admin-org'] });
-      setEmail(''); setName(''); setShow(false);
-    },
-  });
-  if (!show) return (
-    <button onClick={() => setShow(true)}
-      className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs
-        hover:bg-blue-200">
-      사용자 추가
-    </button>
-  );
-  return (
-    <div className="flex gap-1 flex-wrap">
-      <input type="text" value={name} onChange={(e) => setName(e.target.value)}
-        placeholder="이름" className="border rounded px-1 py-0.5 text-xs w-16" />
-      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-        placeholder="이메일" className="border rounded px-1 py-0.5 text-xs w-28" />
-      <button onClick={() => addUser.mutate({ email, name })}
-        className="px-1 py-0.5 bg-blue-500 text-white rounded text-xs">등록</button>
-      <button onClick={() => setShow(false)}
-        className="px-1 py-0.5 border rounded text-xs">취소</button>
-    </div>
-  );
-}
-
 // === 기타 탭 (간단 구현) ===
 function UploadTab() {
   const [file, setFile] = useState<File | null>(null);
@@ -517,6 +503,78 @@ function PermissionTab() {
             </div>
           </div>
         ))}
+      </div>
+    </div>
+  );
+}
+
+// === 부서 추가 폼 (우측 패널) ===
+function AddDeptForm({ onDone }: { onDone: () => void }) {
+  const [name, setName] = useState('');
+  const addDept = useMutation({
+    mutationFn: (n: string) =>
+      apiClient('/auth/organization/departments', {
+        method: 'POST', body: JSON.stringify({ name: n }),
+      }),
+    onSuccess: onDone,
+  });
+
+  return (
+    <div className="p-6 max-w-md">
+      <h2 className="text-sm font-semibold mb-4">부서 추가</h2>
+      <div className="bg-white border rounded-lg p-4 space-y-3">
+        <FormRow label="부서명*" value={name}
+          onChange={(v) => setName(v)} />
+        <div className="flex gap-2 justify-center pt-2">
+          <button onClick={() => addDept.mutate(name)}
+            disabled={!name.trim()}
+            className="px-4 py-1.5 bg-blue-500 text-white rounded text-sm
+              disabled:opacity-50">추가</button>
+          <button onClick={onDone}
+            className="px-4 py-1.5 border rounded text-sm">취소</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// === 사용자 추가 폼 (우측 패널) ===
+function AddUserForm({ onDone }: { onDone: () => void }) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [dept, setDept] = useState('');
+  const [position, setPosition] = useState('');
+  const [phone, setPhone] = useState('');
+
+  const addUser = useMutation({
+    mutationFn: (data: any) =>
+      apiClient('/auth/register', {
+        method: 'POST',
+        body: JSON.stringify({ ...data, password: 'password123' }),
+      }),
+    onSuccess: onDone,
+  });
+
+  return (
+    <div className="p-6 max-w-md">
+      <h2 className="text-sm font-semibold mb-4">사용자 추가</h2>
+      <div className="bg-white border rounded-lg p-4 space-y-3">
+        <FormRow label="이메일*" value={email} onChange={setEmail} />
+        <FormRow label="한글이름*" value={name} onChange={setName} />
+        <FormRow label="소속부서" value={dept} onChange={setDept} />
+        <FormRow label="직위" value={position} onChange={setPosition} />
+        <FormRow label="휴대전화" value={phone} onChange={setPhone} />
+        <p className="text-xs text-gray-400">
+          * 초기 비밀번호: password123
+        </p>
+        <div className="flex gap-2 justify-center pt-2">
+          <button onClick={() => addUser.mutate({ name, email })}
+            disabled={!name.trim() || !email.trim()}
+            className="px-4 py-1.5 bg-blue-500 text-white rounded text-sm
+              disabled:opacity-50">등록</button>
+          <button onClick={onDone}
+            className="px-4 py-1.5 border rounded text-sm">취소</button>
+        </div>
       </div>
     </div>
   );
