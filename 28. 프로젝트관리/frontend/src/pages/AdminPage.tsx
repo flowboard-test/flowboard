@@ -350,6 +350,9 @@ function UserDetailForm({ user, onUpdate }: { user: any; onUpdate: () => void })
         <FormRow label="상태"
           value={user.is_dormant ? '휴면' : '활성'} readonly />
       </div>
+
+      {/* 비밀번호 변경 */}
+      <PasswordResetSection userId={user.id} />
     </div>
   );
 }
@@ -725,6 +728,75 @@ function AddUserForm({ onDone }: { onDone: () => void }) {
             className="px-4 py-1.5 border rounded text-sm">취소</button>
         </div>
       </div>
+    </div>
+  );
+}
+
+// === 비밀번호 초기화 섹션 ===
+function PasswordResetSection({ userId }: { userId: string }) {
+  const [newPw, setNewPw] = useState('');
+  const [confirmPw, setConfirmPw] = useState('');
+  const [msg, setMsg] = useState('');
+
+  const resetMut = useMutation({
+    mutationFn: (password: string) =>
+      apiClient(`/admin/users/${userId}/password`, {
+        method: 'PUT',
+        body: JSON.stringify({ password }),
+      }),
+    onSuccess: () => {
+      setMsg('비밀번호가 변경되었습니다');
+      setNewPw('');
+      setConfirmPw('');
+      setTimeout(() => setMsg(''), 3000);
+    },
+    onError: (err: any) => {
+      setMsg(err.data?.message || '변경 실패');
+    },
+  });
+
+  return (
+    <div className="bg-white border rounded-lg p-4 mt-4 space-y-2">
+      <h3 className="text-xs font-semibold">비밀번호 변경</h3>
+      <div className="flex items-center gap-3">
+        <label className="w-24 text-xs text-gray-600 text-right shrink-0">
+          새 비밀번호
+        </label>
+        <input type="password" value={newPw}
+          onChange={(e) => setNewPw(e.target.value)}
+          placeholder="8자 이상"
+          className="flex-1 border rounded px-2 py-1 text-sm" />
+      </div>
+      <div className="flex items-center gap-3">
+        <label className="w-24 text-xs text-gray-600 text-right shrink-0">
+          비밀번호 확인
+        </label>
+        <input type="password" value={confirmPw}
+          onChange={(e) => setConfirmPw(e.target.value)}
+          placeholder="비밀번호 재입력"
+          className="flex-1 border rounded px-2 py-1 text-sm" />
+      </div>
+      {newPw && confirmPw && newPw !== confirmPw && (
+        <p className="text-xs text-red-500 ml-27">비밀번호가 일치하지 않습니다</p>
+      )}
+      <div className="flex gap-2 ml-27">
+        <button
+          onClick={() => resetMut.mutate(newPw)}
+          disabled={!newPw || newPw.length < 8 || newPw !== confirmPw}
+          className="px-3 py-1 bg-blue-500 text-white rounded text-xs
+            disabled:opacity-50">변경</button>
+        <button
+          onClick={() => resetMut.mutate('password123')}
+          className="px-3 py-1 border border-orange-300 text-orange-600
+            rounded text-xs hover:bg-orange-50">
+          초기화 (password123)
+        </button>
+      </div>
+      {msg && (
+        <p className={`text-xs ml-27 ${msg.includes('실패') ? 'text-red-500' : 'text-green-600'}`}>
+          {msg}
+        </p>
+      )}
     </div>
   );
 }

@@ -47,6 +47,21 @@ export async function buildApp() {
     return reply.status(204).send();
   });
 
+  // 관리자: 사용자 비밀번호 초기화
+  app.put('/api/admin/users/:id/password', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { password } = request.body as { password: string };
+    if (!password || password.length < 8) {
+      return reply.status(400).send({ message: '비밀번호는 8자 이상이어야 합니다' });
+    }
+    const { getDb } = require('./shared/database/connection');
+    const bcrypt = require('bcrypt');
+    const db = getDb();
+    const hash = await bcrypt.hash(password, 12);
+    await db('users').where('id', id).update({ password_hash: hash });
+    return reply.send({ message: '비밀번호가 변경되었습니다' });
+  });
+
   // 관리자: 사용자 부서 변경
   app.put('/api/admin/users/:id/department', async (request, reply) => {
     const { id } = request.params as { id: string };
