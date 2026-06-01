@@ -75,6 +75,7 @@ export function AdminPage() {
             <div className="p-2">
               <OrgTree orgData={orgData}
                 selectedId={selectedUser?.id}
+                search={search}
                 onSelect={(u: any) => { setSelectedUser(u); setRightPanel('user'); }}
                 onMoveUser={async (userId: string, deptName: string) => {
                   try {
@@ -134,22 +135,53 @@ export function AdminPage() {
 }
 
 // === 조직도 트리 ===
-function OrgTree({ orgData, selectedId, onSelect, onMoveUser }: any) {
+function OrgTree({ orgData, selectedId, onSelect, onMoveUser, search }: any) {
   const [expandedDepts, setExpandedDepts] = useState<Set<string>>(new Set());
   const [dragOverDept, setDragOverDept] = useState<string | null>(null);
   const [deptOrder, setDeptOrder] = useState<string[]>([]);
 
-  const sortedDepts = [...(orgData?.departments || [])];
-  // 사용자 정의 순서가 있으면 적용, 없으면 가나다순
+  const allDepts = [...(orgData?.departments || [])];
+  const allUnassigned = orgData?.unassigned || [];
+
+  // 검색 필터링
+  const searchLower = (search || '').toLowerCase();
+  const filteredDepts = allDepts.map((dept: any) => {
+    if (!searchLower) return dept;
+    const matchDept = dept.name.toLowerCase().includes(searchLower);
+    const matchUsers = dept.users?.filter((u: any) =>
+      u.name.toLowerCase().includes(searchLower) ||
+      u.email?.toLowerCase().includes(searchLower) ||
+      u.position?.toLowerCase().includes(searchLower)
+    ) || [];
+    if (matchDept || matchUsers.length > 0) {
+      return { ...dept, users: matchDept ? dept.users : matchUsers };
+    }
+    return null;
+  }).filter(Boolean);
+
+  const filteredUnassigned = searchLower
+    ? allUnassigned.filter((u: any) =>
+        u.name.toLowerCase().includes(searchLower) ||
+        u.email?.toLowerCase().includes(searchLower)
+      )
+    : allUnassigned;
+
+  // 정렬
   const orderedDepts = deptOrder.length > 0
-    ? deptOrder.map((id) => sortedDepts.find((d: any) => d.id === id)).filter(Boolean)
-    : sortedDepts.sort((a: any, b: any) => a.name.localeCompare(b.name, 'ko'));
+    ? deptOrder.map((id) => filteredDepts.find((d: any) => d.id === id)).filter(Boolean)
+    : filteredDepts.sort((a: any, b: any) => a.name.localeCompare(b.name, 'ko'));
 
   function toggleDept(deptId: string) {
     const next = new Set(expandedDepts);
     if (next.has(deptId)) next.delete(deptId);
     else next.add(deptId);
     setExpandedDepts(next);
+  }
+
+  // 검색 중이면 모든 부서 펼침
+  const isSearching = searchLower.length > 0;
+  function isDeptExpanded(deptId: string) {
+    return isSearching || expandedDepts.has(deptId);
   }
 
   function handleDeptDrop(draggedId: string, targetId: string) {
@@ -201,7 +233,7 @@ function OrgTree({ orgData, selectedId, onSelect, onMoveUser }: any) {
             className={`flex items-center gap-1 py-1 px-1 rounded
               cursor-pointer hover:bg-gray-100
               ${dragOverDept === dept.id ? 'bg-blue-100 ring-1 ring-blue-400' : ''}`}>
-            <span>{expandedDepts.has(dept.id) ? '📂' : '📁'}</span>
+            <span>{isDeptExpanded(dept.id) ? '📂' : '📁'}</span>
             <span className="font-medium text-gray-600">{dept.name}</span>
             <span className="text-gray-400 ml-auto">
               {dept.users?.length || 0}
@@ -210,7 +242,7 @@ function OrgTree({ orgData, selectedId, onSelect, onMoveUser }: any) {
 
 
           {/* 부서 펼침 시 소속 사용자 표시 */}
-          {expandedDepts.has(dept.id) && dept.users?.map((u: any) => (
+          {isDeptExpanded(dept.id) && dept.users?.map((u: any) => (
             <div key={u.id}
               draggable
               onDragStart={(e) => {
@@ -227,13 +259,13 @@ function OrgTree({ orgData, selectedId, onSelect, onMoveUser }: any) {
         </div>
       ))}
 
-      {/* 부서미지정 (펼침 가능) */}
-      {orgData?.unassigned?.length > 0 && (
+      {/* 부서미지정 */}
+      {filteredUnassigned.length > 0 && (
         <div className="ml-3 mt-2">
           <div className="font-medium text-gray-400 py-1 px-1">
-            📁 부서미지정 ({orgData.unassigned.length})
+            📁 부서미지정 ({filteredUnassigned.length})
           </div>
-          {orgData.unassigned.map((u: any) => (
+          {filteredUnassigned.map((u: any) => (
             <div key={u.id}
               draggable
               onDragStart={(e) => {
