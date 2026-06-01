@@ -6,6 +6,7 @@ import { ProjectListPage } from '@/pages/ProjectListPage';
 import { ProjectPage } from '@/pages/ProjectPage';
 import { MyTasksPage } from '@/pages/MyTasksPage';
 import { AccountPage } from '@/pages/AccountPage';
+import { OkrPage } from '@/pages/OkrPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -23,6 +24,7 @@ function App() {
         <Route index element={<Navigate to="/my-tasks" replace />} />
         <Route path="projects" element={<ProjectListPage />} />
         <Route path="projects/:id" element={<ProjectPage />} />
+        <Route path="projects/:id/okr" element={<OkrPage />} />
         <Route path="my-tasks" element={<MyTasksPage />} />
         <Route path="account" element={<AccountPage />} />
       </Route>

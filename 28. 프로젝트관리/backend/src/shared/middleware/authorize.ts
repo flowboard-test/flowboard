@@ -3,10 +3,11 @@ import { getDb } from '../database/connection';
 import { AppError } from '../errors/AppError';
 import { ProjectRole } from '../types';
 
-const ROLE_HIERARCHY: Record<ProjectRole, number> = {
+const ROLE_HIERARCHY: Record<string, number> = {
   owner: 3,
   admin: 2,
   member: 1,
+  guest: 0,
 };
 
 export function requireProjectRole(...allowedRoles: ProjectRole[]) {

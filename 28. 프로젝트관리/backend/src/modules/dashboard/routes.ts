@@ -25,6 +25,36 @@ const dashboardRoutes: FastifyPluginAsync = async (app) => {
     return reply.send(tasks);
   });
 
+  // OKR 목표 관리
+  app.get('/projects/:id/objectives', {
+    preHandler: [requireProjectRole('member', 'admin', 'owner')],
+  }, async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { getDb } = require('../../shared/database/connection');
+    const db = getDb();
+    const objectives = await db('objectives').where('project_id', id);
+    const result = [];
+    for (const obj of objectives) {
+      const krs = await db('key_results').where('objective_id', obj.id);
+      result.push({ ...obj, key_results: krs });
+    }
+    return reply.send(result);
+  });
+
+  app.post('/projects/:id/objectives', {
+    preHandler: [requireProjectRole('admin', 'owner')],
+  }, async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { title } = request.body as { title: string };
+    const { getDb } = require('../../shared/database/connection');
+    const { v4: uid } = require('uuid');
+    const db = getDb();
+    await db('objectives').insert({
+      id: uid(), project_id: id, title, owner_id: request.userId!,
+    });
+    return reply.status(201).send({ message: '목표가 추가되었습니다' });
+  });
+
   // 주간 보고서
   app.get('/projects/:id/weekly-report', {
     preHandler: [requireProjectRole('member', 'admin', 'owner')],

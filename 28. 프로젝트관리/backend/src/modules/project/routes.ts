@@ -83,6 +83,39 @@ const projectRoutes: FastifyPluginAsync = async (app) => {
     return reply.status(204).send();
   });
 
+  // 게스트 초대
+  app.post('/projects/:id/invite-guest', {
+    preHandler: [requireProjectRole('admin', 'owner')],
+  }, async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { email } = request.body as { email: string };
+    const { getDb } = require('../../shared/database/connection');
+    const { v4: uid } = require('uuid');
+    const db = getDb();
+
+    // 사용자 찾기 또는 생성
+    let user = await db('users').where('email', email).first();
+    if (!user) {
+      const userId = uid();
+      await db('users').insert({
+        id: userId, email, name: email.split('@')[0], password_hash: null,
+      });
+      user = await db('users').where('id', userId).first();
+    }
+
+    // 이미 멤버인지 확인
+    const existing = await db('project_members')
+      .where({ project_id: id, user_id: user.id }).first();
+    if (existing) {
+      return reply.status(400).send({ message: '이미 프로젝트 멤버입니다' });
+    }
+
+    await db('project_members').insert({
+      id: uid(), project_id: id, user_id: user.id, role: 'guest',
+    });
+    return reply.status(201).send({ message: '게스트가 초대되었습니다' });
+  });
+
   // 채팅
   app.get('/projects/:id/chat', {
     preHandler: [requireProjectRole('member', 'admin', 'owner')],
