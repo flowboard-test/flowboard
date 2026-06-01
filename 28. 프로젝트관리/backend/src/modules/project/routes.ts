@@ -82,6 +82,36 @@ const projectRoutes: FastifyPluginAsync = async (app) => {
     await projectService.removeMember(id, userId);
     return reply.status(204).send();
   });
+
+  // 채팅
+  app.get('/projects/:id/chat', {
+    preHandler: [requireProjectRole('member', 'admin', 'owner')],
+  }, async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { getDb } = require('../../shared/database/connection');
+    const db = getDb();
+    const messages = await db('chat_messages')
+      .where('project_id', id)
+      .join('users', 'chat_messages.user_id', 'users.id')
+      .select('chat_messages.*', 'users.name as user_name')
+      .orderBy('chat_messages.created_at', 'asc')
+      .limit(100);
+    return reply.send(messages);
+  });
+
+  app.post('/projects/:id/chat', {
+    preHandler: [requireProjectRole('member', 'admin', 'owner')],
+  }, async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { content } = request.body as { content: string };
+    const { getDb } = require('../../shared/database/connection');
+    const { v4: uid } = require('uuid');
+    const db = getDb();
+    await db('chat_messages').insert({
+      id: uid(), project_id: id, user_id: request.userId!, content,
+    });
+    return reply.status(201).send({ message: 'sent' });
+  });
 };
 
 export default projectRoutes;

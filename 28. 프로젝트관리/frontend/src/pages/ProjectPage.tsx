@@ -11,6 +11,7 @@ import { CalendarView } from '@/components/views/CalendarView';
 import { DashboardView } from '@/components/dashboard/DashboardView';
 import { CardDetailPanel } from '@/components/card/CardDetailPanel';
 import { WorkflowSetup } from '@/components/board/WorkflowSetup';
+import { ProjectChat } from '@/components/chat/ProjectChat';
 import { useEffect, useState } from 'react';
 
 export function ProjectPage() {
@@ -149,6 +150,8 @@ export function ProjectPage() {
       {viewMode === 'board' && board?.columns && (
         <WorkflowSetup projectId={id!} columns={board.columns} />
       )}
+
+      <ProjectChat projectId={id!} />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/stores/authStore';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/api/client';
+import { SearchBar } from './SearchBar';
 
 export function Layout() {
   const user = useAuthStore((s) => s.user);
@@ -40,7 +41,7 @@ export function Layout() {
           <Link to="/projects" className="font-bold text-lg text-blue-600">
             FlowBoard
           </Link>
-          <nav className="flex gap-1">
+          <nav className="hidden sm:flex gap-1">
             {navItems.map((item) => (
               <Link key={item.path} to={item.path}
                 className={`px-3 py-1.5 rounded text-sm
@@ -51,6 +52,9 @@ export function Layout() {
               </Link>
             ))}
           </nav>
+          <div className="hidden md:block">
+            <SearchBar />
+          </div>
         </div>
         <div className="flex items-center gap-3">
           {/* 알림 벨 */}
