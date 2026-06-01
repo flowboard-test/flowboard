@@ -47,6 +47,78 @@ export async function buildApp() {
     return reply.status(204).send();
   });
 
+  // 직위 관리
+  app.get('/api/admin/positions', async (_req, reply) => {
+    const { getDb } = require('./shared/database/connection');
+    const db = getDb();
+    const list = await db('positions').orderBy('level', 'asc');
+    return reply.send(list);
+  });
+  app.post('/api/admin/positions', async (request, reply) => {
+    const { name, level } = request.body as { name: string; level?: number };
+    const { getDb } = require('./shared/database/connection');
+    const { v4: uid } = require('uuid');
+    const db = getDb();
+    await db('positions').insert({ id: uid(), name, level: level || 0 });
+    return reply.status(201).send({ message: '직위가 추가되었습니다' });
+  });
+  app.delete('/api/admin/positions/:id', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { getDb } = require('./shared/database/connection');
+    const db = getDb();
+    await db('positions').where('id', id).del();
+    return reply.status(204).send();
+  });
+
+  // 직책 관리
+  app.get('/api/admin/ranks', async (_req, reply) => {
+    const { getDb } = require('./shared/database/connection');
+    const db = getDb();
+    const list = await db('ranks').orderBy('level', 'asc');
+    return reply.send(list);
+  });
+  app.post('/api/admin/ranks', async (request, reply) => {
+    const { name, level } = request.body as { name: string; level?: number };
+    const { getDb } = require('./shared/database/connection');
+    const { v4: uid } = require('uuid');
+    const db = getDb();
+    await db('ranks').insert({ id: uid(), name, level: level || 0 });
+    return reply.status(201).send({ message: '직책이 추가되었습니다' });
+  });
+  app.delete('/api/admin/ranks/:id', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { getDb } = require('./shared/database/connection');
+    const db = getDb();
+    await db('ranks').where('id', id).del();
+    return reply.status(204).send();
+  });
+
+  // 권한 그룹 관리
+  app.get('/api/admin/permissions', async (_req, reply) => {
+    const { getDb } = require('./shared/database/connection');
+    const db = getDb();
+    const list = await db('permission_groups').orderBy('created_at');
+    return reply.send(list);
+  });
+  app.post('/api/admin/permissions', async (request, reply) => {
+    const { name, description, permissions } = request.body as any;
+    const { getDb } = require('./shared/database/connection');
+    const { v4: uid } = require('uuid');
+    const db = getDb();
+    await db('permission_groups').insert({
+      id: uid(), name, description: description || null,
+      permissions: JSON.stringify(permissions || []),
+    });
+    return reply.status(201).send({ message: '권한 그룹이 추가되었습니다' });
+  });
+  app.delete('/api/admin/permissions/:id', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { getDb } = require('./shared/database/connection');
+    const db = getDb();
+    await db('permission_groups').where('id', id).del();
+    return reply.status(204).send();
+  });
+
   // 관리자 통계 API
   app.get('/api/admin/stats', async (request, reply) => {
     const { getDb } = require('./shared/database/connection');
