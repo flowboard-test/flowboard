@@ -33,6 +33,9 @@ export function Layout() {
     { path: '/account', label: '계정' },
   ];
 
+  // admin 계정이면 관리자 메뉴 추가
+  const isAdmin = user?.email === 'admin@flowboard.dev';
+
   return (
     <div className="h-screen flex flex-col">
       <header className="h-14 border-b bg-white flex items-center px-4
@@ -51,6 +54,15 @@ export function Layout() {
                 {item.label}
               </Link>
             ))}
+            {isAdmin && (
+              <Link to="/admin"
+                className={`px-3 py-1.5 rounded text-sm
+                  ${location.pathname === '/admin'
+                    ? 'bg-red-50 text-red-700 font-medium'
+                    : 'text-red-500 hover:bg-red-50'}`}>
+                ⚙ 관리자
+              </Link>
+            )}
           </nav>
           <div className="hidden md:block">
             <SearchBar />

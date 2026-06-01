@@ -38,6 +38,34 @@ export async function buildApp() {
   // Health check
   app.get('/health', async () => ({ status: 'ok' }));
 
+  // 관리자 통계 API
+  app.get('/api/admin/stats', async (request, reply) => {
+    const { getDb } = require('./shared/database/connection');
+    const db = getDb();
+    const today = new Date().toISOString().split('T')[0];
+    const weekAgo = new Date(Date.now() - 7 * 86400000).toISOString();
+
+    const totalUsers = await db('users').count('id as c').first();
+    const activeUsers = await db('users').where('is_dormant', false).count('id as c').first();
+    const dormantUsers = await db('users').where('is_dormant', true).count('id as c').first();
+    const totalProjects = await db('projects').count('id as c').first();
+    const totalCards = await db('cards').whereNull('parent_id').count('id as c').first();
+    const completedCards = await db('cards').where('status', 'done').whereNull('parent_id').count('id as c').first();
+    const todayLogins = await db('users').where('last_login_at', '>=', today).count('id as c').first();
+    const weeklyCards = await db('cards').where('created_at', '>=', weekAgo).whereNull('parent_id').count('id as c').first();
+
+    return reply.send({
+      totalUsers: Number(totalUsers?.c || 0),
+      activeUsers: Number(activeUsers?.c || 0),
+      dormantUsers: Number(dormantUsers?.c || 0),
+      totalProjects: Number(totalProjects?.c || 0),
+      totalCards: Number(totalCards?.c || 0),
+      completedCards: Number(completedCards?.c || 0),
+      todayLogins: Number(todayLogins?.c || 0),
+      weeklyCards: Number(weeklyCards?.c || 0),
+    });
+  });
+
   // 통합 검색 API
   app.get('/api/search', async (request, reply) => {
     const { q } = request.query as { q?: string };
