@@ -63,7 +63,11 @@ export function DashboardView({ data, cards = [], members = [] }: DashboardViewP
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* 진행률 */}
-        <div className="bg-white border rounded-lg p-4">
+        <div className="bg-white border rounded-lg p-4 cursor-pointer hover:shadow-md"
+          onClick={() => {
+            const doneCards = cards.filter((c: any) => c.status === 'done');
+            setDetailView({ type: 'progress', title: '📊 완료된 업무 목록', items: doneCards });
+          }}>
           <h3 className="text-sm font-semibold mb-2">프로젝트 진행률</h3>
           <div className="flex items-center gap-3">
             <div className="flex-1 bg-gray-200 rounded-full h-4">
@@ -75,7 +79,7 @@ export function DashboardView({ data, cards = [], members = [] }: DashboardViewP
             </span>
           </div>
           <p className="text-xs text-gray-500 mt-1">
-            {data.progress.done} / {data.progress.total} 완료
+            {data.progress.done} / {data.progress.total} 완료 (클릭하여 상세)
           </p>
         </div>
 
@@ -83,15 +87,18 @@ export function DashboardView({ data, cards = [], members = [] }: DashboardViewP
         <div className="bg-white border rounded-lg p-4">
           <h3 className="text-sm font-semibold mb-2">요약</h3>
           <div className="grid grid-cols-3 gap-2 text-center">
-            <div>
+            <div className="cursor-pointer hover:bg-blue-50 rounded p-1"
+              onClick={() => setDetailView({ type: 'all', title: '📋 전체 업무', items: cards })}>
               <p className="text-2xl font-bold text-blue-600">{data.progress.total}</p>
               <p className="text-xs text-gray-500">전체</p>
             </div>
-            <div>
+            <div className="cursor-pointer hover:bg-green-50 rounded p-1"
+              onClick={() => setDetailView({ type: 'done', title: '✅ 완료 업무', items: cards.filter((c: any) => c.status === 'done') })}>
               <p className="text-2xl font-bold text-green-600">{data.progress.done}</p>
               <p className="text-xs text-gray-500">완료</p>
             </div>
-            <div>
+            <div className="cursor-pointer hover:bg-red-50 rounded p-1"
+              onClick={() => setDetailView({ type: 'overdue', title: '🚨 기한초과', items: overdueCards })}>
               <p className="text-2xl font-bold text-red-600">{overdueCards.length}</p>
               <p className="text-xs text-gray-500">기한초과</p>
             </div>
@@ -105,7 +112,12 @@ export function DashboardView({ data, cards = [], members = [] }: DashboardViewP
           <h3 className="text-sm font-semibold mb-3">컬럼별 카드 분포</h3>
           <div className="space-y-2">
             {data.columnDistribution.map((col) => (
-              <div key={col.column_name} className="flex items-center gap-2">
+              <div key={col.column_name}
+                className="flex items-center gap-2 cursor-pointer hover:bg-blue-50 rounded p-1"
+                onClick={() => {
+                  const colCards = cards.filter((c: any) => c.column_name === col.column_name);
+                  setDetailView({ type: 'column', title: `📂 ${col.column_name} 업무 목록`, items: colCards });
+                }}>
                 <span className="text-xs w-14 text-gray-600 truncate">
                   {col.column_name}
                 </span>
@@ -127,7 +139,12 @@ export function DashboardView({ data, cards = [], members = [] }: DashboardViewP
           {memberStats.length > 0 ? (
             <div className="space-y-2">
               {memberStats.map((m: any) => (
-                <div key={m.id} className="flex items-center gap-2">
+                <div key={m.id}
+                  className="flex items-center gap-2 cursor-pointer hover:bg-green-50 rounded p-1"
+                  onClick={() => {
+                    const memberCards = cards.filter((c: any) => c.assignee_id === m.id);
+                    setDetailView({ type: 'member', title: `👤 ${m.name} 업무 목록`, items: memberCards });
+                  }}>
                   <div className="w-6 h-6 rounded-full bg-gray-200 flex
                     items-center justify-center text-xs">
                     {m.name?.charAt(0)}
@@ -202,23 +219,38 @@ export function DashboardView({ data, cards = [], members = [] }: DashboardViewP
                 className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
             </div>
             <div className="flex-1 overflow-y-auto p-3">
+              {detailView.type === 'member' && detailView.items.length > 0 && (
+                <div className="flex gap-2 mb-3 text-xs">
+                  <span className="px-2 py-1 bg-green-100 text-green-700 rounded">
+                    완료: {detailView.items.filter((c: any) => c.status === 'done').length}
+                  </span>
+                  <span className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded">
+                    진행중: {detailView.items.filter((c: any) => c.status !== 'done').length}
+                  </span>
+                </div>
+              )}
               {detailView.items.length > 0 ? (
                 <div className="space-y-2">
                   {detailView.items.map((t: any) => (
                     <div key={t.id} className="border rounded-lg p-3">
                       <div className="flex justify-between items-start">
                         <h3 className="text-sm font-medium">{t.title}</h3>
-                        <span className={`text-xs px-1.5 py-0.5 rounded
-                          ${t.priority === 'urgent' ? 'bg-red-100 text-red-700' :
-                            t.priority === 'high' ? 'bg-orange-100 text-orange-700' :
-                            'bg-gray-100 text-gray-600'}`}>
-                          {t.priority}
-                        </span>
+                        <div className="flex gap-1">
+                          {t.status === 'done' && (
+                            <span className="text-xs px-1.5 py-0.5 rounded bg-green-100 text-green-700">완료</span>
+                          )}
+                          <span className={`text-xs px-1.5 py-0.5 rounded
+                            ${t.priority === 'urgent' ? 'bg-red-100 text-red-700' :
+                              t.priority === 'high' ? 'bg-orange-100 text-orange-700' :
+                              'bg-gray-100 text-gray-600'}`}>
+                            {t.priority}
+                          </span>
+                        </div>
                       </div>
                       <div className="flex gap-3 mt-2 text-xs text-gray-400">
                         {t.due_date && <span>마감: {t.due_date.split('T')[0]}</span>}
                         {t.column_name && <span>상태: {t.column_name}</span>}
-                        <span>우선순위: {t.priority}</span>
+                        {t.assignee_name && <span>담당: {t.assignee_name}</span>}
                       </div>
                     </div>
                   ))}
