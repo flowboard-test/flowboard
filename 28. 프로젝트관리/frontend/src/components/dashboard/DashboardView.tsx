@@ -14,6 +14,7 @@ interface DashboardViewProps {
 
 export function DashboardView({ data, cards = [], members = [] }: DashboardViewProps) {
   const [period, setPeriod] = useState<'daily' | 'weekly' | 'monthly'>('weekly');
+  const [detailView, setDetailView] = useState<{ type: string; title: string; items: any[] } | null>(null);
 
   if (!data) {
     return <p className="p-4 text-gray-500">데이터를 불러오는 중...</p>;
@@ -148,7 +149,8 @@ export function DashboardView({ data, cards = [], members = [] }: DashboardViewP
 
       {/* 마감 임박 / 기한 초과 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-white border rounded-lg p-4">
+        <div className="bg-white border rounded-lg p-4 cursor-pointer hover:shadow-md"
+          onClick={() => setDetailView({ type: 'urgent', title: '⏰ 마감 임박 업무', items: urgentCards })}>
           <h3 className="text-sm font-semibold mb-2 text-orange-600">
             ⏰ 마감 임박 ({urgentCards.length})
           </h3>
@@ -168,7 +170,8 @@ export function DashboardView({ data, cards = [], members = [] }: DashboardViewP
           </div>
         </div>
 
-        <div className="bg-white border rounded-lg p-4">
+        <div className="bg-white border rounded-lg p-4 cursor-pointer hover:shadow-md"
+          onClick={() => setDetailView({ type: 'overdue', title: '🚨 기한 초과 업무', items: overdueCards })}>
           <h3 className="text-sm font-semibold mb-2 text-red-600">
             🚨 기한 초과 ({overdueCards.length})
           </h3>
@@ -188,6 +191,45 @@ export function DashboardView({ data, cards = [], members = [] }: DashboardViewP
           </div>
         </div>
       </div>
+
+      {/* 상세 모달 */}
+      {detailView && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg w-[500px] max-h-[70vh] flex flex-col">
+            <div className="p-4 border-b flex justify-between items-center">
+              <h2 className="text-sm font-semibold">{detailView.title}</h2>
+              <button onClick={() => setDetailView(null)}
+                className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+            </div>
+            <div className="flex-1 overflow-y-auto p-3">
+              {detailView.items.length > 0 ? (
+                <div className="space-y-2">
+                  {detailView.items.map((t: any) => (
+                    <div key={t.id} className="border rounded-lg p-3">
+                      <div className="flex justify-between items-start">
+                        <h3 className="text-sm font-medium">{t.title}</h3>
+                        <span className={`text-xs px-1.5 py-0.5 rounded
+                          ${t.priority === 'urgent' ? 'bg-red-100 text-red-700' :
+                            t.priority === 'high' ? 'bg-orange-100 text-orange-700' :
+                            'bg-gray-100 text-gray-600'}`}>
+                          {t.priority}
+                        </span>
+                      </div>
+                      <div className="flex gap-3 mt-2 text-xs text-gray-400">
+                        {t.due_date && <span>마감: {t.due_date.split('T')[0]}</span>}
+                        {t.column_name && <span>상태: {t.column_name}</span>}
+                        <span>우선순위: {t.priority}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-center text-gray-400 py-8">업무가 없습니다</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
