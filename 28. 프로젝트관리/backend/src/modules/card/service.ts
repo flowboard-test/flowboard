@@ -68,7 +68,7 @@ export class CardService {
           .where('chain_id', chain.id)
           .orderBy('step_order', 'asc')
           .first();
-        if (firstStep && !input.assignee_id) {
+        if (firstStep) {
           await db('cards').where('id', cardId).update({
             assignee_id: firstStep.assignee_id,
           });
@@ -114,14 +114,6 @@ export class CardService {
     }
 
     const updatedCard = await db('cards').where('id', cardId).first();
-
-    // 상태가 done으로 변경되면 워크플로우 실행
-    if (data.status === 'done' && updatedCard) {
-      const { workflowEngine } = require('../transfer/workflow-engine');
-      await workflowEngine.checkAndExecute(
-        cardId, updatedCard.column_id, updatedCard.assignee_id || updatedCard.created_by
-      );
-    }
 
     return updatedCard;
   }
