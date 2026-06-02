@@ -10,11 +10,13 @@ interface DashboardViewProps {
   data: DashboardData | null;
   cards?: any[];
   members?: any[];
+  onCardClick?: (card: any) => void;
 }
 
-export function DashboardView({ data, cards = [], members = [] }: DashboardViewProps) {
+export function DashboardView({ data, cards = [], members = [], onCardClick }: DashboardViewProps) {
   const [period, setPeriod] = useState<'daily' | 'weekly' | 'monthly'>('weekly');
   const [detailView, setDetailView] = useState<{ type: string; title: string; items: any[] } | null>(null);
+  const [selectedCard, setSelectedCard] = useState<any | null>(null);
 
   if (!data) {
     return <p className="p-4 text-gray-500">데이터를 불러오는 중...</p>;
@@ -210,7 +212,7 @@ export function DashboardView({ data, cards = [], members = [] }: DashboardViewP
       </div>
 
       {/* 상세 모달 */}
-      {detailView && (
+      {detailView && !selectedCard && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg w-[500px] max-h-[70vh] flex flex-col">
             <div className="p-4 border-b flex justify-between items-center">
@@ -232,7 +234,8 @@ export function DashboardView({ data, cards = [], members = [] }: DashboardViewP
               {detailView.items.length > 0 ? (
                 <div className="space-y-2">
                   {detailView.items.map((t: any) => (
-                    <div key={t.id} className="border rounded-lg p-3">
+                    <div key={t.id} className="border rounded-lg p-3 cursor-pointer hover:bg-gray-50 hover:shadow-sm transition"
+                      onClick={() => onCardClick ? onCardClick(t) : setSelectedCard(t)}>
                       <div className="flex justify-between items-start">
                         <h3 className="text-sm font-medium">{t.title}</h3>
                         <div className="flex gap-1">
@@ -258,6 +261,61 @@ export function DashboardView({ data, cards = [], members = [] }: DashboardViewP
               ) : (
                 <p className="text-center text-gray-400 py-8">업무가 없습니다</p>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* 카드 상세 모달 */}
+      {selectedCard && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[60]">
+          <div className="bg-white rounded-lg w-[520px] max-h-[75vh] flex flex-col">
+            <div className="p-4 border-b flex justify-between items-center">
+              <h2 className="text-sm font-semibold">📝 업무 상세</h2>
+              <button onClick={() => setSelectedCard(null)}
+                className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+            </div>
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <div>
+                <h3 className="text-lg font-semibold">{selectedCard.title}</h3>
+                {selectedCard.description && (
+                  <p className="text-sm text-gray-600 mt-2">{selectedCard.description}</p>
+                )}
+              </div>
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="bg-gray-50 rounded p-2">
+                  <span className="text-xs text-gray-400">상태</span>
+                  <p className="font-medium">{selectedCard.column_name || selectedCard.status || '-'}</p>
+                </div>
+                <div className="bg-gray-50 rounded p-2">
+                  <span className="text-xs text-gray-400">우선순위</span>
+                  <p className={`font-medium ${
+                    selectedCard.priority === 'urgent' ? 'text-red-600' :
+                    selectedCard.priority === 'high' ? 'text-orange-600' : ''
+                  }`}>{selectedCard.priority || '-'}</p>
+                </div>
+                <div className="bg-gray-50 rounded p-2">
+                  <span className="text-xs text-gray-400">담당자</span>
+                  <p className="font-medium">{selectedCard.assignee_name || '-'}</p>
+                </div>
+                <div className="bg-gray-50 rounded p-2">
+                  <span className="text-xs text-gray-400">마감일</span>
+                  <p className={`font-medium ${
+                    selectedCard.due_date && new Date(selectedCard.due_date) < now ? 'text-red-600' : ''
+                  }`}>{selectedCard.due_date?.split('T')[0] || '-'}</p>
+                </div>
+                <div className="bg-gray-50 rounded p-2">
+                  <span className="text-xs text-gray-400">시작일</span>
+                  <p className="font-medium">{selectedCard.start_date?.split('T')[0] || '-'}</p>
+                </div>
+                <div className="bg-gray-50 rounded p-2">
+                  <span className="text-xs text-gray-400">생성일</span>
+                  <p className="font-medium">{selectedCard.created_at?.split('T')[0] || '-'}</p>
+                </div>
+              </div>
+            </div>
+            <div className="p-3 border-t flex justify-end">
+              <button onClick={() => setSelectedCard(null)}
+                className="px-4 py-1.5 text-sm bg-gray-100 rounded hover:bg-gray-200">닫기</button>
             </div>
           </div>
         </div>
