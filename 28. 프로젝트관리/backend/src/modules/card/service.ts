@@ -120,6 +120,11 @@ export class CardService {
 
   async delete(cardId: string) {
     const db = getDb();
+    const card = await db('cards').where('id', cardId).first();
+    if (!card) throw AppError.notFound('카드를 찾을 수 없습니다');
+    if (card.status === 'done') {
+      throw AppError.badRequest('CARD_DONE', '완료된 카드는 삭제할 수 없습니다');
+    }
     await db('cards').where('id', cardId).del();
   }
 

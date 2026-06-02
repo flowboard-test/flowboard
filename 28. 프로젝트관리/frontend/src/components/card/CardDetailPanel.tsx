@@ -79,6 +79,21 @@ export function CardDetailPanel({ cardId, projectId }: CardDetailPanelProps) {
     },
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: () =>
+      apiClient(`/cards/${cardId}`, { method: 'DELETE' }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['board', projectId] });
+      setSelectedCard(null);
+    },
+  });
+
+  const handleDelete = () => {
+    if (window.confirm('이 카드를 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.')) {
+      deleteMutation.mutate();
+    }
+  };
+
   if (!card) return null;
 
   return (
@@ -91,6 +106,9 @@ export function CardDetailPanel({ cardId, projectId }: CardDetailPanelProps) {
             className="text-xs text-blue-500 hover:text-blue-700">
             {isEditing ? '취소' : '수정'}
           </button>
+          <button onClick={handleDelete}
+            disabled={card.status === 'done'}
+            className={`text-xs ${card.status === 'done' ? 'text-gray-300 cursor-not-allowed' : 'text-red-500 hover:text-red-700'}`}>삭제</button>
           <button onClick={() => setSelectedCard(null)}
             className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
         </div>
