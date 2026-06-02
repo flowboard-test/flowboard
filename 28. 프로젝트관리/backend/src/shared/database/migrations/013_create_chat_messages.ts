@@ -8,6 +8,8 @@ export async function up(knex: Knex): Promise<void> {
     table.uuid('user_id').notNullable()
       .references('id').inTable('users');
     table.text('content').notNullable();
+    table.boolean('is_notice').defaultTo(false);
+    table.boolean('hide_from_guest').defaultTo(false);
     table.timestamp('created_at').defaultTo(knex.fn.now());
   });
 }

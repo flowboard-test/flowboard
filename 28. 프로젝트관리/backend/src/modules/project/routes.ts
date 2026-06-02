@@ -136,12 +136,16 @@ const projectRoutes: FastifyPluginAsync = async (app) => {
     preHandler: [requireProjectRole('member', 'admin', 'owner')],
   }, async (request, reply) => {
     const { id } = request.params as { id: string };
-    const { content } = request.body as { content: string };
+    const { content, is_notice, hide_from_guest } = request.body as {
+      content: string; is_notice?: boolean; hide_from_guest?: boolean;
+    };
     const { getDb } = require('../../shared/database/connection');
     const { v4: uid } = require('uuid');
     const db = getDb();
     await db('chat_messages').insert({
       id: uid(), project_id: id, user_id: request.userId!, content,
+      is_notice: is_notice || false,
+      hide_from_guest: hide_from_guest || false,
     });
     return reply.status(201).send({ message: 'sent' });
   });

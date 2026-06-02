@@ -107,12 +107,14 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
               </label>
             </div>
             <form onSubmit={sendMessage} className="flex gap-1">
-              <input type="text" value={message}
+              <textarea value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="메시지 입력..."
-                className="flex-1 border rounded px-2 py-1 text-sm" />
+                onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(e); } }}
+                placeholder="메시지 입력... (Shift+Enter: 줄바꿈)"
+                rows={3}
+                className="flex-1 border rounded px-2 py-1 text-sm resize-none" />
               <button type="submit"
-                className="px-3 py-1 bg-blue-500 text-white rounded text-sm">
+                className="px-3 py-1 bg-blue-500 text-white rounded text-sm self-end">
                 전송
               </button>
             </form>
@@ -153,27 +155,89 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
 }
 
 function DmTab() {
+  const [activeConvo, setActiveConvo] = useState<any>(null);
+  const [dmMessage, setDmMessage] = useState('');
+  const queryClient = useQueryClient();
+  const currentUser = useAuthStore((s) => s.user);
+
   const { data: users } = useQuery<any[]>({
     queryKey: ['dm-users'],
     queryFn: () => apiClient('/auth/users'),
   });
 
-  const queryClient = useQueryClient();
+  const { data: conversations } = useQuery<any[]>({
+    queryKey: ['conversations'],
+    queryFn: () => apiClient('/conversations'),
+  });
+
+  const { data: dmMessages } = useQuery<any[]>({
+    queryKey: ['dm-messages', activeConvo?.id],
+    queryFn: () => apiClient(`/conversations/${activeConvo.id}/messages`),
+    enabled: !!activeConvo,
+    refetchInterval: 3000,
+  });
+
   const createDm = useMutation({
     mutationFn: (id: string) =>
       apiClient('/conversations/dm', {
         method: 'POST',
         body: JSON.stringify({ target_user_id: id }),
       }),
-    onSuccess: () => {
+    onSuccess: (data: any) => {
       queryClient.invalidateQueries({ queryKey: ['conversations'] });
-      alert('DM 대화방이 생성되었습니다. 메신저 페이지에서 확인하세요.');
+      setActiveConvo(data);
     },
   });
 
+  const sendDm = useMutation({
+    mutationFn: (content: string) =>
+      apiClient(`/conversations/${activeConvo.id}/messages`, {
+        method: 'POST',
+        body: JSON.stringify({ content }),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['dm-messages', activeConvo.id] });
+      setDmMessage('');
+    },
+  });
+
+  if (activeConvo) {
+    return (
+      <div className="flex-1 flex flex-col">
+        <div className="p-2 border-b flex items-center gap-2">
+          <button onClick={() => setActiveConvo(null)}
+            className="text-xs text-blue-500">← 목록</button>
+          <span className="text-xs font-medium">1:1 대화</span>
+        </div>
+        <div className="flex-1 overflow-y-auto p-2 space-y-1 bg-gray-50">
+          {dmMessages?.map((m: any) => (
+            <div key={m.id} className={`flex flex-col
+              ${m.sender_id === currentUser?.id ? 'items-end' : 'items-start'}`}>
+              <span className="text-xs text-gray-400">{m.sender_name}</span>
+              <div className={`px-2 py-1 rounded-lg text-xs max-w-[75%]
+                ${m.sender_id === currentUser?.id
+                  ? 'bg-blue-500 text-white' : 'bg-white border'}`}>
+                {m.content}
+              </div>
+            </div>
+          ))}
+        </div>
+        <form onSubmit={(e) => { e.preventDefault(); if (dmMessage.trim()) sendDm.mutate(dmMessage); }}
+          className="p-2 border-t flex gap-1">
+          <input type="text" value={dmMessage}
+            onChange={(e) => setDmMessage(e.target.value)}
+            placeholder="메시지..."
+            className="flex-1 border rounded px-2 py-1 text-xs" />
+          <button type="submit"
+            className="px-2 py-1 bg-blue-500 text-white rounded text-xs">전송</button>
+        </form>
+      </div>
+    );
+  }
+
   return (
     <div className="flex-1 overflow-y-auto p-2">
-      <p className="text-xs text-gray-500 mb-2">1:1 대화할 상대 선택</p>
+      <p className="text-xs text-gray-500 mb-2">대화할 상대를 선택하세요</p>
       <div className="space-y-0.5">
         {users?.map((u: any) => (
           <button key={u.id}
