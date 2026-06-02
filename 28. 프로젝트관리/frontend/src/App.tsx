@@ -8,6 +8,7 @@ import { MyTasksPage } from '@/pages/MyTasksPage';
 import { AccountPage } from '@/pages/AccountPage';
 import { OkrPage } from '@/pages/OkrPage';
 import { AdminPage } from '@/pages/AdminPage';
+import { MessengerPage } from '@/pages/MessengerPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -27,6 +28,7 @@ function App() {
         <Route path="projects/:id" element={<ProjectPage />} />
         <Route path="projects/:id/okr" element={<OkrPage />} />
         <Route path="my-tasks" element={<MyTasksPage />} />
+        <Route path="messenger" element={<MessengerPage />} />
         <Route path="account" element={<AccountPage />} />
         <Route path="admin" element={<AdminPage />} />
       </Route>

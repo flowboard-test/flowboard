@@ -30,6 +30,7 @@ export function Layout() {
   const navItems = [
     { path: '/projects', label: '프로젝트' },
     { path: '/my-tasks', label: '내 업무' },
+    { path: '/messenger', label: '메신저' },
     { path: '/account', label: '계정' },
   ];
 

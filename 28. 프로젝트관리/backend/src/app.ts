@@ -260,6 +260,9 @@ export async function buildApp() {
   await app.register(import('./modules/dashboard/routes'), {
     prefix: '/api',
   });
+  await app.register(import('./modules/messenger/routes'), {
+    prefix: '/api',
+  });
 
   return app;
 }
