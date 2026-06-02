@@ -153,7 +153,6 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
 }
 
 function DmTab() {
-  const [targetId, setTargetId] = useState('');
   const { data: users } = useQuery<any[]>({
     queryKey: ['dm-users'],
     queryFn: () => apiClient('/auth/users'),
