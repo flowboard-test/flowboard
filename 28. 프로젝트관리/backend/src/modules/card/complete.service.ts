@@ -18,6 +18,13 @@ export class CardCompleteService {
     const column = await db('columns').where('id', card.column_id).first();
     const board = await db('boards').where('id', column.board_id).first();
 
+    // 보드의 컬럼들 조회 (칸반 이동용)
+    const boardColumns = await db('columns')
+      .where('board_id', column.board_id)
+      .orderBy('position', 'asc');
+    const inProgressCol = boardColumns.find((c: any) => c.name === '진행 중');
+    const doneCol = boardColumns.find((c: any) => c.name === '완료');
+
     // 워크플로우 체인 확인
     const chain = await db('workflow_chains')
       .where({ project_id: board.project_id, is_active: true })
@@ -69,10 +76,12 @@ export class CardCompleteService {
           workflow_step_id: nextStep.id,
         });
 
-        // 카드 담당자 변경 (다음 사람에게)
+        // 카드 담당자 변경 + "진행 중" 컬럼으로 이동
+        const targetColId = inProgressCol ? inProgressCol.id : card.column_id;
         await db('cards').where('id', cardId).update({
           assignee_id: nextStep.assignee_id,
-          status: 'todo',
+          status: 'in_progress',
+          column_id: targetColId,
           updated_at: db.fn.now(),
         });
 
@@ -116,9 +125,11 @@ export class CardCompleteService {
           next_assignee_id: nextStep.assignee_id,
         };
       } else {
-        // 마지막 단계이거나 워크플로우에 없는 사람 → 최종 완료
+        // 마지막 단계이거나 워크플로우에 없는 사람 → 최종 완료 + "완료" 컬럼 이동
+        const targetDoneCol = doneCol ? doneCol.id : card.column_id;
         await db('cards').where('id', cardId).update({
           status: 'done',
+          column_id: targetDoneCol,
           updated_at: db.fn.now(),
         });
 
@@ -133,9 +144,11 @@ export class CardCompleteService {
         return { status: 'done', message: '업무가 최종 완료되었습니다.' };
       }
     } else {
-      // 워크플로우 없음 → 단순 완료 처리
+      // 워크플로우 없음 → 단순 완료 처리 + "완료" 컬럼 이동
+      const targetDoneCol = doneCol ? doneCol.id : card.column_id;
       await db('cards').where('id', cardId).update({
         status: 'done',
+        column_id: targetDoneCol,
         updated_at: db.fn.now(),
       });
 

@@ -15,6 +15,13 @@ export class CardRejectService {
     const card = await db('cards').where('id', cardId).first();
     if (!card) throw AppError.notFound('카드를 찾을 수 없습니다');
 
+    // 보드 컬럼 조회 (검토 컬럼 이동용)
+    const column = await db('columns').where('id', card.column_id).first();
+    const boardColumns = await db('columns')
+      .where('board_id', column.board_id)
+      .orderBy('position', 'asc');
+    const reviewCol = boardColumns.find((c: any) => c.name === '검토');
+
     // 가장 최근 이관 기록에서 이전 담당자 찾기
     const lastTransfer = await db('transfers')
       .where('card_id', cardId)
@@ -43,10 +50,12 @@ export class CardRejectService {
       is_auto: false,
     });
 
-    // 카드 담당자를 이전 담당자로 변경
+    // 카드 담당자를 이전 담당자로 변경 + "검토" 컬럼으로 이동
+    const targetReviewCol = reviewCol ? reviewCol.id : card.column_id;
     await db('cards').where('id', cardId).update({
       assignee_id: previousAssignee,
-      status: 'todo',
+      status: 'review',
+      column_id: targetReviewCol,
       updated_at: db.fn.now(),
     });
 
@@ -75,8 +84,8 @@ export class CardRejectService {
 
     // 이전 담당자에게 알림
     const rejecter = await db('users').where('id', userId).first();
-    const column = await db('columns').where('id', card.column_id).first();
-    const board = await db('boards').where('id', column?.board_id).first();
+    const cardColumn = await db('columns').where('id', card.column_id).first();
+    const board = await db('boards').where('id', cardColumn?.board_id).first();
 
     await notificationService.sendRejectionNotification(
       previousAssignee,
