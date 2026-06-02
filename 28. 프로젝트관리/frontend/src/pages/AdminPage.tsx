@@ -808,6 +808,8 @@ function PasswordResetSection({ userId }: { userId: string }) {
 function ProjectOverviewTab() {
   const navigate = useNavigate();
   const [detailModal, setDetailModal] = useState<{ projectId: string; projectName: string; type: 'done' | 'overdue' } | null>(null);
+  const [filter, setFilter] = useState<'all' | 'done' | 'overdue'>('all');
+
   const { data: stats } = useQuery<any>({
     queryKey: ['admin-stats'],
     queryFn: () => apiClient('/admin/stats'),
@@ -818,13 +820,23 @@ function ProjectOverviewTab() {
     queryFn: () => apiClient('/admin/projects-overview'),
   });
 
+  // 필터링된 프로젝트
+  const filteredProjects = projects?.filter((p: any) => {
+    if (filter === 'done') return p.done > 0;
+    if (filter === 'overdue') return p.overdue > 0;
+    return true;
+  }) || [];
+
   return (
     <div className="p-6 max-w-4xl">
       <h2 className="text-sm font-semibold mb-4">전체 프로젝트 현황</h2>
 
-      {/* 요약 카드 */}
+      {/* 요약 카드 (클릭으로 필터) */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-        <div className="bg-white border rounded-lg p-3 text-center">
+        <div onClick={() => setFilter('all')}
+          className={`bg-white border rounded-lg p-3 text-center cursor-pointer
+            hover:shadow-md transition-shadow
+            ${filter === 'all' ? 'ring-2 ring-blue-400' : ''}`}>
           <p className="text-2xl font-bold text-blue-600">{stats?.totalProjects || 0}</p>
           <p className="text-xs text-gray-500">전체 프로젝트</p>
         </div>
@@ -832,17 +844,34 @@ function ProjectOverviewTab() {
           <p className="text-2xl font-bold text-gray-800">{stats?.totalCards || 0}</p>
           <p className="text-xs text-gray-500">전체 업무</p>
         </div>
-        <div className="bg-white border rounded-lg p-3 text-center">
+        <div onClick={() => setFilter('done')}
+          className={`bg-white border rounded-lg p-3 text-center cursor-pointer
+            hover:shadow-md transition-shadow
+            ${filter === 'done' ? 'ring-2 ring-green-400' : ''}`}>
           <p className="text-2xl font-bold text-green-600">{stats?.completedCards || 0}</p>
           <p className="text-xs text-gray-500">완료된 업무</p>
         </div>
-        <div className="bg-white border rounded-lg p-3 text-center">
+        <div onClick={() => setFilter('overdue')}
+          className={`bg-white border rounded-lg p-3 text-center cursor-pointer
+            hover:shadow-md transition-shadow
+            ${filter === 'overdue' ? 'ring-2 ring-red-400' : ''}`}>
           <p className="text-2xl font-bold text-red-600">
             {projects?.reduce((sum, p) => sum + (p.overdue || 0), 0) || 0}
           </p>
           <p className="text-xs text-gray-500">기한 초과</p>
         </div>
       </div>
+
+      {/* 필터 표시 */}
+      {filter !== 'all' && (
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-xs text-gray-500">
+            필터: {filter === 'done' ? '완료 업무가 있는 프로젝트' : '기한 초과 업무가 있는 프로젝트'}
+          </span>
+          <button onClick={() => setFilter('all')}
+            className="text-xs text-blue-500">전체 보기</button>
+        </div>
+      )}
 
       {/* 프로젝트별 상세 */}
       <div className="bg-white border rounded-lg overflow-hidden">
@@ -858,7 +887,7 @@ function ProjectOverviewTab() {
             </tr>
           </thead>
           <tbody>
-            {projects?.map((p: any) => (
+            {filteredProjects.map((p: any) => (
               <tr key={p.id} className="border-t hover:bg-gray-50 cursor-pointer"
                 onClick={() => navigate(`/projects/${p.id}`)}>
                 <td className="px-3 py-2 font-medium text-blue-600 hover:underline">
