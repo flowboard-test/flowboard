@@ -183,12 +183,17 @@ export class CardService {
         .whereNot('id', cardId)
         .increment('position', 1);
 
-      // 카드 이동
+      // 카드 이동 + 컬럼명에 따라 status 동기화
+      const statusMap: Record<string, string> = {
+        '할 일': 'todo', '진행 중': 'in_progress', '검토': 'review', '완료': 'done',
+      };
+      const newStatus = statusMap[targetColumn.name] || card.status;
       await trx('cards')
         .where('id', cardId)
         .update({
           column_id: input.target_column_id,
           position: input.position,
+          status: newStatus,
           updated_at: trx.fn.now(),
         });
 
