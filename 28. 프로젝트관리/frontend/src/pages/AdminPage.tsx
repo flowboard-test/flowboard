@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/api/client';
 import { useAuthStore } from '@/stores/authStore';
 
-type AdminTab = 'org' | 'position' | 'rank' | 'permission' | 'upload';
+type AdminTab = 'org' | 'position' | 'rank' | 'permission' | 'upload' | 'overview';
 
 export function AdminPage() {
   const [tab, setTab] = useState<AdminTab>('org');
@@ -18,6 +18,7 @@ export function AdminPage() {
     { key: 'rank', label: '직책 관리' },
     { key: 'permission', label: '권한 관리' },
     { key: 'upload', label: '조직도 업로드' },
+    { key: 'overview', label: '프로젝트 현황' },
   ] as const;
 
   const { data: orgData } = useQuery<any>({
@@ -130,6 +131,7 @@ export function AdminPage() {
       {tab === 'permission' && <PermissionTab />}
       {tab === 'position' && <PositionTab />}
       {tab === 'rank' && <RankTab />}
+      {tab === 'overview' && <ProjectOverviewTab />}
     </div>
   );
 }
@@ -797,6 +799,86 @@ function PasswordResetSection({ userId }: { userId: string }) {
           {msg}
         </p>
       )}
+    </div>
+  );
+}
+
+// === 전체 프로젝트 현황 ===
+function ProjectOverviewTab() {
+  const { data: stats } = useQuery<any>({
+    queryKey: ['admin-stats'],
+    queryFn: () => apiClient('/admin/stats'),
+  });
+
+  const { data: projects } = useQuery<any[]>({
+    queryKey: ['admin-projects-overview'],
+    queryFn: () => apiClient('/admin/projects-overview'),
+  });
+
+  return (
+    <div className="p-6 max-w-4xl">
+      <h2 className="text-sm font-semibold mb-4">전체 프로젝트 현황</h2>
+
+      {/* 요약 카드 */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+        <div className="bg-white border rounded-lg p-3 text-center">
+          <p className="text-2xl font-bold text-blue-600">{stats?.totalProjects || 0}</p>
+          <p className="text-xs text-gray-500">전체 프로젝트</p>
+        </div>
+        <div className="bg-white border rounded-lg p-3 text-center">
+          <p className="text-2xl font-bold text-gray-800">{stats?.totalCards || 0}</p>
+          <p className="text-xs text-gray-500">전체 업무</p>
+        </div>
+        <div className="bg-white border rounded-lg p-3 text-center">
+          <p className="text-2xl font-bold text-green-600">{stats?.completedCards || 0}</p>
+          <p className="text-xs text-gray-500">완료된 업무</p>
+        </div>
+        <div className="bg-white border rounded-lg p-3 text-center">
+          <p className="text-2xl font-bold text-red-600">
+            {projects?.reduce((sum, p) => sum + (p.overdue || 0), 0) || 0}
+          </p>
+          <p className="text-xs text-gray-500">기한 초과</p>
+        </div>
+      </div>
+
+      {/* 프로젝트별 상세 */}
+      <div className="bg-white border rounded-lg overflow-hidden">
+        <table className="w-full text-sm">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="text-left px-3 py-2 text-xs">프로젝트</th>
+              <th className="text-left px-3 py-2 text-xs">개설자</th>
+              <th className="text-center px-3 py-2 text-xs">전체</th>
+              <th className="text-center px-3 py-2 text-xs">완료</th>
+              <th className="text-center px-3 py-2 text-xs">기한초과</th>
+              <th className="text-center px-3 py-2 text-xs">진행률</th>
+            </tr>
+          </thead>
+          <tbody>
+            {projects?.map((p: any) => (
+              <tr key={p.id} className="border-t hover:bg-gray-50">
+                <td className="px-3 py-2 font-medium">{p.name}</td>
+                <td className="px-3 py-2 text-gray-500">{p.owner_name}</td>
+                <td className="px-3 py-2 text-center">{p.total}</td>
+                <td className="px-3 py-2 text-center text-green-600">{p.done}</td>
+                <td className="px-3 py-2 text-center text-red-600">{p.overdue}</td>
+                <td className="px-3 py-2">
+                  <div className="flex items-center gap-1">
+                    <div className="flex-1 bg-gray-200 rounded-full h-2">
+                      <div className="bg-blue-500 h-2 rounded-full"
+                        style={{ width: `${p.progress}%` }} />
+                    </div>
+                    <span className="text-xs text-gray-600 w-8">{p.progress}%</span>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {(!projects || projects.length === 0) && (
+          <p className="p-4 text-center text-gray-400 text-sm">프로젝트가 없습니다</p>
+        )}
+      </div>
     </div>
   );
 }

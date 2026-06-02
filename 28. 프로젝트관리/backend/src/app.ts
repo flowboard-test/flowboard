@@ -179,6 +179,42 @@ export async function buildApp() {
     });
   });
 
+  // 관리자: 전체 프로젝트 상세 현황
+  app.get('/api/admin/projects-overview', async (request, reply) => {
+    const { getDb } = require('./shared/database/connection');
+    const db = getDb();
+    const now = new Date().toISOString().split('T')[0];
+
+    const projects = await db('projects')
+      .where('is_archived', false)
+      .join('users', 'projects.owner_id', 'users.id')
+      .select('projects.*', 'users.name as owner_name');
+
+    const result = [];
+    for (const project of projects) {
+      const board = await db('boards').where('project_id', project.id).first();
+      if (!board) { result.push({ ...project, total: 0, done: 0, overdue: 0, progress: 0 }); continue; }
+      const cols = await db('columns').where('board_id', board.id);
+      const colIds = cols.map((c: any) => c.id);
+      if (colIds.length === 0) { result.push({ ...project, total: 0, done: 0, overdue: 0, progress: 0 }); continue; }
+
+      const total = await db('cards').whereIn('column_id', colIds).whereNull('parent_id').count('id as c').first();
+      const done = await db('cards').whereIn('column_id', colIds).whereNull('parent_id').where('status', 'done').count('id as c').first();
+      const overdue = await db('cards').whereIn('column_id', colIds).whereNull('parent_id')
+        .whereNot('status', 'done').where('due_date', '<', now).count('id as c').first();
+
+      const t = Number(total?.c || 0);
+      const d = Number(done?.c || 0);
+      result.push({
+        ...project,
+        total: t, done: d,
+        overdue: Number(overdue?.c || 0),
+        progress: t > 0 ? Math.round((d / t) * 100) : 0,
+      });
+    }
+    return reply.send(result);
+  });
+
   // 통합 검색 API
   app.get('/api/search', async (request, reply) => {
     const { q } = request.query as { q?: string };
