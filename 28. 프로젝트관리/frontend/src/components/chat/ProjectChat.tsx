@@ -15,9 +15,25 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
   const [message, setMessage] = useState('');
   const [isNotice, setIsNotice] = useState(false);
   const [hideGuest, setHideGuest] = useState(false);
+  const [attachedFile, setAttachedFile] = useState<{ name: string; data: string; type: string } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const currentUser = useAuthStore((s) => s.user);
+
+  function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      setAttachedFile({
+        name: file.name,
+        data: reader.result as string,
+        type: file.type,
+      });
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  }
 
   const { data: messages } = useQuery<any[]>({
     queryKey: ['chat', projectId],
@@ -32,15 +48,25 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
   async function sendMessage(e?: React.FormEvent | React.KeyboardEvent, customContent?: string) {
     if (e) e.preventDefault();
     const content = customContent || message;
-    if (!content.trim()) return;
+    if (!content.trim() && !attachedFile) return;
+
+    let finalContent = content;
+    if (attachedFile) {
+      finalContent = JSON.stringify({
+        text: content,
+        file: { name: attachedFile.name, data: attachedFile.data, type: attachedFile.type },
+      });
+    }
+
     try {
       await apiClient(`/projects/${projectId}/chat`, {
         method: 'POST',
         body: JSON.stringify({
-          content, is_notice: isNotice, hide_from_guest: hideGuest,
+          content: finalContent, is_notice: isNotice, hide_from_guest: hideGuest,
         }),
       });
       setMessage('');
+      setAttachedFile(null);
       setIsNotice(false);
       setHideGuest(false);
       queryClient.invalidateQueries({ queryKey: ['chat', projectId] });
@@ -92,7 +118,7 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
                 <div className={`px-2.5 py-1 rounded-lg text-sm max-w-[75%]
                   ${msg.user_id === currentUser?.id
                     ? 'bg-blue-500 text-white' : 'bg-white border'}`}>
-                  {msg.content}
+                  <ChatMessageContent content={msg.content} />
                 </div>
               </div>
             ))}
@@ -112,13 +138,23 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
               </label>
               <label className="flex items-center gap-0.5 text-xs text-gray-500 ml-auto cursor-pointer">
                 📎 파일
-                <input type="file" className="hidden"
-                  onChange={(e) => {
-                    const f = e.target.files?.[0];
-                    if (f) setMessage((prev) => prev + ` [파일: ${f.name}]`);
-                  }} />
+                <input type="file" className="hidden" onChange={handleFileSelect} />
               </label>
             </div>
+
+            {/* 첨부파일 미리보기 */}
+            {attachedFile && (
+              <div className="flex items-center gap-2 mb-1 bg-gray-100 rounded px-2 py-1">
+                {attachedFile.type.startsWith('image/') ? (
+                  <img src={attachedFile.data} alt="" className="w-8 h-8 rounded object-cover" />
+                ) : (
+                  <span className="text-xs">📎</span>
+                )}
+                <span className="text-xs flex-1 truncate">{attachedFile.name}</span>
+                <button onClick={() => setAttachedFile(null)}
+                  className="text-xs text-red-400">✕</button>
+              </div>
+            )}
 
             {isNotice ? (
               <NoticeForm
@@ -321,4 +357,39 @@ function NoticeForm({ onSubmit, onCancel }: {
       </div>
     </div>
   );
+}
+
+// === 메시지 내용 렌더링 (파일 포함) ===
+function ChatMessageContent({ content }: { content: string }) {
+  // JSON 파일 첨부 메시지 파싱 시도
+  try {
+    const parsed = JSON.parse(content);
+    if (parsed.file) {
+      const isImage = parsed.file.type?.startsWith('image/');
+      return (
+        <div>
+          {parsed.text && <p className="mb-1">{parsed.text}</p>}
+          {isImage ? (
+            <a href={parsed.file.data} download={parsed.file.name}
+              className="block">
+              <img src={parsed.file.data} alt={parsed.file.name}
+                className="max-w-[200px] max-h-[150px] rounded border cursor-pointer" />
+              <span className="text-xs opacity-70">📥 {parsed.file.name}</span>
+            </a>
+          ) : (
+            <a href={parsed.file.data} download={parsed.file.name}
+              className="flex items-center gap-1 bg-black/10 rounded px-2 py-1 mt-1">
+              <span>📎</span>
+              <span className="text-xs underline">{parsed.file.name}</span>
+              <span className="text-xs opacity-70">📥</span>
+            </a>
+          )}
+        </div>
+      );
+    }
+  } catch {
+    // JSON이 아니면 일반 텍스트
+  }
+
+  return <span className="whitespace-pre-wrap">{content}</span>;
 }
