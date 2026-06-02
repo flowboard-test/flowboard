@@ -179,6 +179,34 @@ export async function buildApp() {
     });
   });
 
+  // 관리자: 프로젝트별 업무 상세 (완료/기한초과)
+  app.get('/api/admin/projects/:id/tasks', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { type } = request.query as { type: string };
+    const { getDb } = require('./shared/database/connection');
+    const db = getDb();
+    const now = new Date().toISOString().split('T')[0];
+
+    const board = await db('boards').where('project_id', id).first();
+    if (!board) return reply.send([]);
+    const cols = await db('columns').where('board_id', board.id);
+    const colIds = cols.map((c: any) => c.id);
+    if (colIds.length === 0) return reply.send([]);
+
+    let query = db('cards').whereIn('column_id', colIds).whereNull('parent_id')
+      .leftJoin('users', 'cards.assignee_id', 'users.id')
+      .select('cards.*', 'users.name as assignee_name');
+
+    if (type === 'done') {
+      query = query.where('cards.status', 'done');
+    } else if (type === 'overdue') {
+      query = query.whereNot('cards.status', 'done').where('cards.due_date', '<', now);
+    }
+
+    const tasks = await query.limit(50);
+    return reply.send(tasks);
+  });
+
   // 관리자: 전체 프로젝트 상세 현황
   app.get('/api/admin/projects-overview', async (request, reply) => {
     const { getDb } = require('./shared/database/connection');

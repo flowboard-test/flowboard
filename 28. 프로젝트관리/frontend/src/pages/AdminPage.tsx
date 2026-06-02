@@ -807,6 +807,7 @@ function PasswordResetSection({ userId }: { userId: string }) {
 // === 전체 프로젝트 현황 ===
 function ProjectOverviewTab() {
   const navigate = useNavigate();
+  const [detailModal, setDetailModal] = useState<{ projectId: string; projectName: string; type: 'done' | 'overdue' } | null>(null);
   const { data: stats } = useQuery<any>({
     queryKey: ['admin-stats'],
     queryFn: () => apiClient('/admin/stats'),
@@ -865,8 +866,14 @@ function ProjectOverviewTab() {
                 </td>
                 <td className="px-3 py-2 text-gray-500">{p.owner_name}</td>
                 <td className="px-3 py-2 text-center">{p.total}</td>
-                <td className="px-3 py-2 text-center text-green-600">{p.done}</td>
-                <td className="px-3 py-2 text-center text-red-600">{p.overdue}</td>
+                <td className="px-3 py-2 text-center text-green-600 cursor-pointer hover:underline"
+                  onClick={(e) => { e.stopPropagation(); if (p.done > 0) setDetailModal({ projectId: p.id, projectName: p.name, type: 'done' }); }}>
+                  {p.done}
+                </td>
+                <td className="px-3 py-2 text-center text-red-600 cursor-pointer hover:underline"
+                  onClick={(e) => { e.stopPropagation(); if (p.overdue > 0) setDetailModal({ projectId: p.id, projectName: p.name, type: 'overdue' }); }}>
+                  {p.overdue}
+                </td>
                 <td className="px-3 py-2">
                   <div className="flex items-center gap-1">
                     <div className="flex-1 bg-gray-200 rounded-full h-2">
@@ -883,6 +890,68 @@ function ProjectOverviewTab() {
         {(!projects || projects.length === 0) && (
           <p className="p-4 text-center text-gray-400 text-sm">프로젝트가 없습니다</p>
         )}
+      </div>
+
+      {detailModal && (
+        <TaskDetailModal
+          projectId={detailModal.projectId}
+          projectName={detailModal.projectName}
+          type={detailModal.type}
+          onClose={() => setDetailModal(null)}
+        />
+      )}
+    </div>
+  );
+}
+
+// === 업무 상세 목록 모달 ===
+function TaskDetailModal({ projectId, projectName, type, onClose }: {
+  projectId: string; projectName: string; type: 'done' | 'overdue'; onClose: () => void;
+}) {
+  const { data: tasks } = useQuery<any[]>({
+    queryKey: ['admin-tasks', projectId, type],
+    queryFn: () => apiClient(`/admin/projects/${projectId}/tasks?type=${type}`),
+  });
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg w-[500px] max-h-[70vh] flex flex-col">
+        <div className="p-4 border-b flex justify-between items-center">
+          <div>
+            <h2 className="text-sm font-semibold">{projectName}</h2>
+            <p className="text-xs text-gray-500">
+              {type === 'done' ? '완료된 업무' : '기한 초과 업무'}
+            </p>
+          </div>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-3">
+          {tasks && tasks.length > 0 ? (
+            <div className="space-y-2">
+              {tasks.map((t: any) => (
+                <div key={t.id} className="border rounded-lg p-3">
+                  <div className="flex justify-between items-start">
+                    <h3 className="text-sm font-medium">{t.title}</h3>
+                    <span className={`text-xs px-1.5 py-0.5 rounded
+                      ${type === 'done' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                      {type === 'done' ? '완료' : '기한초과'}
+                    </span>
+                  </div>
+                  {t.description && (
+                    <p className="text-xs text-gray-600 mt-1">{t.description}</p>
+                  )}
+                  <div className="flex gap-3 mt-2 text-xs text-gray-400">
+                    <span>우선순위: {t.priority}</span>
+                    {t.due_date && <span>마감: {t.due_date.split('T')[0]}</span>}
+                    {t.assignee_name && <span>담당: {t.assignee_name}</span>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-gray-400 text-sm py-8">업무가 없습니다</p>
+          )}
+        </div>
       </div>
     </div>
   );
