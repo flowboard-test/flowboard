@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/api/client';
 import { useAuthStore } from '@/stores/authStore';
+import { useNavigate } from 'react-router-dom';
 
 type AdminTab = 'org' | 'position' | 'rank' | 'permission' | 'upload' | 'overview';
 
@@ -805,6 +806,7 @@ function PasswordResetSection({ userId }: { userId: string }) {
 
 // === 전체 프로젝트 현황 ===
 function ProjectOverviewTab() {
+  const navigate = useNavigate();
   const { data: stats } = useQuery<any>({
     queryKey: ['admin-stats'],
     queryFn: () => apiClient('/admin/stats'),
@@ -856,8 +858,11 @@ function ProjectOverviewTab() {
           </thead>
           <tbody>
             {projects?.map((p: any) => (
-              <tr key={p.id} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 font-medium">{p.name}</td>
+              <tr key={p.id} className="border-t hover:bg-gray-50 cursor-pointer"
+                onClick={() => navigate(`/projects/${p.id}`)}>
+                <td className="px-3 py-2 font-medium text-blue-600 hover:underline">
+                  {p.name}
+                </td>
                 <td className="px-3 py-2 text-gray-500">{p.owner_name}</td>
                 <td className="px-3 py-2 text-center">{p.total}</td>
                 <td className="px-3 py-2 text-center text-green-600">{p.done}</td>
