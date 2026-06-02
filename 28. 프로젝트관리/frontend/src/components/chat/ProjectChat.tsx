@@ -29,19 +29,23 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  async function sendMessage(e: React.FormEvent) {
-    e.preventDefault();
+  async function sendMessage(e?: React.FormEvent | React.KeyboardEvent) {
+    if (e) e.preventDefault();
     if (!message.trim()) return;
-    await apiClient(`/projects/${projectId}/chat`, {
-      method: 'POST',
-      body: JSON.stringify({
-        content: message, is_notice: isNotice, hide_from_guest: hideGuest,
-      }),
-    });
-    setMessage('');
-    setIsNotice(false);
-    setHideGuest(false);
-    queryClient.invalidateQueries({ queryKey: ['chat', projectId] });
+    try {
+      await apiClient(`/projects/${projectId}/chat`, {
+        method: 'POST',
+        body: JSON.stringify({
+          content: message, is_notice: isNotice, hide_from_guest: hideGuest,
+        }),
+      });
+      setMessage('');
+      setIsNotice(false);
+      setHideGuest(false);
+      queryClient.invalidateQueries({ queryKey: ['chat', projectId] });
+    } catch (err) {
+      console.error('메시지 전송 실패:', err);
+    }
   }
 
   if (!isOpen) {

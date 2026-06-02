@@ -142,11 +142,20 @@ const projectRoutes: FastifyPluginAsync = async (app) => {
     const { getDb } = require('../../shared/database/connection');
     const { v4: uid } = require('uuid');
     const db = getDb();
-    await db('chat_messages').insert({
+    const msgData: any = {
       id: uid(), project_id: id, user_id: request.userId!, content,
-      is_notice: is_notice || false,
-      hide_from_guest: hide_from_guest || false,
-    });
+    };
+    // is_notice, hide_from_guest 컬럼이 있는 경우에만 추가
+    if (is_notice) msgData.is_notice = true;
+    if (hide_from_guest) msgData.hide_from_guest = true;
+    try {
+      await db('chat_messages').insert(msgData);
+    } catch {
+      // 컬럼이 없는 경우 기본 필드만으로 재시도
+      await db('chat_messages').insert({
+        id: msgData.id, project_id: id, user_id: request.userId!, content,
+      });
+    }
     return reply.status(201).send({ message: 'sent' });
   });
 };
