@@ -41,6 +41,68 @@ export class CardCompleteService {
         (s) => s.assignee_id === userId
       );
 
+      // 워크플로우에 없는 사람(카드 생성자 등)이 완료한 경우 → 첫 번째 담당자에게 이관
+      if (currentStepIdx === -1) {
+        const firstStep = steps[0];
+        const transferId = uuid();
+
+        await db('transfers').insert({
+          id: transferId,
+          card_id: cardId,
+          from_user_id: userId,
+          to_user_id: firstStep.assignee_id,
+          resolution_type: 'completed',
+          comment: comment || `${card.title} → 워크플로우 시작`,
+          is_auto: true,
+          workflow_step_id: firstStep.id,
+        });
+
+        const targetColId = inProgressCol ? inProgressCol.id : card.column_id;
+        await db('cards').where('id', cardId).update({
+          assignee_id: firstStep.assignee_id,
+          status: 'in_progress',
+          column_id: targetColId,
+          updated_at: db.fn.now(),
+        });
+
+        await db('resolutions').insert({
+          id: uuid(),
+          card_id: cardId,
+          transfer_id: transferId,
+          type: 'completed',
+          comment: comment || '워크플로우 시작',
+          created_by: userId,
+        });
+
+        await db('card_timeline').insert({
+          id: uuid(),
+          card_id: cardId,
+          event_type: 'auto_transferred',
+          actor_id: userId,
+          payload: JSON.stringify({
+            from_user_id: userId,
+            to_user_id: firstStep.assignee_id,
+            step_order: firstStep.step_order,
+            chain_name: chain.name,
+          }),
+        });
+
+        const fromUser = await db('users').where('id', userId).first();
+        await notificationService.sendTransferNotification(
+          firstStep.assignee_id,
+          fromUser?.name || '시스템',
+          card.title,
+          cardId,
+          board.project_id
+        );
+
+        return {
+          status: 'transferred',
+          message: '워크플로우가 시작되었습니다. 첫 번째 담당자에게 전달되었습니다.',
+          next_assignee_id: firstStep.assignee_id,
+        };
+      }
+
       // 이전 단계 완료 여부 검증
       if (currentStepIdx > 0) {
         const prevStep = steps[currentStepIdx - 1];

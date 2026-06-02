@@ -57,6 +57,25 @@ export class CardService {
       created_by: userId,
     });
 
+    // 워크플로우가 있으면 첫 번째 담당자 자동 배정
+    const board = await db('boards').where('id', column.board_id).first();
+    if (board) {
+      const chain = await db('workflow_chains')
+        .where({ project_id: board.project_id, is_active: true })
+        .first();
+      if (chain) {
+        const firstStep = await db('workflow_steps')
+          .where('chain_id', chain.id)
+          .orderBy('step_order', 'asc')
+          .first();
+        if (firstStep && !input.assignee_id) {
+          await db('cards').where('id', cardId).update({
+            assignee_id: firstStep.assignee_id,
+          });
+        }
+      }
+    }
+
     const card = await db('cards').where('id', cardId).first();
     return card;
   }
