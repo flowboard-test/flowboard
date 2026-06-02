@@ -186,10 +186,41 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
 
       {/* 파일 탭 */}
       {tab === 'files' && (
-        <div className="flex-1 overflow-y-auto p-3">
-          <p className="text-xs text-gray-400 text-center py-8">
-            채팅에서 공유된 파일이 여기에 표시됩니다
-          </p>
+        <div className="flex-1 overflow-y-auto p-2">
+          <h3 className="text-xs font-medium mb-2">공유된 파일</h3>
+          {(() => {
+            const fileMessages = messages?.filter((m: any) => {
+              try { const p = JSON.parse(m.content); return !!p.file; } catch { return false; }
+            }) || [];
+            if (fileMessages.length === 0) {
+              return <p className="text-xs text-gray-400 text-center py-8">공유된 파일이 없습니다</p>;
+            }
+            return (
+              <div className="space-y-1">
+                {fileMessages.map((m: any) => {
+                  const parsed = JSON.parse(m.content);
+                  const file = parsed.file;
+                  const isImage = file.type?.startsWith('image/');
+                  return (
+                    <a key={m.id} href={file.data} download={file.name}
+                      className="flex items-center gap-2 bg-white border rounded px-2 py-2
+                        hover:bg-gray-50 cursor-pointer">
+                      {isImage ? (
+                        <img src={file.data} alt="" className="w-10 h-10 rounded object-cover" />
+                      ) : (
+                        <span className="text-lg">📄</span>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-medium truncate">{file.name}</p>
+                        <p className="text-xs text-gray-400">{m.user_name}</p>
+                      </div>
+                      <span className="text-xs text-blue-500">📥</span>
+                    </a>
+                  );
+                })}
+              </div>
+            );
+          })()}
         </div>
       )}
 
