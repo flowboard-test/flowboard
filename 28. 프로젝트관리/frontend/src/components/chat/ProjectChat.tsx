@@ -165,11 +165,6 @@ function DmTab() {
     queryFn: () => apiClient('/auth/users'),
   });
 
-  const { data: conversations } = useQuery<any[]>({
-    queryKey: ['conversations'],
-    queryFn: () => apiClient('/conversations'),
-  });
-
   const { data: dmMessages } = useQuery<any[]>({
     queryKey: ['dm-messages', activeConvo?.id],
     queryFn: () => apiClient(`/conversations/${activeConvo.id}/messages`),
