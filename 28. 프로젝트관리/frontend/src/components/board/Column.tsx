@@ -93,11 +93,13 @@ export function ColumnComponent({ column }: ColumnProps) {
         </SortableContext>
       </div>
       <div className="p-2 border-t">
-        <button onClick={() => setIsAdding(true)}
-          className="w-full text-left text-sm text-gray-500
-            hover:text-gray-700 px-2 py-1">
-          + 카드 추가
-        </button>
+        {column.name === '할 일' && (
+          <button onClick={() => setIsAdding(true)}
+            className="w-full text-left text-sm text-gray-500
+              hover:text-gray-700 px-2 py-1">
+            + 카드 추가
+          </button>
+        )}
       </div>
 
       {/* 카드 생성 팝업 */}
