@@ -134,7 +134,7 @@ export function ProjectPage() {
       </div>
 
       <div className="flex-1 overflow-hidden flex">
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 overflow-y-auto">
           {viewMode === 'board' && <BoardView />}
           {viewMode === 'list' && (
             <ListView cards={allCards} columns={board?.columns || []} />
@@ -144,22 +144,22 @@ export function ProjectPage() {
           {viewMode === 'dashboard' && (
             <DashboardView data={dashboard} cards={allCards} members={members || []} />
           )}
+
+          {viewMode === 'board' && board?.columns && (
+            <WorkflowSetup projectId={id!} columns={board.columns} />
+          )}
+
+          {viewMode === 'board' && (
+            <div className="px-4 pb-4">
+              <GuestInvite projectId={id!} />
+            </div>
+          )}
         </div>
         <MemberPanel projectId={id!} />
       </div>
 
       {selectedCardId && (
         <CardDetailPanel cardId={selectedCardId} projectId={id!} />
-      )}
-
-      {viewMode === 'board' && board?.columns && (
-        <WorkflowSetup projectId={id!} columns={board.columns} />
-      )}
-
-      {viewMode === 'board' && (
-        <div className="px-4 pb-4">
-          <GuestInvite projectId={id!} />
-        </div>
       )}
 
       <ProjectChat projectId={id!} />
