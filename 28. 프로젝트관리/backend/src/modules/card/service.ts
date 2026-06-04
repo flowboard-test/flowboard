@@ -125,6 +125,18 @@ export class CardService {
     if (card.status === 'done') {
       throw AppError.badRequest('CARD_DONE', '완료된 카드는 삭제할 수 없습니다');
     }
+    // 관련 데이터 삭제 (외래키 제약)
+    await db('card_timeline').where('card_id', cardId).del();
+    await db('comments').where('card_id', cardId).del();
+    await db('attachments').where('card_id', cardId).del();
+    const transfers = await db('transfers').where('card_id', cardId);
+    const transferIds = transfers.map((t: any) => t.id);
+    if (transferIds.length > 0) {
+      await db('resolutions').whereIn('transfer_id', transferIds).del();
+    }
+    await db('transfers').where('card_id', cardId).del();
+    // 서브태스크 삭제
+    await db('cards').where('parent_id', cardId).del();
     await db('cards').where('id', cardId).del();
   }
 
