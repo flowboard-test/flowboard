@@ -5,6 +5,8 @@ import { CardItem } from './CardItem';
 import { apiClient } from '@/api/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 
 interface ColumnProps {
   column: {
@@ -116,10 +118,18 @@ export function ColumnComponent({ column }: ColumnProps) {
               onKeyDown={(e) => e.key === 'Enter' && handleAddCard()}
               placeholder="카드 제목 *" autoFocus
               className="w-full border rounded px-3 py-2 text-sm" />
-            <textarea value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="본문 내용 (선택)" rows={3}
-              className="w-full border rounded px-3 py-2 text-sm resize-none" />
+            <div className="border rounded overflow-hidden">
+              <ReactQuill value={description}
+                onChange={setDescription}
+                placeholder="본문 내용 (선택)"
+                theme="snow"
+                style={{ height: '120px' }}
+                modules={{ toolbar: [
+                  ['bold', 'italic', 'underline'],
+                  [{ list: 'ordered' }, { list: 'bullet' }],
+                  ['link'],
+                ] }} />
+            </div>
             <select value={priority}
               onChange={(e) => setPriority(e.target.value)}
               className="w-full border rounded px-3 py-2 text-sm">
