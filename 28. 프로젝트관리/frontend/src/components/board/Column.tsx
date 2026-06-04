@@ -40,7 +40,7 @@ export function ColumnComponent({ column }: ColumnProps) {
 
   async function handleAddCard() {
     if (!newTitle.trim()) return;
-    const res = await apiClient(`/columns/${column.id}/cards`, {
+    const res: any = await apiClient(`/columns/${column.id}/cards`, {
       method: 'POST',
       body: JSON.stringify({
         title: newTitle,
