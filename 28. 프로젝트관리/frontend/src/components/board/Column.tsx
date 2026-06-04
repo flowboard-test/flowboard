@@ -57,7 +57,7 @@ export function ColumnComponent({ column }: ColumnProps) {
 
   return (
     <div ref={setNodeRef}
-      className={`flex flex-col w-72 min-w-72 bg-gray-50 rounded-lg
+      className={`flex flex-col w-72 min-w-72 max-h-full bg-gray-50 rounded-lg
         ${isOver ? 'ring-2 ring-blue-400' : ''}
         ${isOverLimit ? 'border-2 border-red-300' : ''}`}>
       <div className="flex items-center justify-between p-3 border-b">
