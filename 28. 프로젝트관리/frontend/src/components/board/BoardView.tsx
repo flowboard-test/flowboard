@@ -6,6 +6,7 @@ import {
 } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 import { useBoardStore } from '@/stores/boardStore';
+import { useAuthStore } from '@/stores/authStore';
 import { ColumnComponent } from './Column';
 import { CardItem } from './CardItem';
 import { apiClient } from '@/api/client';
@@ -18,6 +19,8 @@ export function BoardView() {
   const queryClient = useQueryClient();
   const { id: projectId } = useParams();
   const [activeCard, setActiveCard] = useState<any>(null);
+  const [myOnly, setMyOnly] = useState(false);
+  const currentUser = useAuthStore((s) => s.user);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -113,6 +116,14 @@ export function BoardView() {
     }
   }
 
+  // 내 업무만 필터링된 컬럼
+  const filteredColumns = myOnly && currentUser
+    ? columns.map((col) => ({
+        ...col,
+        cards: col.cards.filter((c: any) => c.assignee_id === currentUser.id),
+      }))
+    : columns;
+
   return (
     <DndContext
       sensors={sensors}
@@ -121,8 +132,16 @@ export function BoardView() {
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="flex gap-4 overflow-x-auto p-4 h-full">
-        {columns.map((column) => (
+      <div className="px-4 pt-2 pb-1">
+        <label className="inline-flex items-center gap-2 text-xs cursor-pointer">
+          <input type="checkbox" checked={myOnly}
+            onChange={(e) => setMyOnly(e.target.checked)}
+            className="rounded" />
+          <span>내 업무만 보기</span>
+        </label>
+      </div>
+      <div className="flex gap-4 overflow-x-auto p-4 pt-2 h-full">
+        {filteredColumns.map((column) => (
           <ColumnComponent key={column.id} column={column} />
         ))}
       </div>

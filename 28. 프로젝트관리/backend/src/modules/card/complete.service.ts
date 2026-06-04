@@ -22,7 +22,7 @@ export class CardCompleteService {
     const boardColumns = await db('columns')
       .where('board_id', column.board_id)
       .orderBy('position', 'asc');
-    const todoCol = boardColumns.find((c: any) => c.name === '할 일');
+    const inProgressCol = boardColumns.find((c: any) => c.name === '진행 중');
     const doneCol = boardColumns.find((c: any) => c.name === '완료');
 
     // 워크플로우 체인 확인
@@ -57,10 +57,10 @@ export class CardCompleteService {
           workflow_step_id: firstStep.id,
         });
 
-        const targetColId = todoCol ? todoCol.id : card.column_id;
+        const targetColId = inProgressCol ? inProgressCol.id : card.column_id;
         await db('cards').where('id', cardId).update({
           assignee_id: firstStep.assignee_id,
-          status: 'todo',
+          status: 'in_progress',
           column_id: targetColId,
           updated_at: db.fn.now(),
         });
@@ -138,11 +138,11 @@ export class CardCompleteService {
           workflow_step_id: nextStep.id,
         });
 
-        // 카드 담당자 변경 + "할 일" 컬럼으로 이동
-        const targetColId = todoCol ? todoCol.id : card.column_id;
+        // 카드 담당자 변경 + "진행 중" 컬럼으로 이동
+        const targetColId = inProgressCol ? inProgressCol.id : card.column_id;
         await db('cards').where('id', cardId).update({
           assignee_id: nextStep.assignee_id,
-          status: 'todo',
+          status: 'in_progress',
           column_id: targetColId,
           updated_at: db.fn.now(),
         });
