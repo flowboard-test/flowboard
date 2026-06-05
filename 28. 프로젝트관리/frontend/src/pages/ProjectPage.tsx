@@ -11,6 +11,7 @@ import { CalendarView } from '@/components/views/CalendarView';
 import { DashboardView } from '@/components/dashboard/DashboardView';
 import { CardDetailPanel } from '@/components/card/CardDetailPanel';
 import { WorkflowSetup } from '@/components/board/WorkflowSetup';
+import { AddCardModal } from '@/components/board/AddCardModal';
 import { ProjectChat } from '@/components/chat/ProjectChat';
 import { GuestInvite } from '@/components/project/GuestInvite';
 import { MemberPanel } from '@/components/project/MemberPanel';
@@ -24,6 +25,7 @@ export function ProjectPage() {
   const setColumns = useBoardStore((s) => s.setColumns);
   const [isEditingName, setIsEditingName] = useState(false);
   const [editName, setEditName] = useState('');
+  const [showAddCard, setShowAddCard] = useState(false);
   const queryClient = useQueryClient();
 
   useRealtime(id || null);
@@ -131,6 +133,11 @@ export function ProjectPage() {
             {v.label}
           </button>
         ))}
+        <button onClick={() => setShowAddCard(true)}
+          className="px-3 py-1 rounded text-xs bg-green-500 text-white
+            hover:bg-green-600 ml-2">
+          + 카드 추가
+        </button>
       </div>
 
       <div className="flex-1 overflow-hidden flex">
@@ -163,6 +170,15 @@ export function ProjectPage() {
       )}
 
       <ProjectChat projectId={id!} />
+
+      {/* 카드 추가 모달 */}
+      {showAddCard && board?.columns && (
+        <AddCardModal
+          columns={board.columns}
+          projectId={id!}
+          onClose={() => setShowAddCard(false)}
+        />
+      )}
     </div>
   );
 }
