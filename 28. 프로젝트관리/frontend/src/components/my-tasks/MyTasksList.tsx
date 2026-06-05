@@ -94,6 +94,7 @@ export function MyTasksList({ tasks }: MyTasksListProps) {
             cardId={selectedTask.id}
             projectId={selectedTask.project_id}
             inline
+            onClose={() => setSelectedTask(null)}
           />
         </div>
       )}

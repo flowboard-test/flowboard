@@ -12,9 +12,10 @@ interface CardDetailPanelProps {
   cardId: string;
   projectId: string;
   inline?: boolean;
+  onClose?: () => void;
 }
 
-export function CardDetailPanel({ cardId, projectId, inline }: CardDetailPanelProps) {
+export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDetailPanelProps) {
   const setSelectedCard = useUiStore((s) => s.setSelectedCard);
   const currentUser = useAuthStore((s) => s.user);
   const queryClient = useQueryClient();
@@ -116,7 +117,7 @@ export function CardDetailPanel({ cardId, projectId, inline }: CardDetailPanelPr
             <button onClick={handleDelete}
               className="text-xs text-red-500 hover:text-red-700">삭제</button>
           )}
-          <button onClick={() => setSelectedCard(null)}
+          <button onClick={() => { onClose ? onClose() : setSelectedCard(null); }}
             className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
         </div>
       </div>
