@@ -180,12 +180,14 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
             py-2 bg-green-50 rounded">✓ 완료된 업무</p>
         )}
 
-        {/* 이관 버튼 */}
-        <button onClick={() => setShowTransfer(!showTransfer)}
-          className="w-full py-2 bg-blue-500 text-white rounded-md text-sm
-            hover:bg-blue-600">
-          업무 이관하기
-        </button>
+        {/* 이관 버튼 - 이미 이관된 카드는 재이관 불가 */}
+        {(!transfers || transfers.length === 0) && (
+          <button onClick={() => setShowTransfer(!showTransfer)}
+            className="w-full py-2 bg-blue-500 text-white rounded-md text-sm
+              hover:bg-blue-600">
+            업무 이관하기
+          </button>
+        )}
 
         {/* 이관 폼 */}
         {showTransfer && (

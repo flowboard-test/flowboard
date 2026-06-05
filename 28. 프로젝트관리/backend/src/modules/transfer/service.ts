@@ -14,6 +14,17 @@ export class TransferService {
         throw AppError.notFound('카드를 찾을 수 없습니다');
       }
 
+      // 이미 수동 이관된 카드는 재이관 불가
+      const existingTransfer = await trx('transfers')
+        .where({ card_id: cardId, is_auto: false })
+        .first();
+      if (existingTransfer) {
+        throw AppError.badRequest(
+          'ALREADY_TRANSFERRED',
+          '이미 이관된 업무입니다. 복수 이관은 불가합니다.'
+        );
+      }
+
       // 이관 대상이 프로젝트 멤버인지 확인
       const column = await trx('columns').where('id', card.column_id).first();
       const board = await trx('boards').where('id', column.board_id).first();
