@@ -288,7 +288,7 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
 
       {/* 공지 상세 팝업 */}
       {noticePopup && (
-        <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10">
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[60]">
           <div className="bg-white rounded-lg w-[340px] max-h-[320px] flex flex-col shadow-xl">
             <div className="p-3 border-b flex justify-between items-center bg-yellow-50 rounded-t-lg">
               <span className="text-xs font-semibold text-yellow-800">📢 공지사항</span>
