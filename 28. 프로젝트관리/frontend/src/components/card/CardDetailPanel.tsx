@@ -168,8 +168,8 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
         {/* 첨부파일 */}
         <FileAttachment cardId={cardId} />
 
-        {/* 완료 처리 버튼 */}
-        {card.status !== 'done' && (
+        {/* 완료 처리 버튼 - 내 담당 업무만 */}
+        {card.status !== 'done' && card.assignee_id === currentUser?.id && (
           <div className="space-y-2">
             <CompleteButton cardId={cardId} projectId={projectId} onClose={onClose} />
             <RejectButton cardId={cardId} projectId={projectId} />
