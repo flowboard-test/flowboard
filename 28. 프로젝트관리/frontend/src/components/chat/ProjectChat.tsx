@@ -142,7 +142,7 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
             );
           })()}
           <div className="flex-1 overflow-y-auto p-2 space-y-1.5 bg-gray-50">
-            {messages?.map((msg: any) => (
+            {messages?.filter((msg: any) => !msg.is_notice).map((msg: any) => (
               <div key={msg.id}
                 className={`flex flex-col group
                   ${msg.user_id === currentUser?.id ? 'items-end' : 'items-start'}`}>
