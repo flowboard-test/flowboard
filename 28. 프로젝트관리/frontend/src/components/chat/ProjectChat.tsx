@@ -286,24 +286,28 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
         </div>
       )}
 
-      {/* 공지 상세 팝업 - 채팅 내용 영역을 대체 */}
+      {/* 공지 상세 모달 팝업 */}
       {noticePopup && (
-        <div className="flex-1 flex flex-col bg-yellow-50 overflow-hidden">
-          <div className="p-3 border-b flex justify-between items-center">
-            <span className="text-xs font-semibold text-yellow-800">📢 공지사항</span>
-            <button onClick={() => setNoticePopup(null)}
-              className="text-gray-400 hover:text-gray-600 text-lg">✕</button>
-          </div>
-          <div className="p-3 overflow-y-auto flex-1">
-            <p className="text-sm font-medium mb-2">
-              {noticePopup.content?.split('\n')[0]?.replace('[공지] ', '')}
-            </p>
-            <p className="text-xs text-gray-700 whitespace-pre-wrap">
-              {noticePopup.content?.split('\n').slice(1).join('\n')}
-            </p>
-            <p className="text-xs text-gray-400 mt-3">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          onClick={() => setNoticePopup(null)}>
+          <div className="bg-white rounded-lg w-[360px] shadow-2xl"
+            onClick={(e) => e.stopPropagation()}>
+            <div className="p-4 border-b flex justify-between items-center">
+              <span className="text-sm font-semibold">📢 공지사항</span>
+              <button onClick={() => setNoticePopup(null)}
+                className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+            </div>
+            <div className="p-4 max-h-[300px] overflow-y-auto">
+              <p className="text-sm font-medium mb-2">
+                {noticePopup.content?.split('\n')[0]?.replace('[공지] ', '')}
+              </p>
+              <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                {noticePopup.content?.split('\n').slice(1).join('\n')}
+              </p>
+            </div>
+            <div className="px-4 pb-3 text-xs text-gray-400">
               {noticePopup.user_name} · {new Date(noticePopup.created_at).toLocaleString('ko-KR')}
-            </p>
+            </div>
           </div>
         </div>
       )}
