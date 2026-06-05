@@ -312,6 +312,8 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
     </div>
   );
 }
+
+function DmTab() {
   const [activeConvo, setActiveConvo] = useState<any>(null);
   const [dmMessage, setDmMessage] = useState('');
   const queryClient = useQueryClient();
