@@ -991,7 +991,6 @@ function TaskDetailModal({ projectId, projectName, type, onClose }: {
 
 // === 통계 탭 ===
 function StatisticsTab() {
-  const [period, setPeriod] = useState<'daily' | 'weekly' | 'monthly'>('daily');
   const [fromDate, setFromDate] = useState(() => {
     const d = new Date(); d.setDate(d.getDate() - 7);
     return d.toISOString().split('T')[0];
