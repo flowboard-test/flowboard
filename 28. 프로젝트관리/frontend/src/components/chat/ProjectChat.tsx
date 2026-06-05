@@ -15,6 +15,7 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
   const [message, setMessage] = useState('');
   const [isNotice, setIsNotice] = useState(false);
   const [hideGuest, setHideGuest] = useState(false);
+  const [noticeDismissed, setNoticeDismissed] = useState(false);
   const [attachedFile, setAttachedFile] = useState<{ name: string; data: string; type: string } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
@@ -119,6 +120,24 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
       {/* 채팅 탭 */}
       {tab === 'chat' && (
         <>
+          {/* 공지 배너 (카카오톡 스타일) */}
+          {!noticeDismissed && (() => {
+            const latestNotice = messages?.filter((m: any) => m.is_notice).slice(-1)[0];
+            if (!latestNotice) return null;
+            const lines = latestNotice.content?.split('\n') || [];
+            const title = lines[0]?.replace('[공지] ', '') || '';
+            return (
+              <div className="mx-2 mt-1 bg-yellow-50 border border-yellow-200
+                rounded-lg px-3 py-2 flex items-start gap-2 shadow-sm">
+                <span className="text-sm">📢</span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-yellow-800 truncate">{title}</p>
+                </div>
+                <button onClick={() => setNoticeDismissed(true)}
+                  className="text-yellow-600 hover:text-yellow-800 text-xs shrink-0">✕</button>
+              </div>
+            );
+          })()}
           <div className="flex-1 overflow-y-auto p-2 space-y-1.5 bg-gray-50">
             {messages?.map((msg: any) => (
               <div key={msg.id}
