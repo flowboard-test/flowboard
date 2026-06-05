@@ -93,6 +93,12 @@ export class CardService {
     const db = getDb();
     const { version, ...data } = input;
 
+    // 완료된 카드는 수정 불가
+    const existing = await db('cards').where('id', cardId).first();
+    if (existing && existing.status === 'done') {
+      throw AppError.badRequest('CARD_DONE', '완료된 카드는 수정할 수 없습니다');
+    }
+
     const result = await db('cards')
       .where({ id: cardId, version })
       .update({
@@ -118,12 +124,18 @@ export class CardService {
     return updatedCard;
   }
 
-  async delete(cardId: string) {
+  async delete(cardId: string, userId: string) {
     const db = getDb();
     const card = await db('cards').where('id', cardId).first();
     if (!card) throw AppError.notFound('카드를 찾을 수 없습니다');
+    if (card.created_by !== userId) {
+      throw AppError.forbidden('NOT_OWNER', '본인이 만든 카드만 삭제할 수 있습니다');
+    }
     if (card.status === 'done') {
       throw AppError.badRequest('CARD_DONE', '완료된 카드는 삭제할 수 없습니다');
+    }
+    if (card.status === 'in_progress' || card.status === 'review') {
+      throw AppError.badRequest('CARD_IN_PROGRESS', '진행중인 카드는 삭제할 수 없습니다');
     }
     // 관련 데이터 삭제 (외래키 제약)
     await db('card_timeline').where('card_id', cardId).del();
@@ -135,7 +147,6 @@ export class CardService {
       await db('resolutions').whereIn('transfer_id', transferIds).del();
     }
     await db('transfers').where('card_id', cardId).del();
-    // 서브태스크 삭제
     await db('cards').where('parent_id', cardId).del();
     await db('cards').where('id', cardId).del();
   }

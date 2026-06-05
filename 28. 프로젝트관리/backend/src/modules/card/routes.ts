@@ -30,7 +30,7 @@ const cardRoutes: FastifyPluginAsync = async (app) => {
 
   app.delete('/cards/:id', async (request, reply) => {
     const { id } = request.params as { id: string };
-    await cardService.delete(id);
+    await cardService.delete(id, request.userId!);
     return reply.status(204).send();
   });
 

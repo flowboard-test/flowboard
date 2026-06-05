@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/api/client';
 import { useUiStore } from '@/stores/uiStore';
+import { useAuthStore } from '@/stores/authStore';
 import { SubtaskList } from './SubtaskList';
 import { CardEditForm } from './CardEditForm';
 import { CommentSection } from './CommentSection';
@@ -14,6 +15,7 @@ interface CardDetailPanelProps {
 
 export function CardDetailPanel({ cardId, projectId }: CardDetailPanelProps) {
   const setSelectedCard = useUiStore((s) => s.setSelectedCard);
+  const currentUser = useAuthStore((s) => s.user);
   const queryClient = useQueryClient();
   const [showTransfer, setShowTransfer] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -102,13 +104,16 @@ export function CardDetailPanel({ cardId, projectId }: CardDetailPanelProps) {
       <div className="p-4 border-b flex justify-between items-center">
         <h2 className="font-semibold truncate">{card.title}</h2>
         <div className="flex gap-2">
-          <button onClick={() => setIsEditing(!isEditing)}
-            className="text-xs text-blue-500 hover:text-blue-700">
-            {isEditing ? '취소' : '수정'}
-          </button>
-          <button onClick={handleDelete}
-            disabled={card.status === 'done'}
-            className={`text-xs ${card.status === 'done' ? 'text-gray-300 cursor-not-allowed' : 'text-red-500 hover:text-red-700'}`}>삭제</button>
+          {card.status !== 'done' && (
+            <button onClick={() => setIsEditing(!isEditing)}
+              className="text-xs text-blue-500 hover:text-blue-700">
+              {isEditing ? '취소' : '수정'}
+            </button>
+          )}
+          {card.created_by === currentUser?.id && card.status === 'todo' && (
+            <button onClick={handleDelete}
+              className="text-xs text-red-500 hover:text-red-700">삭제</button>
+          )}
           <button onClick={() => setSelectedCard(null)}
             className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
         </div>
