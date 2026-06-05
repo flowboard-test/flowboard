@@ -991,8 +991,9 @@ function TaskDetailModal({ projectId, projectName, type, onClose }: {
 
 // === 통계 탭 ===
 function StatisticsTab() {
+  const [view, setView] = useState<'daily' | 'monthly' | 'yearly' | 'user'>('daily');
   const [fromDate, setFromDate] = useState(() => {
-    const d = new Date(); d.setDate(d.getDate() - 7);
+    const d = new Date(); d.setDate(d.getDate() - 30);
     return d.toISOString().split('T')[0];
   });
   const [toDate, setToDate] = useState(() => new Date().toISOString().split('T')[0]);
@@ -1002,9 +1003,21 @@ function StatisticsTab() {
     queryFn: () => apiClient(`/statistics/global?from=${fromDate}&to=${toDate}`),
   });
 
+  const { data: userStats } = useQuery<any[]>({
+    queryKey: ['stats-users', fromDate, toDate],
+    queryFn: () => apiClient(`/statistics/overdue?type=user&from=${fromDate}&to=${toDate}`),
+    enabled: view === 'user',
+  });
+
   const { data: realtime } = useQuery<any>({
     queryKey: ['stats-realtime'],
     queryFn: () => apiClient('/statistics/realtime'),
+  });
+
+  const { data: users } = useQuery<any[]>({
+    queryKey: ['all-users-stats'],
+    queryFn: () => apiClient('/auth/users'),
+    enabled: view === 'user',
   });
 
   const runBatch = useMutation({
@@ -1012,6 +1025,36 @@ function StatisticsTab() {
       method: 'POST', body: JSON.stringify({ date: toDate }),
     }),
   });
+
+  // 월별 집계
+  const monthlyStats = globalStats ? Object.values(
+    globalStats.reduce((acc: any, s: any) => {
+      const month = s.stat_date?.substring(0, 7);
+      if (!acc[month]) acc[month] = { month, created: 0, completed: 0, in_progress: 0, review: 0, overdue: 0, total: 0 };
+      acc[month].created += s.created_count;
+      acc[month].completed += s.completed_count;
+      acc[month].in_progress = s.in_progress_count;
+      acc[month].review = s.review_count;
+      acc[month].overdue = s.overdue_count;
+      acc[month].total = s.total_count;
+      return acc;
+    }, {})
+  ) : [];
+
+  // 연별 집계
+  const yearlyStats = globalStats ? Object.values(
+    globalStats.reduce((acc: any, s: any) => {
+      const year = s.stat_date?.substring(0, 4);
+      if (!acc[year]) acc[year] = { year, created: 0, completed: 0, in_progress: 0, review: 0, overdue: 0, total: 0 };
+      acc[year].created += s.created_count;
+      acc[year].completed += s.completed_count;
+      acc[year].in_progress = s.in_progress_count;
+      acc[year].review = s.review_count;
+      acc[year].overdue = s.overdue_count;
+      acc[year].total = s.total_count;
+      return acc;
+    }, {})
+  ) : [];
 
   return (
     <div className="p-4 space-y-4">
@@ -1028,7 +1071,7 @@ function StatisticsTab() {
         <div className="grid grid-cols-4 gap-3">
           <div className="bg-white border rounded p-3 text-center">
             <p className="text-2xl font-bold text-blue-600">{realtime.total}</p>
-            <p className="text-xs text-gray-500">전체 카드</p>
+            <p className="text-xs text-gray-500">전체</p>
           </div>
           <div className="bg-white border rounded p-3 text-center">
             <p className="text-2xl font-bold text-green-600">{realtime.done}</p>
@@ -1045,6 +1088,17 @@ function StatisticsTab() {
         </div>
       )}
 
+      {/* 서브탭 */}
+      <div className="flex gap-1">
+        {(['daily', 'monthly', 'yearly', 'user'] as const).map((v) => (
+          <button key={v} onClick={() => setView(v)}
+            className={`px-3 py-1 rounded text-xs
+              ${view === v ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}>
+            {v === 'daily' ? '일별' : v === 'monthly' ? '월별' : v === 'yearly' ? '연별' : '계정별'}
+          </button>
+        ))}
+      </div>
+
       {/* 기간 선택 */}
       <div className="flex gap-2 items-center">
         <input type="date" value={fromDate}
@@ -1056,12 +1110,14 @@ function StatisticsTab() {
           className="border rounded px-2 py-1 text-xs" />
       </div>
 
-      {/* 일별 통계 테이블 */}
+      {/* 통계 테이블 */}
       <div className="bg-white border rounded-lg overflow-hidden">
         <table className="w-full text-xs">
           <thead className="bg-gray-50">
             <tr>
-              <th className="p-2 text-left">날짜</th>
+              <th className="p-2 text-left">
+                {view === 'daily' ? '날짜' : view === 'monthly' ? '월' : view === 'yearly' ? '연도' : '계정'}
+              </th>
               <th className="p-2 text-right">생성</th>
               <th className="p-2 text-right">완료</th>
               <th className="p-2 text-right">진행중</th>
@@ -1071,7 +1127,7 @@ function StatisticsTab() {
             </tr>
           </thead>
           <tbody>
-            {globalStats?.map((s: any) => (
+            {view === 'daily' && globalStats?.map((s: any) => (
               <tr key={s.id} className="border-t hover:bg-gray-50">
                 <td className="p-2">{s.stat_date}</td>
                 <td className="p-2 text-right">{s.created_count}</td>
@@ -1082,7 +1138,46 @@ function StatisticsTab() {
                 <td className="p-2 text-right font-medium">{s.total_count}</td>
               </tr>
             ))}
-            {(!globalStats || globalStats.length === 0) && (
+            {view === 'monthly' && (monthlyStats as any[]).map((s: any) => (
+              <tr key={s.month} className="border-t hover:bg-gray-50">
+                <td className="p-2">{s.month}</td>
+                <td className="p-2 text-right">{s.created}</td>
+                <td className="p-2 text-right text-green-600">{s.completed}</td>
+                <td className="p-2 text-right text-yellow-600">{s.in_progress}</td>
+                <td className="p-2 text-right text-purple-600">{s.review}</td>
+                <td className="p-2 text-right text-red-600">{s.overdue}</td>
+                <td className="p-2 text-right font-medium">{s.total}</td>
+              </tr>
+            ))}
+            {view === 'yearly' && (yearlyStats as any[]).map((s: any) => (
+              <tr key={s.year} className="border-t hover:bg-gray-50">
+                <td className="p-2">{s.year}</td>
+                <td className="p-2 text-right">{s.created}</td>
+                <td className="p-2 text-right text-green-600">{s.completed}</td>
+                <td className="p-2 text-right text-yellow-600">{s.in_progress}</td>
+                <td className="p-2 text-right text-purple-600">{s.review}</td>
+                <td className="p-2 text-right text-red-600">{s.overdue}</td>
+                <td className="p-2 text-right font-medium">{s.total}</td>
+              </tr>
+            ))}
+            {view === 'user' && userStats?.map((s: any) => {
+              const u = users?.find((u: any) => u.id === s.ref_id);
+              return (
+                <tr key={s.id} className="border-t hover:bg-gray-50">
+                  <td className="p-2">{u?.name || s.ref_id?.slice(0, 8)}</td>
+                  <td className="p-2 text-right">{s.created_count}</td>
+                  <td className="p-2 text-right text-green-600">{s.completed_count}</td>
+                  <td className="p-2 text-right text-yellow-600">{s.in_progress_count}</td>
+                  <td className="p-2 text-right text-purple-600">{s.review_count}</td>
+                  <td className="p-2 text-right text-red-600">{s.overdue_count}</td>
+                  <td className="p-2 text-right font-medium">{s.total_count}</td>
+                </tr>
+              );
+            })}
+            {((view === 'daily' && (!globalStats || globalStats.length === 0)) ||
+              (view === 'user' && (!userStats || userStats.length === 0)) ||
+              (view === 'monthly' && monthlyStats.length === 0) ||
+              (view === 'yearly' && yearlyStats.length === 0)) && (
               <tr><td colSpan={7} className="p-4 text-center text-gray-400">
                 통계 데이터가 없습니다. 배치를 실행해주세요.
               </td></tr>
