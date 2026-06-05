@@ -4,7 +4,7 @@ import { apiClient } from '@/api/client';
 import { useAuthStore } from '@/stores/authStore';
 import { useNavigate } from 'react-router-dom';
 
-type AdminTab = 'org' | 'position' | 'rank' | 'permission' | 'upload' | 'overview';
+type AdminTab = 'org' | 'position' | 'rank' | 'permission' | 'upload' | 'overview' | 'statistics';
 
 export function AdminPage() {
   const [tab, setTab] = useState<AdminTab>('org');
@@ -20,6 +20,7 @@ export function AdminPage() {
     { key: 'permission', label: '권한 관리' },
     { key: 'upload', label: '조직도 업로드' },
     { key: 'overview', label: '프로젝트 현황' },
+    { key: 'statistics', label: '통계' },
   ] as const;
 
   const { data: orgData } = useQuery<any>({
@@ -133,6 +134,7 @@ export function AdminPage() {
       {tab === 'position' && <PositionTab />}
       {tab === 'rank' && <RankTab />}
       {tab === 'overview' && <ProjectOverviewTab />}
+      {tab === 'statistics' && <StatisticsTab />}
     </div>
   );
 }
@@ -981,6 +983,113 @@ function TaskDetailModal({ projectId, projectName, type, onClose }: {
             <p className="text-center text-gray-400 text-sm py-8">업무가 없습니다</p>
           )}
         </div>
+      </div>
+    </div>
+  );
+}
+
+
+// === 통계 탭 ===
+function StatisticsTab() {
+  const [period, setPeriod] = useState<'daily' | 'weekly' | 'monthly'>('daily');
+  const [fromDate, setFromDate] = useState(() => {
+    const d = new Date(); d.setDate(d.getDate() - 7);
+    return d.toISOString().split('T')[0];
+  });
+  const [toDate, setToDate] = useState(() => new Date().toISOString().split('T')[0]);
+
+  const { data: globalStats } = useQuery<any[]>({
+    queryKey: ['stats-global', fromDate, toDate],
+    queryFn: () => apiClient(`/statistics/global?from=${fromDate}&to=${toDate}`),
+  });
+
+  const { data: realtime } = useQuery<any>({
+    queryKey: ['stats-realtime'],
+    queryFn: () => apiClient('/statistics/realtime'),
+  });
+
+  const runBatch = useMutation({
+    mutationFn: () => apiClient('/statistics/run-batch', {
+      method: 'POST', body: JSON.stringify({ date: toDate }),
+    }),
+  });
+
+  return (
+    <div className="p-4 space-y-4">
+      <div className="flex items-center gap-3">
+        <h2 className="text-sm font-semibold">📊 통계</h2>
+        <button onClick={() => runBatch.mutate()}
+          className="text-xs px-2 py-1 bg-blue-500 text-white rounded">
+          배치 실행
+        </button>
+      </div>
+
+      {/* 실시간 요약 */}
+      {realtime && (
+        <div className="grid grid-cols-4 gap-3">
+          <div className="bg-white border rounded p-3 text-center">
+            <p className="text-2xl font-bold text-blue-600">{realtime.total}</p>
+            <p className="text-xs text-gray-500">전체 카드</p>
+          </div>
+          <div className="bg-white border rounded p-3 text-center">
+            <p className="text-2xl font-bold text-green-600">{realtime.done}</p>
+            <p className="text-xs text-gray-500">완료</p>
+          </div>
+          <div className="bg-white border rounded p-3 text-center">
+            <p className="text-2xl font-bold text-yellow-600">{realtime.in_progress}</p>
+            <p className="text-xs text-gray-500">진행중</p>
+          </div>
+          <div className="bg-white border rounded p-3 text-center">
+            <p className="text-2xl font-bold text-red-600">{realtime.overdue}</p>
+            <p className="text-xs text-gray-500">기한초과</p>
+          </div>
+        </div>
+      )}
+
+      {/* 기간 선택 */}
+      <div className="flex gap-2 items-center">
+        <input type="date" value={fromDate}
+          onChange={(e) => setFromDate(e.target.value)}
+          className="border rounded px-2 py-1 text-xs" />
+        <span className="text-xs">~</span>
+        <input type="date" value={toDate}
+          onChange={(e) => setToDate(e.target.value)}
+          className="border rounded px-2 py-1 text-xs" />
+      </div>
+
+      {/* 일별 통계 테이블 */}
+      <div className="bg-white border rounded-lg overflow-hidden">
+        <table className="w-full text-xs">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="p-2 text-left">날짜</th>
+              <th className="p-2 text-right">생성</th>
+              <th className="p-2 text-right">완료</th>
+              <th className="p-2 text-right">진행중</th>
+              <th className="p-2 text-right">검토</th>
+              <th className="p-2 text-right">기한초과</th>
+              <th className="p-2 text-right">전체</th>
+            </tr>
+          </thead>
+          <tbody>
+            {globalStats?.map((s: any) => (
+              <tr key={s.id} className="border-t hover:bg-gray-50">
+                <td className="p-2">{s.stat_date}</td>
+                <td className="p-2 text-right">{s.created_count}</td>
+                <td className="p-2 text-right text-green-600">{s.completed_count}</td>
+                <td className="p-2 text-right text-yellow-600">{s.in_progress_count}</td>
+                <td className="p-2 text-right text-purple-600">{s.review_count}</td>
+                <td className="p-2 text-right text-red-600">{s.overdue_count}</td>
+                <td className="p-2 text-right font-medium">{s.total_count}</td>
+              </tr>
+            ))}
+            {(!globalStats || globalStats.length === 0) && (
+              <tr><td colSpan={7} className="p-4 text-center text-gray-400">
+                통계 데이터가 없습니다. 배치를 실행해주세요.
+              </td></tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
