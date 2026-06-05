@@ -140,7 +140,7 @@ export function BoardView() {
           <span>내 업무만 보기</span>
         </label>
       </div>
-      <div className="flex gap-4 overflow-x-auto p-4 pt-2 h-[calc(100vh-180px)]">
+      <div className="flex gap-4 overflow-x-auto p-4 pt-2 h-[calc(100vh-180px)] bg-gray-100 rounded-lg mx-4">
         {filteredColumns.map((column) => (
           <ColumnComponent key={column.id} column={column} />
         ))}

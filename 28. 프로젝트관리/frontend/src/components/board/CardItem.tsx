@@ -13,10 +13,10 @@ interface CardItemProps {
 }
 
 const priorityColors: Record<string, string> = {
-  urgent: 'border-l-red-500',
-  high: 'border-l-orange-400',
-  normal: 'border-l-blue-400',
-  low: 'border-l-gray-300',
+  urgent: 'border-l-4 border-l-red-500 bg-red-50/30',
+  high: 'border-l-4 border-l-orange-400 bg-orange-50/30',
+  normal: 'border-l-4 border-l-blue-400',
+  low: 'border-l-4 border-l-gray-300',
 };
 
 const priorityLabels: Record<string, string> = {
@@ -41,9 +41,9 @@ export function CardItem({ card }: CardItemProps) {
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}
       onClick={() => setSelectedCard(card.id)}
-      className={`bg-white rounded-md p-3 shadow-sm border-l-4
-        cursor-pointer hover:shadow-md transition-shadow
-        ${priorityColors[card.priority] || 'border-l-gray-300'}
+      className={`bg-white rounded-md p-3 shadow-sm
+        cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5
+        ${priorityColors[card.priority] || 'border-l-4 border-l-gray-300'}
         ${isDragging ? 'opacity-50 rotate-1 shadow-lg' : ''}`}>
       <p className="text-sm font-medium">{card.title}</p>
       <div className="flex items-center gap-2 mt-2">

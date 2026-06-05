@@ -73,9 +73,17 @@ export function ColumnComponent({ column }: ColumnProps) {
     queryClient.invalidateQueries({ queryKey: ['board', projectId] });
   }
 
+  const columnColors: Record<string, string> = {
+    '할 일': 'border-t-4 border-t-blue-400',
+    '진행 중': 'border-t-4 border-t-yellow-400',
+    '검토': 'border-t-4 border-t-purple-400',
+    '완료': 'border-t-4 border-t-green-400',
+  };
+
   return (
     <div ref={setNodeRef}
-      className={`flex flex-col w-72 min-w-72 max-h-full bg-gray-50 rounded-lg
+      className={`flex flex-col w-72 min-w-72 max-h-full bg-white rounded-lg shadow-sm
+        ${columnColors[column.name] || 'border-t-4 border-t-gray-300'}
         ${isOver ? 'ring-2 ring-blue-400' : ''}
         ${isOverLimit ? 'border-2 border-red-300' : ''}`}>
       <div className="flex items-center justify-between p-3 border-b">
