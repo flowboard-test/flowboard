@@ -11,6 +11,7 @@ export async function buildApp() {
       level: config.nodeEnv === 'production' ? 'info' : 'debug',
     },
     trustProxy: true,
+    bodyLimit: 10 * 1024 * 1024, // 10MB for file uploads
   });
 
   // Security headers
