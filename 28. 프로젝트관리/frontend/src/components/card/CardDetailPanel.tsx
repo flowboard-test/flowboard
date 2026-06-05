@@ -11,9 +11,10 @@ import { FileAttachment } from './FileAttachment';
 interface CardDetailPanelProps {
   cardId: string;
   projectId: string;
+  inline?: boolean;
 }
 
-export function CardDetailPanel({ cardId, projectId }: CardDetailPanelProps) {
+export function CardDetailPanel({ cardId, projectId, inline }: CardDetailPanelProps) {
   const setSelectedCard = useUiStore((s) => s.setSelectedCard);
   const currentUser = useAuthStore((s) => s.user);
   const queryClient = useQueryClient();
@@ -99,8 +100,9 @@ export function CardDetailPanel({ cardId, projectId }: CardDetailPanelProps) {
   if (!card) return null;
 
   return (
-    <div className="fixed right-0 top-0 h-full w-96 bg-white shadow-xl
-      border-l overflow-y-auto z-40">
+    <div className={inline
+      ? 'h-full bg-white border rounded-lg overflow-y-auto'
+      : 'fixed right-0 top-0 h-full w-96 bg-white shadow-xl border-l overflow-y-auto z-40'}>
       <div className="p-4 border-b flex justify-between items-center">
         <h2 className="font-semibold truncate">{card.title}</h2>
         <div className="flex gap-2">
