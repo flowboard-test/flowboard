@@ -37,7 +37,7 @@ export class ProjectService {
       });
 
       // 기본 컬럼 생성
-      const defaultColumns = ['할 일', '진행 중', '검토', '완료', '프로젝트 보드'];
+      const defaultColumns = ['할 일', '진행 중', '검토', '완료'];
       for (let i = 0; i < defaultColumns.length; i++) {
         await trx('columns').insert({
           id: uuid(),

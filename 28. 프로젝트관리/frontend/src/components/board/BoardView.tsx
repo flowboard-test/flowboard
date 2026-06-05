@@ -7,6 +7,7 @@ import {
 import { arrayMove } from '@dnd-kit/sortable';
 import { useBoardStore } from '@/stores/boardStore';
 import { useAuthStore } from '@/stores/authStore';
+import { useUiStore } from '@/stores/uiStore';
 import { ColumnComponent } from './Column';
 import { CardItem } from './CardItem';
 import { apiClient } from '@/api/client';
@@ -144,6 +145,28 @@ export function BoardView() {
         {filteredColumns.map((column) => (
           <ColumnComponent key={column.id} column={column} />
         ))}
+        {/* 프로젝트 보드 - 모든 카드 게시판 */}
+        <div className="flex flex-col w-80 min-w-80 max-h-full bg-white rounded-lg shadow-sm border-t-4 border-t-indigo-400">
+          <div className="flex items-center justify-between p-3 border-b">
+            <h3 className="font-semibold text-sm">프로젝트 보드</h3>
+            <span className="text-xs text-gray-500">
+              {columns.flatMap((c) => c.cards).length}
+            </span>
+          </div>
+          <div className="flex-1 overflow-y-auto p-2 space-y-2">
+            {columns.flatMap((c) => c.cards).map((card: any) => (
+              <div key={card.id}
+                onClick={() => useUiStore.getState().setSelectedCard(card.id)}
+                className="bg-gray-50 rounded p-2 cursor-pointer hover:bg-indigo-50 transition text-xs border">
+                <p className="font-medium truncate">{card.title}</p>
+                <div className="flex gap-2 mt-1 text-gray-400">
+                  <span>{card.priority}</span>
+                  {card.view_count > 0 && <span>👁 {card.view_count}</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
       <DragOverlay>
         {activeCard && <CardItem card={activeCard} />}
