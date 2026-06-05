@@ -158,6 +158,31 @@ const projectRoutes: FastifyPluginAsync = async (app) => {
     }
     return reply.status(201).send({ message: 'sent' });
   });
+
+  // 채팅 메시지 삭제
+  app.delete('/projects/:id/chat/:msgId', {
+    preHandler: [requireProjectRole('member', 'admin', 'owner')],
+  }, async (request, reply) => {
+    const { id, msgId } = request.params as { id: string; msgId: string };
+    const { getDb } = require('../../shared/database/connection');
+    const db = getDb();
+    const msg = await db('chat_messages').where('id', msgId).first();
+    if (!msg) return reply.status(404).send({ message: '메시지를 찾을 수 없습니다' });
+    if (msg.user_id !== request.userId!) {
+      return reply.status(403).send({ message: '본인 메시지만 삭제할 수 있습니다' });
+    }
+    // 다른 사람이 읽었는지 체크 (본인 외 메시지가 이후에 있으면 읽은 것)
+    const readByOthers = await db('chat_messages')
+      .where('project_id', id)
+      .where('created_at', '>', msg.created_at)
+      .whereNot('user_id', request.userId!)
+      .first();
+    if (readByOthers) {
+      return reply.status(400).send({ message: '다른 사람이 읽은 메시지는 삭제할 수 없습니다' });
+    }
+    await db('chat_messages').where('id', msgId).del();
+    return reply.send({ message: '삭제되었습니다' });
+  });
 };
 
 export default projectRoutes;

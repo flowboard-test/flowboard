@@ -45,6 +45,16 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  async function handleDeleteMsg(msgId: string) {
+    if (!window.confirm('메시지를 삭제하시겠습니까?')) return;
+    try {
+      await apiClient(`/projects/${projectId}/chat/${msgId}`, { method: 'DELETE' });
+      queryClient.invalidateQueries({ queryKey: ['chat', projectId] });
+    } catch (err: any) {
+      alert(err?.message || '삭제할 수 없습니다');
+    }
+  }
+
   async function sendMessage(e?: React.FormEvent | React.KeyboardEvent, customContent?: string) {
     if (e) e.preventDefault();
     const content = customContent || message;
@@ -112,13 +122,20 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
           <div className="flex-1 overflow-y-auto p-2 space-y-1.5 bg-gray-50">
             {messages?.map((msg: any) => (
               <div key={msg.id}
-                className={`flex flex-col
+                className={`flex flex-col group
                   ${msg.user_id === currentUser?.id ? 'items-end' : 'items-start'}`}>
                 <span className="text-xs text-gray-400">{msg.user_name}</span>
-                <div className={`px-2.5 py-1 rounded-lg text-sm max-w-[75%]
-                  ${msg.user_id === currentUser?.id
-                    ? 'bg-blue-500 text-white' : 'bg-white border'}`}>
-                  <ChatMessageContent content={msg.content} />
+                <div className="flex items-center gap-1">
+                  {msg.user_id === currentUser?.id && (
+                    <button onClick={() => handleDeleteMsg(msg.id)}
+                      className="text-xs text-red-400 opacity-0 group-hover:opacity-100
+                        hover:text-red-600">삭제</button>
+                  )}
+                  <div className={`px-2.5 py-1 rounded-lg text-sm max-w-[75%]
+                    ${msg.user_id === currentUser?.id
+                      ? 'bg-blue-500 text-white' : 'bg-white border'}`}>
+                    <ChatMessageContent content={msg.content} />
+                  </div>
                 </div>
               </div>
             ))}
