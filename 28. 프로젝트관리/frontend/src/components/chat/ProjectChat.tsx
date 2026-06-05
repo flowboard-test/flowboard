@@ -16,6 +16,7 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
   const [isNotice, setIsNotice] = useState(false);
   const [hideGuest, setHideGuest] = useState(false);
   const [noticeDismissed, setNoticeDismissed] = useState(false);
+  const [noticePopup, setNoticePopup] = useState<any>(null);
   const [attachedFile, setAttachedFile] = useState<{ name: string; data: string; type: string } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
@@ -128,12 +129,14 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
             const title = lines[0]?.replace('[공지] ', '') || '';
             return (
               <div className="mx-2 mt-1 bg-yellow-50 border border-yellow-200
-                rounded-lg px-3 py-2 flex items-start gap-2 shadow-sm">
+                rounded-lg px-3 py-2 flex items-start gap-2 shadow-sm cursor-pointer
+                hover:bg-yellow-100 transition"
+                onClick={() => setNoticePopup(latestNotice)}>
                 <span className="text-sm">📢</span>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-semibold text-yellow-800 truncate">{title}</p>
                 </div>
-                <button onClick={() => setNoticeDismissed(true)}
+                <button onClick={(e) => { e.stopPropagation(); setNoticeDismissed(true); }}
                   className="text-yellow-600 hover:text-yellow-800 text-xs shrink-0">✕</button>
               </div>
             );
@@ -282,11 +285,33 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
           )}
         </div>
       )}
+
+      {/* 공지 상세 팝업 */}
+      {noticePopup && (
+        <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10">
+          <div className="bg-white rounded-lg w-[340px] max-h-[320px] flex flex-col shadow-xl">
+            <div className="p-3 border-b flex justify-between items-center bg-yellow-50 rounded-t-lg">
+              <span className="text-xs font-semibold text-yellow-800">📢 공지사항</span>
+              <button onClick={() => setNoticePopup(null)}
+                className="text-gray-400 hover:text-gray-600 text-lg">✕</button>
+            </div>
+            <div className="p-3 overflow-y-auto flex-1">
+              <p className="text-sm font-medium mb-2">
+                {noticePopup.content?.split('\n')[0]?.replace('[공지] ', '')}
+              </p>
+              <p className="text-xs text-gray-700 whitespace-pre-wrap">
+                {noticePopup.content?.split('\n').slice(1).join('\n')}
+              </p>
+              <p className="text-xs text-gray-400 mt-3">
+                {noticePopup.user_name} · {new Date(noticePopup.created_at).toLocaleString('ko-KR')}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
-
-function DmTab() {
   const [activeConvo, setActiveConvo] = useState<any>(null);
   const [dmMessage, setDmMessage] = useState('');
   const queryClient = useQueryClient();
