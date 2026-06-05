@@ -171,7 +171,7 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
         {/* 완료 처리 버튼 */}
         {card.status !== 'done' && (
           <div className="space-y-2">
-            <CompleteButton cardId={cardId} projectId={projectId} />
+            <CompleteButton cardId={cardId} projectId={projectId} onClose={onClose} />
             <RejectButton cardId={cardId} projectId={projectId} />
           </div>
         )}
@@ -283,7 +283,7 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
   );
 }
 
-function CompleteButton({ cardId, projectId }: { cardId: string; projectId: string }) {
+function CompleteButton({ cardId, projectId, onClose }: { cardId: string; projectId: string; onClose?: () => void }) {
   const [msg, setMsg] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const queryClient = useQueryClient();
@@ -297,10 +297,12 @@ function CompleteButton({ cardId, projectId }: { cardId: string; projectId: stri
       setMsg(data.message);
       queryClient.invalidateQueries({ queryKey: ['card', cardId] });
       queryClient.invalidateQueries({ queryKey: ['board', projectId] });
+      queryClient.invalidateQueries({ queryKey: ['my-tasks'] });
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
       setTimeout(() => {
+        if (onClose) onClose();
         setSelectedCard(null);
-      }, 1500);
+      }, 500);
     },
     onError: (err: any) => {
       setErrMsg(err.data?.message || '완료 처리에 실패했습니다');
