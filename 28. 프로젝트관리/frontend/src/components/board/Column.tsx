@@ -30,6 +30,7 @@ export function ColumnComponent({ column }: ColumnProps) {
     '진행 중': 'border-t-4 border-t-yellow-400',
     '검토': 'border-t-4 border-t-purple-400',
     '완료': 'border-t-4 border-t-green-400',
+    '프로젝트 보드': 'border-t-4 border-t-indigo-400',
   };
 
   return (

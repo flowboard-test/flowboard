@@ -208,7 +208,7 @@ export class CardService {
 
       // 카드 이동 + 컬럼명에 따라 status 동기화
       const statusMap: Record<string, string> = {
-        '할 일': 'todo', '진행 중': 'in_progress', '검토': 'review', '완료': 'done',
+        '할 일': 'todo', '진행 중': 'in_progress', '검토': 'review', '완료': 'done', '프로젝트 보드': 'board',
       };
       const newStatus = statusMap[targetColumn.name] || card.status;
       await trx('cards')
