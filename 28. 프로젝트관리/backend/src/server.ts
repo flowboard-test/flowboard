@@ -82,10 +82,15 @@ async function start() {
     const httpServer = app.server;
     initWebSocket(httpServer);
 
+    // 통계 배치 스케줄러 시작
+    const { startStatisticsScheduler } = require('./modules/statistics/scheduler');
+    startStatisticsScheduler();
+
     console.log(
       `Server running at http://${config.host}:${config.port}`
     );
     console.log('WebSocket server initialized');
+    console.log('Statistics scheduler started');
   } catch (err) {
     app.log.error(err);
     process.exit(1);
