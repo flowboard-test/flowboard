@@ -100,7 +100,7 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
 
   return (
     <div className="fixed bottom-20 right-4 w-96 h-[480px] bg-white border
-      rounded-lg shadow-xl flex flex-col z-30 relative">
+      rounded-lg shadow-xl flex flex-col z-30">
       {/* 헤더 */}
       <div className="p-2 border-b bg-blue-500 text-white rounded-t-lg
         flex justify-between items-center">
@@ -288,26 +288,24 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
 
       {/* 공지 상세 모달 - 메신저 내부 */}
       {noticePopup && (
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 rounded-lg"
-          onClick={() => setNoticePopup(null)}>
-          <div className="bg-white rounded-lg w-[85%] max-h-[70%] shadow-xl flex flex-col"
-            onClick={(e) => e.stopPropagation()}>
-            <div className="p-3 border-b flex justify-between items-center">
-              <span className="text-sm font-semibold">📢 공지사항</span>
-              <button onClick={() => setNoticePopup(null)}
-                className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
-            </div>
-            <div className="p-3 overflow-y-auto flex-1">
-              <p className="text-sm font-medium mb-2">
-                {noticePopup.content?.split('\n')[0]?.replace('[공지] ', '')}
-              </p>
-              <p className="text-sm text-gray-700 whitespace-pre-wrap">
-                {noticePopup.content?.split('\n').slice(1).join('\n')}
-              </p>
-            </div>
-            <div className="px-3 pb-2 text-xs text-gray-400">
-              {noticePopup.user_name} · {new Date(noticePopup.created_at).toLocaleString('ko-KR')}
-            </div>
+        <div className="fixed bottom-[520px] right-4 w-96 bg-white border
+          rounded-lg shadow-2xl z-40"
+          style={{ maxHeight: '280px' }}>
+          <div className="p-3 border-b flex justify-between items-center">
+            <span className="text-sm font-semibold">📢 공지사항</span>
+            <button onClick={() => setNoticePopup(null)}
+              className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+          </div>
+          <div className="p-3 overflow-y-auto" style={{ maxHeight: '200px' }}>
+            <p className="text-sm font-medium mb-2">
+              {noticePopup.content?.split('\n')[0]?.replace('[공지] ', '')}
+            </p>
+            <p className="text-sm text-gray-700 whitespace-pre-wrap">
+              {noticePopup.content?.split('\n').slice(1).join('\n')}
+            </p>
+          </div>
+          <div className="px-3 pb-2 text-xs text-gray-400 border-t pt-2">
+            {noticePopup.user_name} · {new Date(noticePopup.created_at).toLocaleString('ko-KR')}
           </div>
         </div>
       )}
