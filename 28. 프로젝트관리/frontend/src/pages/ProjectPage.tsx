@@ -79,6 +79,7 @@ export function ProjectPage() {
 
   const views = [
     { key: 'board', label: '보드' },
+    { key: 'project-board', label: '프로젝트 보드' },
     { key: 'list', label: '리스트' },
     { key: 'gantt', label: '간트' },
     { key: 'calendar', label: '캘린더' },
@@ -143,6 +144,34 @@ export function ProjectPage() {
       <div className="flex-1 overflow-hidden flex">
         <div className="flex-1 overflow-y-auto">
           {viewMode === 'board' && <BoardView />}
+          {viewMode === 'project-board' && (
+            <div className="p-4 space-y-3 overflow-y-auto h-full">
+              <h3 className="text-sm font-semibold">📋 전체 카드 목록</h3>
+              {allCards.filter((c: any) => !c._isSubtask).map((card: any) => (
+                <div key={card.id}
+                  onClick={() => useUiStore.getState().setSelectedCard(card.id)}
+                  className="bg-white border rounded-lg p-3 cursor-pointer
+                    hover:shadow-md transition flex justify-between items-center">
+                  <div>
+                    <p className="text-sm font-medium">{card.title}</p>
+                    <div className="flex gap-2 mt-1 text-xs text-gray-400">
+                      <span>{card.column_name}</span>
+                      {card.due_date && <span>마감: {card.due_date.split('T')[0]}</span>}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-gray-400">👁 {card.view_count || 0}</span>
+                    <span className={`text-xs px-1.5 py-0.5 rounded
+                      ${card.priority === 'urgent' ? 'bg-red-100 text-red-700' :
+                        card.priority === 'high' ? 'bg-orange-100 text-orange-700' :
+                        'bg-gray-100 text-gray-600'}`}>
+                      {card.priority}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
           {viewMode === 'list' && (
             <ListView cards={allCards} columns={board?.columns || []} />
           )}

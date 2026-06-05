@@ -58,6 +58,11 @@ export function CardItem({ card }: CardItemProps) {
             {card.due_date.split('T')[0]}
           </span>
         )}
+        {(card as any).view_count > 0 && (
+          <span className="text-xs text-gray-400 ml-auto">
+            👁 {(card as any).view_count}
+          </span>
+        )}
       </div>
     </div>
   );

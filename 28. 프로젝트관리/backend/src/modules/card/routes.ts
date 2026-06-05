@@ -18,7 +18,29 @@ const cardRoutes: FastifyPluginAsync = async (app) => {
   app.get('/cards/:id', async (request, reply) => {
     const { id } = request.params as { id: string };
     const card = await cardService.getById(id);
-    return reply.send(card);
+    // 읽음 기록
+    const db = require('../../shared/database/connection').getDb();
+    const { v4: uid } = require('uuid');
+    const existing = await db('card_views')
+      .where({ card_id: id, user_id: request.userId! }).first();
+    if (!existing) {
+      await db('card_views').insert({
+        id: uid(), card_id: id, user_id: request.userId!,
+      }).catch(() => {});
+    }
+    // 읽음 수 첨부
+    const viewCount = await db('card_views').where('card_id', id).count('id as count').first();
+    return reply.send({ ...card, view_count: Number(viewCount?.count || 0) });
+  });
+
+  app.get('/cards/:id/views', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const db = require('../../shared/database/connection').getDb();
+    const views = await db('card_views')
+      .where('card_id', id)
+      .join('users', 'card_views.user_id', 'users.id')
+      .select('users.name', 'card_views.viewed_at');
+    return reply.send(views);
   });
 
   app.put('/cards/:id', async (request, reply) => {

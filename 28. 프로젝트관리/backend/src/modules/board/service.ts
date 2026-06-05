@@ -33,6 +33,19 @@ export class BoardService {
           .orderBy('position', 'asc')
       : [];
 
+    // 읽음 수 조회
+    const viewCounts = cardIds.length > 0
+      ? await db('card_views')
+          .whereIn('card_id', cardIds)
+          .groupBy('card_id')
+          .select('card_id')
+          .count('id as count')
+      : [];
+    const viewMap: Record<string, number> = {};
+    for (const v of viewCounts) {
+      viewMap[v.card_id] = Number(v.count);
+    }
+
     // Group cards by column + attach subtasks
     const cardsByColumn: Record<string, any[]> = {};
     const subtasksByParent: Record<string, any[]> = {};
@@ -49,6 +62,7 @@ export class BoardService {
       }
       cardsByColumn[card.column_id].push({
         ...card,
+        view_count: viewMap[card.id] || 0,
         subtasks: subtasksByParent[card.id] || [],
       });
     }
