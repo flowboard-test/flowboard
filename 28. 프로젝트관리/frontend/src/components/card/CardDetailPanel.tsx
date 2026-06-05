@@ -100,10 +100,10 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
 
   if (!card) return null;
 
-  return (
+  const panelContent = (
     <div className={inline
       ? 'h-full bg-white border rounded-lg overflow-y-auto'
-      : 'fixed right-0 top-0 h-full w-96 bg-white shadow-xl border-l overflow-y-auto z-40'}>
+      : 'bg-white rounded-lg w-[480px] max-h-[85vh] overflow-y-auto shadow-xl'}>
       <div className="p-4 border-b flex justify-between items-center">
         <h2 className="font-semibold truncate">{card.title}</h2>
         <div className="flex gap-2">
@@ -278,6 +278,17 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
         <CommentSection cardId={cardId} />
         </>
         )}
+      </div>
+    </div>
+  );
+
+  if (inline) return panelContent;
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+      onClick={() => { onClose ? onClose() : setSelectedCard(null); }}>
+      <div onClick={(e) => e.stopPropagation()}>
+        {panelContent}
       </div>
     </div>
   );
