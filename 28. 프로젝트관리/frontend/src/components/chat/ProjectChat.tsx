@@ -100,7 +100,7 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
 
   return (
     <div className="fixed bottom-20 right-4 w-96 h-[480px] bg-white border
-      rounded-lg shadow-xl flex flex-col z-30 overflow-hidden relative">
+      rounded-lg shadow-xl flex flex-col z-30 relative">
       {/* 헤더 */}
       <div className="p-2 border-b bg-blue-500 text-white rounded-t-lg
         flex justify-between items-center">
@@ -288,7 +288,7 @@ export function ProjectChat({ projectId }: ProjectChatProps) {
 
       {/* 공지 상세 팝업 */}
       {noticePopup && (
-        <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10 rounded-lg">
+        <div className="absolute inset-0 bg-black/30 flex items-center justify-center z-10 rounded-lg">
           <div className="bg-white rounded-lg w-[340px] max-h-[320px] flex flex-col shadow-xl">
             <div className="p-3 border-b flex justify-between items-center bg-yellow-50 rounded-t-lg">
               <span className="text-xs font-semibold text-yellow-800">📢 공지사항</span>
