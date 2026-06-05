@@ -1060,10 +1060,6 @@ function StatisticsTab() {
     <div className="p-4 space-y-4">
       <div className="flex items-center gap-3">
         <h2 className="text-sm font-semibold">📊 통계</h2>
-        <button onClick={() => runBatch.mutate()}
-          className="text-xs px-2 py-1 bg-blue-500 text-white rounded">
-          배치 실행
-        </button>
       </div>
 
       {/* 실시간 요약 */}
