@@ -3,6 +3,7 @@ import { useState } from 'react';
 interface DashboardData {
   progress: { total: number; done: number; percentage: number };
   columnDistribution: Array<{ column_name: string; count: number }>;
+  columnDwellTime?: Array<{ column_name: string; avg_hours: number }>;
   memberStats?: Array<{ id: string; name: string; assigned: number; completed: number }>;
 }
 
@@ -165,6 +166,27 @@ export function DashboardView({ data, cards = [], members = [], onCardClick }: D
           )}
         </div>
       </div>
+
+      {/* 병목 분석: 컬럼별 평균 체류 시간 */}
+      {data.columnDwellTime && data.columnDwellTime.length > 0 && (
+        <div className="bg-white border rounded-lg p-4">
+          <h3 className="text-sm font-semibold mb-3">⏱ 컬럼별 평균 체류 시간 (병목 분석)</h3>
+          <div className="space-y-2">
+            {data.columnDwellTime.map((col) => (
+              <div key={col.column_name} className="flex items-center gap-2">
+                <span className="text-xs w-14 text-gray-600">{col.column_name}</span>
+                <div className="flex-1 bg-gray-100 rounded h-5">
+                  <div className="bg-purple-400 h-5 rounded text-xs text-white
+                    flex items-center px-2"
+                    style={{ width: `${Math.min(col.avg_hours * 5, 100)}%` }}>
+                    {col.avg_hours}h
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* 마감 임박 / 기한 초과 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

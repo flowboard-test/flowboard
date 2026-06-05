@@ -60,16 +60,26 @@ const cardRoutes: FastifyPluginAsync = async (app) => {
 
   app.post('/cards/:id/attachments', async (request, reply) => {
     const { id } = request.params as { id: string };
-    // 간단한 메타데이터 저장 (실제 S3 업로드는 추후 구현)
-    const body = request.body as { file_name: string; file_size: number; mime_type: string };
+    const body = request.body as { file_name: string; file_size: number; mime_type: string; file_data?: string };
     const db = require('../../shared/database/connection').getDb();
     const { v4: uid } = require('uuid');
+    const attachId = uid();
     await db('attachments').insert({
-      id: uid(), card_id: id, file_name: body.file_name || 'file',
+      id: attachId, card_id: id, file_name: body.file_name || 'file',
       file_size: body.file_size || 0, mime_type: body.mime_type || 'application/octet-stream',
-      s3_key: `uploads/${id}/${uid()}`, uploaded_by: request.userId!,
+      s3_key: body.file_data || `uploads/${id}/${attachId}`,
+      uploaded_by: request.userId!,
     });
-    return reply.status(201).send({ message: '파일이 첨부되었습니다' });
+    return reply.status(201).send({ id: attachId, message: '파일이 첨부되었습니다' });
+  });
+
+  // 첨부파일 다운로드
+  app.get('/cards/:id/attachments/:attachId/download', async (request, reply) => {
+    const { attachId } = request.params as { id: string; attachId: string };
+    const db = require('../../shared/database/connection').getDb();
+    const file = await db('attachments').where('id', attachId).first();
+    if (!file) return reply.status(404).send({ message: '파일을 찾을 수 없습니다' });
+    return reply.send({ file_name: file.file_name, file_data: file.s3_key, mime_type: file.mime_type });
   });
 
   // 댓글
@@ -95,6 +105,28 @@ const cardRoutes: FastifyPluginAsync = async (app) => {
     await db('comments').insert({
       id: uid(), card_id: id, author_id: request.userId!, content,
     });
+
+    // @ 멘션 알림 처리
+    const mentions = content.match(/@(\S+)/g);
+    if (mentions && mentions.length > 0) {
+      const { notificationService } = require('../notification/service');
+      const author = await db('users').where('id', request.userId!).first();
+      const card = await db('cards').where('id', id).first();
+      for (const mention of mentions) {
+        const name = mention.replace('@', '');
+        const user = await db('users').where('name', name).first();
+        if (user && user.id !== request.userId!) {
+          await notificationService.create({
+            user_id: user.id,
+            type: 'mention',
+            title: `${author?.name}님이 댓글에서 회원님을 멘션했습니다`,
+            body: content.substring(0, 100),
+            link: `/cards/${id}`,
+          });
+        }
+      }
+    }
+
     return reply.status(201).send({ message: '댓글이 추가되었습니다' });
   });
 

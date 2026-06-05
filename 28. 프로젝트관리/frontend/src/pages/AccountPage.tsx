@@ -121,6 +121,9 @@ export function AccountPage() {
 
       {/* U+웍스 그룹웨어 연동 */}
       <ExternalLinkSection />
+
+      {/* 알림 수신 설정 */}
+      <NotificationSettings />
     </div>
   );
 }
@@ -162,6 +165,62 @@ function ExternalLinkSection() {
           </button>
         </div>
       )}
+    </div>
+  );
+}
+
+function NotificationSettings() {
+  const [settings, setSettings] = useState<Record<string, any>>({});
+  const [saved, setSaved] = useState(false);
+
+  const types = [
+    { key: 'transfer_received', label: '업무 이관 수신' },
+    { key: 'transfer_rejected', label: '반려 알림' },
+    { key: 'deadline_approaching', label: '마감 임박' },
+    { key: 'deadline_overdue', label: '기한 초과' },
+    { key: 'mention', label: '멘션 알림' },
+  ];
+
+  async function toggleSetting(type: string, channel: string) {
+    const current = settings[type] || {};
+    const newVal = !(current[channel] ?? true);
+    const updated = { ...current, [channel]: newVal };
+    setSettings({ ...settings, [type]: updated });
+    await apiClient('/notifications/settings', {
+      method: 'PUT',
+      body: JSON.stringify({
+        notification_type: type,
+        [`channel_${channel}`]: newVal,
+      }),
+    });
+    setSaved(true);
+    setTimeout(() => setSaved(false), 1500);
+  }
+
+  return (
+    <div className="bg-white border rounded-lg p-4 space-y-3">
+      <h2 className="text-sm font-semibold">알림 수신 설정</h2>
+      {saved && <p className="text-xs text-green-600">저장됨</p>}
+      <div className="space-y-2">
+        {types.map((t) => (
+          <div key={t.key} className="flex items-center justify-between">
+            <span className="text-xs">{t.label}</span>
+            <div className="flex gap-2">
+              {['in_app', 'email', 'push'].map((ch) => (
+                <button key={ch}
+                  onClick={() => toggleSetting(t.key, ch)}
+                  className={`px-2 py-0.5 rounded text-xs border
+                    ${(settings[t.key]?.[ch] ?? true)
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-gray-100 text-gray-500'}`}>
+                  {ch === 'in_app' ? '앱' :
+                   ch === 'email' ? '이메일' : '푸시'}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

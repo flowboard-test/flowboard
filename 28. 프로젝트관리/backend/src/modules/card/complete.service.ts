@@ -15,6 +15,19 @@ export class CardCompleteService {
     const card = await db('cards').where('id', cardId).first();
     if (!card) throw AppError.notFound('카드를 찾을 수 없습니다');
 
+    // 서브태스크 완료 검증
+    const incompleteSubtasks = await db('cards')
+      .where('parent_id', cardId)
+      .whereNot('status', 'done')
+      .count('id as count')
+      .first();
+    if (Number(incompleteSubtasks?.count || 0) > 0) {
+      throw AppError.badRequest(
+        'SUBTASKS_INCOMPLETE',
+        '미완료된 하위 업무가 있습니다. 모든 하위 업무를 완료한 후 처리하세요.'
+      );
+    }
+
     const column = await db('columns').where('id', card.column_id).first();
     const board = await db('boards').where('id', column.board_id).first();
 

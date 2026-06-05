@@ -263,6 +263,59 @@ export async function buildApp() {
     return reply.send({ projects, cards });
   });
 
+  // Custom Fields API
+  app.get('/api/projects/:id/custom-fields', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { getDb } = require('./shared/database/connection');
+    const db = getDb();
+    const fields = await db('custom_field_definitions').where('project_id', id);
+    return reply.send(fields);
+  });
+
+  app.post('/api/projects/:id/custom-fields', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { name, field_type, options } = request.body as any;
+    const { getDb } = require('./shared/database/connection');
+    const { v4: uid } = require('uuid');
+    const db = getDb();
+    await db('custom_field_definitions').insert({
+      id: uid(), project_id: id, name, field_type,
+      options: options ? JSON.stringify(options) : null,
+    });
+    return reply.status(201).send({ message: '필드가 추가되었습니다' });
+  });
+
+  app.get('/api/cards/:cardId/custom-fields', async (request, reply) => {
+    const { cardId } = request.params as { cardId: string };
+    const { getDb } = require('./shared/database/connection');
+    const db = getDb();
+    const values = await db('custom_field_values')
+      .where('card_id', cardId)
+      .join('custom_field_definitions', 'custom_field_values.field_id', 'custom_field_definitions.id')
+      .select('custom_field_values.*', 'custom_field_definitions.name', 'custom_field_definitions.field_type');
+    return reply.send(values);
+  });
+
+  app.put('/api/cards/:cardId/custom-fields/:fieldId', async (request, reply) => {
+    const { cardId, fieldId } = request.params as any;
+    const { value } = request.body as { value: string };
+    const { getDb } = require('./shared/database/connection');
+    const { v4: uid } = require('uuid');
+    const db = getDb();
+    const existing = await db('custom_field_values')
+      .where({ card_id: cardId, field_id: fieldId }).first();
+    if (existing) {
+      await db('custom_field_values')
+        .where({ card_id: cardId, field_id: fieldId })
+        .update({ value });
+    } else {
+      await db('custom_field_values').insert({
+        id: uid(), card_id: cardId, field_id: fieldId, value,
+      });
+    }
+    return reply.send({ message: '저장되었습니다' });
+  });
+
   // Register modules
   await app.register(import('./modules/auth/routes'), {
     prefix: '/api/auth',

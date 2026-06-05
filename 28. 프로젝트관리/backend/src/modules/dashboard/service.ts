@@ -48,8 +48,45 @@ export class DashboardService {
         column_name: columns.find((c) => c.id === d.column_id)?.name || '',
         count: Number(d.count),
       })),
+      columnDwellTime: await this.getColumnDwellTime(columnIds, columns),
       memberStats: await this.getMemberStats(projectId, columnIds),
     };
+  }
+
+  private async getColumnDwellTime(columnIds: string[], columns: any[]) {
+    const db = getDb();
+    // card_timeline에서 column_moved 이벤트로 평균 체류시간 계산
+    const moves = await db('card_timeline')
+      .where('event_type', 'column_moved')
+      .whereIn('card_id', db('cards').whereIn('column_id', columnIds).select('id'))
+      .orderBy('created_at', 'asc');
+
+    const dwellMap: Record<string, number[]> = {};
+    for (const col of columns) dwellMap[col.id] = [];
+
+    // 카드별 이동 이벤트에서 체류시간 계산
+    const cardMoves: Record<string, any[]> = {};
+    for (const m of moves) {
+      const payload = JSON.parse(m.payload || '{}');
+      if (!cardMoves[m.card_id]) cardMoves[m.card_id] = [];
+      cardMoves[m.card_id].push({ ...m, payload });
+    }
+    for (const events of Object.values(cardMoves)) {
+      for (let i = 1; i < events.length; i++) {
+        const fromCol = events[i].payload.from_column_id;
+        const diff = new Date(events[i].created_at).getTime() -
+          new Date(events[i - 1].created_at).getTime();
+        if (fromCol && dwellMap[fromCol]) {
+          dwellMap[fromCol].push(diff / 3600000); // hours
+        }
+      }
+    }
+    return columns.map((col) => ({
+      column_name: col.name,
+      avg_hours: dwellMap[col.id].length > 0
+        ? Math.round(dwellMap[col.id].reduce((a, b) => a + b, 0) / dwellMap[col.id].length * 10) / 10
+        : 0,
+    }));
   }
 
   private async getMemberStats(projectId: string, columnIds: string[]) {
