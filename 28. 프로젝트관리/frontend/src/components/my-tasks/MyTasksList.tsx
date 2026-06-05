@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CardDetailPanel } from '../card/CardDetailPanel';
 
 interface TaskCard {
   id: string;
@@ -6,6 +7,7 @@ interface TaskCard {
   priority: string;
   due_date: string | null;
   status: string;
+  project_id?: string;
   transfer_info: {
     from_user_name: string;
     resolution_type: string;
@@ -20,6 +22,7 @@ interface MyTasksListProps {
 
 export function MyTasksList({ tasks }: MyTasksListProps) {
   const [filter, setFilter] = useState<'all' | 'active' | 'done' | 'overdue'>('all');
+  const [selectedTask, setSelectedTask] = useState<TaskCard | null>(null);
 
   const filtered = tasks.filter((t) => {
     if (filter === 'active') return t.status !== 'done';
@@ -48,22 +51,37 @@ export function MyTasksList({ tasks }: MyTasksListProps) {
       <div className="space-y-3">
         {filtered.map((task) => (
           <div key={task.id}
-            className="bg-white border rounded-lg p-3 hover:shadow-sm">
+            onClick={() => setSelectedTask(task)}
+            className="bg-white border rounded-lg p-3 hover:shadow-md
+              cursor-pointer transition-shadow">
             <div className="flex justify-between items-start">
-              <p className="font-medium text-sm">{task.title}</p>
-              <span className="text-xs text-gray-500">{task.due_date}</span>
+              <div className="flex items-center gap-2">
+                <span className={`w-2 h-2 rounded-full
+                  ${task.priority === 'urgent' ? 'bg-red-500' :
+                    task.priority === 'high' ? 'bg-orange-400' :
+                    task.priority === 'normal' ? 'bg-blue-400' : 'bg-gray-300'}`} />
+                <p className="font-medium text-sm">{task.title}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className={`text-xs px-1.5 py-0.5 rounded
+                  ${task.status === 'done' ? 'bg-green-100 text-green-700' :
+                    task.status === 'in_progress' ? 'bg-yellow-100 text-yellow-700' :
+                    'bg-gray-100 text-gray-600'}`}>
+                  {task.status === 'done' ? '완료' :
+                   task.status === 'in_progress' ? '진행중' : '할일'}
+                </span>
+                {task.due_date && (
+                  <span className="text-xs text-gray-500">
+                    {task.due_date.split('T')[0]}
+                  </span>
+                )}
+              </div>
             </div>
             {task.transfer_info && (
               <div className="mt-2 bg-blue-50 rounded p-2">
                 <p className="text-xs text-blue-700">
                   ← {task.transfer_info.from_user_name} 이관
-                  ({task.transfer_info.resolution_type})
                 </p>
-                {task.transfer_info.comment && (
-                  <p className="text-xs text-gray-600 mt-0.5">
-                    "{task.transfer_info.comment}"
-                  </p>
-                )}
               </div>
             )}
           </div>
@@ -74,6 +92,13 @@ export function MyTasksList({ tasks }: MyTasksListProps) {
           </p>
         )}
       </div>
+
+      {selectedTask && selectedTask.project_id && (
+        <CardDetailPanel
+          cardId={selectedTask.id}
+          projectId={selectedTask.project_id}
+        />
+      )}
     </div>
   );
 }

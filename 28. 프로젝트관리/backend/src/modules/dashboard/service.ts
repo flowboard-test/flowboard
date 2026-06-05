@@ -120,6 +120,21 @@ export class DashboardService {
 
     const cards = await query;
 
+    // project_id 추가
+    const columnIds = [...new Set(cards.map((c) => c.column_id))];
+    const columns = columnIds.length > 0
+      ? await db('columns').whereIn('id', columnIds)
+      : [];
+    const boardIds = [...new Set(columns.map((c: any) => c.board_id))];
+    const boards = boardIds.length > 0
+      ? await db('boards').whereIn('id', boardIds)
+      : [];
+    const colToProject: Record<string, string> = {};
+    for (const col of columns) {
+      const board = boards.find((b: any) => b.id === col.board_id);
+      if (board) colToProject[col.id] = board.project_id;
+    }
+
     // 이관 정보 추가
     const cardIds = cards.map((c) => c.id);
     const transfers = cardIds.length > 0
@@ -133,6 +148,7 @@ export class DashboardService {
 
     return cards.map((card) => ({
       ...card,
+      project_id: colToProject[card.column_id] || null,
       transfer_info: transfers.find((t) => t.card_id === card.id) || null,
     }));
   }
