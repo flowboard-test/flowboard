@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type ViewMode = 'board' | 'list' | 'gantt' | 'calendar' | 'dashboard';
+type ViewMode = 'board' | 'list' | 'gantt' | 'calendar' | 'dashboard' | 'backlog';
 
 interface UiState {
   viewMode: ViewMode;

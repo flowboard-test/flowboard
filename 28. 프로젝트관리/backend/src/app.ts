@@ -348,6 +348,9 @@ export async function buildApp() {
   await app.register(import('./modules/statistics/routes'), {
     prefix: '/api',
   });
+  await app.register(import('./modules/sprint/routes'), {
+    prefix: '/api',
+  });
 
   return app;
 }

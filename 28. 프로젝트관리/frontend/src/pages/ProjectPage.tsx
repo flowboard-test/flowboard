@@ -8,6 +8,7 @@ import { BoardView } from '@/components/board/BoardView';
 import { ListView } from '@/components/views/ListView';
 import { GanttView } from '@/components/views/GanttView';
 import { CalendarView } from '@/components/views/CalendarView';
+import { BacklogView } from '@/components/views/BacklogView';
 import { DashboardView } from '@/components/dashboard/DashboardView';
 import { CardDetailPanel } from '@/components/card/CardDetailPanel';
 import { WorkflowSetup } from '@/components/board/WorkflowSetup';
@@ -79,6 +80,7 @@ export function ProjectPage() {
 
   const views = [
     { key: 'board', label: '보드' },
+    { key: 'backlog', label: '백로그' },
     { key: 'list', label: '리스트' },
     { key: 'gantt', label: '간트' },
     { key: 'calendar', label: '캘린더' },
@@ -148,6 +150,7 @@ export function ProjectPage() {
           )}
           {viewMode === 'gantt' && <GanttView cards={allCards} />}
           {viewMode === 'calendar' && <CalendarView cards={allCards} />}
+          {viewMode === 'backlog' && <BacklogView projectId={id!} cards={allCards} />}
           {viewMode === 'dashboard' && (
             <DashboardView data={dashboard} cards={allCards} members={members || []} />
           )}
