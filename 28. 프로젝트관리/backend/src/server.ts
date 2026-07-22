@@ -70,6 +70,25 @@ async function start() {
   }
   console.log('Test users (10) ready');
 
+  // 부서 데이터 시드
+  const depts = ['기획팀', '디자인팀', '개발팀', 'QA팀', '마케팅팀', '영업팀', '인사팀', '재무팀', '운영팀', '보안팀'];
+  for (const deptName of depts) {
+    const exists = await db('departments').where('name', deptName).first();
+    if (!exists) {
+      await db('departments').insert({ id: uuid(), name: deptName, parent_id: null, 'order': depts.indexOf(deptName) });
+    }
+  }
+  // 사용자를 부서에 연결
+  for (const u of testUsers) {
+    const user = await db('users').where('email', u.email).first();
+    const dept = await db('departments').where('name', u.dept).first();
+    if (user && dept) {
+      await db('user_profiles').where('user_id', user.id)
+        .update({ department: u.dept }).catch(() => {});
+    }
+  }
+  console.log('Departments seeded');
+
   const app = await buildApp();
 
   try {

@@ -42,6 +42,18 @@ export class CardService {
       .where('position', '>=', insertPosition)
       .increment('position', 1);
 
+    // 이슈 번호 부여 (프로젝트별 카운터 증가)
+    const boardForKey = await db('boards').where('id', column.board_id).first();
+    let issueNumber: number | null = null;
+    if (boardForKey) {
+      const proj = await db('projects').where('id', boardForKey.project_id).first();
+      if (proj) {
+        issueNumber = (proj.issue_counter || 0) + 1;
+        await db('projects').where('id', proj.id)
+          .update({ issue_counter: issueNumber }).catch(() => { issueNumber = null; });
+      }
+    }
+
     const cardId = uuid();
     await db('cards').insert({
       id: cardId,
@@ -55,6 +67,7 @@ export class CardService {
       tags: JSON.stringify(input.tags || []),
       position: insertPosition,
       created_by: userId,
+      ...(issueNumber ? { issue_number: issueNumber } : {}),
     });
 
     // 워크플로우가 있으면 첫 번째 담당자 자동 배정

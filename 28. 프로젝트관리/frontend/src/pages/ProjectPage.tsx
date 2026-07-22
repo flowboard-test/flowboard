@@ -51,7 +51,7 @@ export function ProjectPage() {
   const { data: members } = useQuery<any[]>({
     queryKey: ['members', id],
     queryFn: () => apiClient(`/projects/${id}/members`),
-    enabled: !!id && viewMode === 'dashboard',
+    enabled: !!id && (viewMode === 'dashboard' || viewMode === 'list'),
   });
 
   const renameProject = useMutation({
@@ -144,7 +144,7 @@ export function ProjectPage() {
         <div className="flex-1 overflow-y-auto">
           {viewMode === 'board' && <BoardView />}
           {viewMode === 'list' && (
-            <ListView cards={allCards} columns={board?.columns || []} />
+            <ListView cards={allCards} columns={board?.columns || []} members={members || []} />
           )}
           {viewMode === 'gantt' && <GanttView cards={allCards} />}
           {viewMode === 'calendar' && <CalendarView cards={allCards} />}

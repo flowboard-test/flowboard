@@ -10,6 +10,10 @@ export class ProjectService {
     const boardId = uuid();
 
     return await db.transaction(async (trx) => {
+      // 프로젝트 키 접두사 생성 (이름 첫 글자들 or PROJ)
+      const prefix = input.name.replace(/[^A-Za-z가-힣]/g, '')
+        .substring(0, 4).toUpperCase() || 'PROJ';
+
       await trx('projects').insert({
         id: projectId,
         name: input.name,
@@ -17,6 +21,8 @@ export class ProjectService {
         is_public: input.is_public,
         resolution_required: input.resolution_required,
         owner_id: userId,
+        key_prefix: prefix,
+        issue_counter: 0,
       });
 
       const project = await trx('projects').where('id', projectId).first();

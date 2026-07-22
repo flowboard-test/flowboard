@@ -13,6 +13,9 @@ export class BoardService {
       throw AppError.notFound('보드를 찾을 수 없습니다');
     }
 
+    const project = await db('projects').where('id', projectId).first();
+    const projectPrefix = project?.key_prefix || 'TASK';
+
     const columns = await db('columns')
       .where('board_id', board.id)
       .orderBy('position', 'asc');
@@ -63,6 +66,7 @@ export class BoardService {
       cardsByColumn[card.column_id].push({
         ...card,
         view_count: viewMap[card.id] || 0,
+        issue_key: card.issue_number ? `${projectPrefix}-${card.issue_number}` : null,
         subtasks: subtasksByParent[card.id] || [],
       });
     }

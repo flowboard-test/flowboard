@@ -45,6 +45,9 @@ export function CardItem({ card }: CardItemProps) {
         cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5
         ${priorityColors[card.priority] || 'border-l-4 border-l-gray-300'}
         ${isDragging ? 'opacity-50 rotate-1 shadow-lg' : ''}`}>
+      {(card as any).issue_key && (
+        <span className="text-[10px] text-gray-400 font-mono">{(card as any).issue_key}</span>
+      )}
       <p className="text-sm font-medium">{card.title}</p>
       <div className="flex items-center gap-2 mt-2">
         <span className={`text-xs px-1.5 py-0.5 rounded

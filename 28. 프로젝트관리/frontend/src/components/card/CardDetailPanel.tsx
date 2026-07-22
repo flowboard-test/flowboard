@@ -15,6 +15,20 @@ interface CardDetailPanelProps {
   onClose?: () => void;
 }
 
+function eventLabel(type: string): string {
+  const labels: Record<string, string> = {
+    created: '님이 카드를 생성했습니다',
+    column_moved: '님이 카드를 이동했습니다',
+    transferred: '님이 업무를 이관했습니다',
+    auto_transferred: '님이 완료하여 다음 담당자에게 전달되었습니다',
+    completed: '님이 완료 처리했습니다',
+    rejected: '님이 반려했습니다',
+    workflow_completed: '님이 워크플로우를 완료했습니다',
+    updated: '님이 카드를 수정했습니다',
+  };
+  return labels[type] || `님의 활동 (${type})`;
+}
+
 export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDetailPanelProps) {
   const setSelectedCard = useUiStore((s) => s.setSelectedCard);
   const currentUser = useAuthStore((s) => s.user);
@@ -38,6 +52,11 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
   const { data: transfers } = useQuery<any[]>({
     queryKey: ['transfers', cardId],
     queryFn: () => apiClient(`/cards/${cardId}/transfers`),
+  });
+
+  const { data: timeline } = useQuery<any[]>({
+    queryKey: ['timeline', cardId],
+    queryFn: () => apiClient(`/cards/${cardId}/timeline`),
   });
 
   const { data: members } = useQuery<any[]>({
@@ -270,6 +289,29 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
                       {t.comment}
                     </p>
                   )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 변경 이력 */}
+        {timeline && timeline.length > 0 && (
+          <div>
+            <h3 className="text-xs font-medium text-gray-500 mb-2">변경 이력</h3>
+            <div className="space-y-1.5 max-h-48 overflow-y-auto">
+              {timeline.map((t: any) => (
+                <div key={t.id} className="flex gap-2 text-xs">
+                  <span className="text-gray-400 shrink-0">
+                    {new Date(t.created_at).toLocaleString('ko-KR', {
+                      month: '2-digit', day: '2-digit',
+                      hour: '2-digit', minute: '2-digit',
+                    })}
+                  </span>
+                  <span className="text-gray-700">
+                    <b>{t.actor_name || '시스템'}</b>{' '}
+                    {eventLabel(t.event_type)}
+                  </span>
                 </div>
               ))}
             </div>

@@ -43,6 +43,17 @@ const cardRoutes: FastifyPluginAsync = async (app) => {
     return reply.send(views);
   });
 
+  app.get('/cards/:id/timeline', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const db = require('../../shared/database/connection').getDb();
+    const timeline = await db('card_timeline')
+      .where('card_id', id)
+      .leftJoin('users', 'card_timeline.actor_id', 'users.id')
+      .select('card_timeline.*', 'users.name as actor_name')
+      .orderBy('card_timeline.created_at', 'desc');
+    return reply.send(timeline);
+  });
+
   app.put('/cards/:id', async (request, reply) => {
     const { id } = request.params as { id: string };
     const input = updateCardSchema.parse(request.body);
