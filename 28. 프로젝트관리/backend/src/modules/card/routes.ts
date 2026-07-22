@@ -54,6 +54,60 @@ const cardRoutes: FastifyPluginAsync = async (app) => {
     return reply.send(timeline);
   });
 
+  // 이슈 링크
+  app.get('/cards/:id/links', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const db = require('../../shared/database/connection').getDb();
+    const links = await db('card_links')
+      .where('source_card_id', id)
+      .join('cards', 'card_links.target_card_id', 'cards.id')
+      .select('card_links.*', 'cards.title as target_title', 'cards.status as target_status');
+    return reply.send(links);
+  });
+
+  app.post('/cards/:id/links', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { target_card_id, link_type } = request.body as any;
+    const db = require('../../shared/database/connection').getDb();
+    const { v4: uid } = require('uuid');
+    await db('card_links').insert({
+      id: uid(), source_card_id: id, target_card_id, link_type,
+    });
+    return reply.status(201).send({ message: '연결되었습니다' });
+  });
+
+  app.delete('/cards/:id/links/:linkId', async (request, reply) => {
+    const { linkId } = request.params as any;
+    const db = require('../../shared/database/connection').getDb();
+    await db('card_links').where('id', linkId).del();
+    return reply.status(204).send();
+  });
+
+  // 작업 로그
+  app.get('/cards/:id/worklogs', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const db = require('../../shared/database/connection').getDb();
+    const logs = await db('work_logs')
+      .where('card_id', id)
+      .join('users', 'work_logs.user_id', 'users.id')
+      .select('work_logs.*', 'users.name as user_name')
+      .orderBy('work_logs.work_date', 'desc');
+    return reply.send(logs);
+  });
+
+  app.post('/cards/:id/worklogs', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { hours, comment, work_date } = request.body as any;
+    const db = require('../../shared/database/connection').getDb();
+    const { v4: uid } = require('uuid');
+    await db('work_logs').insert({
+      id: uid(), card_id: id, user_id: request.userId!,
+      hours, comment: comment || null,
+      work_date: work_date || new Date().toISOString().split('T')[0],
+    });
+    return reply.status(201).send({ message: '기록되었습니다' });
+  });
+
   app.put('/cards/:id', async (request, reply) => {
     const { id } = request.params as { id: string };
     const input = updateCardSchema.parse(request.body);

@@ -7,6 +7,8 @@ import { SubtaskList } from './SubtaskList';
 import { CardEditForm } from './CardEditForm';
 import { CommentSection } from './CommentSection';
 import { FileAttachment } from './FileAttachment';
+import { WorkLogSection } from './WorkLogSection';
+import { CardLinkSection } from './CardLinkSection';
 
 interface CardDetailPanelProps {
   cardId: string;
@@ -186,6 +188,13 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
 
         {/* 첨부파일 */}
         <FileAttachment cardId={cardId} />
+
+        {/* 작업 시간 로그 */}
+        <WorkLogSection cardId={cardId} />
+
+        {/* 연결된 이슈 */}
+        <CardLinkSection cardId={cardId}
+          projectCards={(board?.columns || []).flatMap((c: any) => c.cards || [])} />
 
         {/* 완료 처리 버튼 - 내 담당 업무만 */}
         {card.status !== 'done' && card.assignee_id === currentUser?.id && (
