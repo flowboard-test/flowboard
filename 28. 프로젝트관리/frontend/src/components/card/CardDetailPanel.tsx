@@ -10,6 +10,7 @@ import { FileAttachment } from './FileAttachment';
 import { WorkLogSection } from './WorkLogSection';
 import { CardLinkSection } from './CardLinkSection';
 import { MetricSection } from './MetricSection';
+import { CollaboratorSection } from './CollaboratorSection';
 
 interface CardDetailPanelProps {
   cardId: string;
@@ -232,6 +233,10 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
                 <option key={m.id} value={m.id}>{m.name}</option>
               ))}
             </select>
+          </div>
+          <div className="col-span-2">
+            <CollaboratorSection cardId={cardId}
+              members={members && members.length > 0 ? members : allUsers || []} />
           </div>
         </div>
 

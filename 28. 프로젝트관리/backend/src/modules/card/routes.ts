@@ -83,6 +83,39 @@ const cardRoutes: FastifyPluginAsync = async (app) => {
     return reply.status(204).send();
   });
 
+  // === 카드 참여자(협업자) ===
+  app.get('/cards/:id/collaborators', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const db = require('../../shared/database/connection').getDb();
+    const list = await db('card_collaborators')
+      .where('card_id', id)
+      .join('users', 'card_collaborators.user_id', 'users.id')
+      .select('card_collaborators.id', 'users.id as user_id', 'users.name', 'users.email');
+    return reply.send(list);
+  });
+
+  app.post('/cards/:id/collaborators', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { user_id } = request.body as { user_id: string };
+    const db = require('../../shared/database/connection').getDb();
+    const { v4: uid } = require('uuid');
+    const existing = await db('card_collaborators')
+      .where({ card_id: id, user_id }).first();
+    if (existing) return reply.send({ message: '이미 추가됨' });
+    await db('card_collaborators').insert({
+      id: uid(), card_id: id, user_id,
+    });
+    return reply.status(201).send({ message: '추가됨' });
+  });
+
+  app.delete('/cards/:id/collaborators/:userId', async (request, reply) => {
+    const { id, userId } = request.params as any;
+    const db = require('../../shared/database/connection').getDb();
+    await db('card_collaborators')
+      .where({ card_id: id, user_id: userId }).del();
+    return reply.status(204).send();
+  });
+
   // === 카드 메트릭(차트 데이터) ===
   app.get('/cards/:id/metrics', async (request, reply) => {
     const { id } = request.params as { id: string };
