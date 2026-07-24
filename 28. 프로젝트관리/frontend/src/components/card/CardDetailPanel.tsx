@@ -179,7 +179,8 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
         {card.description && (
           <div>
             <span className="text-xs text-gray-500">설명</span>
-            <p className="text-sm mt-1">{card.description}</p>
+            <div className="text-sm mt-1 rich-editor-content"
+              dangerouslySetInnerHTML={{ __html: card.description }} />
           </div>
         )}
 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/api/client';
+import { RichEditor } from '@/components/common/RichEditor';
 
 interface CardEditFormProps {
   card: any;
@@ -54,9 +55,8 @@ export function CardEditForm({ card, projectId, onClose }: CardEditFormProps) {
       </div>
       <div>
         <label className="text-xs text-gray-500">설명</label>
-        <textarea value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full border rounded px-2 py-1 text-sm h-16" />
+        <RichEditor value={description} onChange={setDescription}
+          placeholder="설명을 입력하세요..." minHeight={100} />
       </div>
       <div className="grid grid-cols-2 gap-2">
         <div>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { apiClient } from '@/api/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuthStore } from '@/stores/authStore';
+import { RichEditor } from '@/components/common/RichEditor';
 
 interface AddCardModalProps {
   columns: Array<{ id: string; name: string }>;
@@ -101,11 +102,9 @@ export function AddCardModal({ columns, projectId, onClose }: AddCardModalProps)
           {/* 설명 */}
           <div>
             <label className="text-xs font-medium text-gray-600 mb-1 block">설명</label>
-            <textarea value={description}
-              onChange={(e) => setDescription(e.target.value)}
+            <RichEditor value={description} onChange={setDescription}
               placeholder="업무에 대한 상세 설명을 입력하세요..."
-              rows={5}
-              className="w-full border rounded px-3 py-2 text-sm resize-y" />
+              minHeight={140} />
           </div>
 
           {/* 2열 레이아웃 */}
