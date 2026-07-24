@@ -54,6 +54,20 @@ export function RichEditor({ value, onChange, placeholder, minHeight = 120 }: Ri
           const url = prompt('링크 URL 입력:');
           if (url) exec('createLink', url);
         }} className={btnClass + ' text-blue-500'}>🔗</button>
+        <label className={btnClass + ' text-green-500 cursor-pointer'}>
+          🖼
+          <input type="file" accept="image/*" className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              const reader = new FileReader();
+              reader.onload = () => {
+                exec('insertImage', reader.result as string);
+              };
+              reader.readAsDataURL(file);
+              e.target.value = '';
+            }} />
+        </label>
         <button type="button" onClick={() => exec('removeFormat')}
           className={btnClass + ' text-gray-400'}>지우기</button>
       </div>

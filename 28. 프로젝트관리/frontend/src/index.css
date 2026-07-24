@@ -29,3 +29,4 @@ body {
 .rich-editor-content ol { list-style: decimal; padding-left: 1.5rem; }
 .rich-editor-content h3 { font-size: 1rem; font-weight: 600; margin: 0.3rem 0; }
 .rich-editor-content a { color: #3b82f6; text-decoration: underline; }
+.rich-editor-content img { max-width: 100%; border-radius: 6px; margin: 4px 0; }
