@@ -94,16 +94,52 @@ export class ExternalAuthService {
     externalToken: string
   ): Promise<ExternalUserInfo> {
     if (provider === 'uplus_works') {
-      // TODO: 실제 U+웍스 API 호출
-      // const response = await fetch('https://api.uplusworks.co.kr/v1/me', {
-      //   headers: { Authorization: `Bearer ${externalToken}` },
-      // });
-      // return await response.json();
+      const apiUrl = process.env.UPLUS_WORKS_API_URL;
 
-      // 개발용 목업 (실제 연동 시 위 코드로 교체)
+      // 실제 U+웍스 API가 설정된 경우 호출
+      if (apiUrl) {
+        try {
+          const response = await fetch(`${apiUrl}/v1/me`, {
+            headers: { Authorization: `Bearer ${externalToken}` },
+          });
+          if (!response.ok) {
+            throw AppError.unauthorized('U+웍스 토큰 검증에 실패했습니다');
+          }
+          const data: any = await response.json();
+          return {
+            external_id: data.id || data.employee_id || data.sub,
+            email: data.email,
+            name: data.name || data.display_name,
+            department: data.department || data.dept_name,
+            position: data.position || data.title,
+            phone: data.phone || data.mobile,
+            avatar_url: data.avatar_url || data.profile_image,
+          };
+        } catch (err: any) {
+          if (err.statusCode) throw err;
+          throw AppError.badRequest(
+            'EXTERNAL_AUTH_ERROR',
+            `U+웍스 연동 중 오류: ${err.message}`
+          );
+        }
+      }
+
+      // API 미설정 시 개발용 목업 (토큰을 이메일로 간주하여 테스트)
+      if (process.env.NODE_ENV !== 'production') {
+        const mockEmail = externalToken.includes('@')
+          ? externalToken : `${externalToken}@uplusworks.dev`;
+        return {
+          external_id: `uplus_${externalToken}`,
+          email: mockEmail,
+          name: mockEmail.split('@')[0],
+          department: '연동부서',
+          position: '사원',
+        };
+      }
+
       throw AppError.badRequest(
         'EXTERNAL_AUTH_NOT_CONFIGURED',
-        'U+웍스 연동이 아직 설정되지 않았습니다. 관리자에게 문의하세요.'
+        'U+웍스 API URL(UPLUS_WORKS_API_URL)이 설정되지 않았습니다.'
       );
     }
 
