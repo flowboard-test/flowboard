@@ -27,6 +27,7 @@ export function ProjectPage() {
   const [isEditingName, setIsEditingName] = useState(false);
   const [editName, setEditName] = useState('');
   const [showAddCard, setShowAddCard] = useState(false);
+  const [recurringTemplate, setRecurringTemplate] = useState<any>(null);
   const queryClient = useQueryClient();
 
   useRealtime(id || null);
@@ -73,6 +74,18 @@ export function ProjectPage() {
       setColumns(board.columns);
     }
   }, [board, setColumns]);
+
+  // 반복 알림 클릭 시 이전 내용으로 카드 생성 팝업
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const recurId = params.get('recurring');
+    if (recurId) {
+      apiClient(`/recurring/${recurId}`).then((r: any) => {
+        setRecurringTemplate(r);
+        setShowAddCard(true);
+      }).catch(() => {});
+    }
+  }, []);
 
   if (isLoading) {
     return <div className="p-6 text-gray-500">로딩 중...</div>;
@@ -179,7 +192,8 @@ export function ProjectPage() {
         <AddCardModal
           columns={board.columns}
           projectId={id!}
-          onClose={() => setShowAddCard(false)}
+          template={recurringTemplate}
+          onClose={() => { setShowAddCard(false); setRecurringTemplate(null); }}
         />
       )}
     </div>

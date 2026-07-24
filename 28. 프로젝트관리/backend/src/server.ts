@@ -105,11 +105,16 @@ async function start() {
     const { startStatisticsScheduler } = require('./modules/statistics/scheduler');
     startStatisticsScheduler();
 
+    // 반복 카드 스케줄러 시작
+    const { startRecurringScheduler } = require('./modules/recurring/scheduler');
+    startRecurringScheduler();
+
     console.log(
       `Server running at http://${config.host}:${config.port}`
     );
     console.log('WebSocket server initialized');
     console.log('Statistics scheduler started');
+    console.log('Recurring scheduler started');
   } catch (err) {
     app.log.error(err);
     process.exit(1);

@@ -86,15 +86,29 @@ export function Layout() {
                 <div className="p-2 border-b text-xs font-medium">
                   알림 ({unreadCount}건 미읽음)
                 </div>
-                {notifications?.slice(0, 20).map((n: any) => (
-                  <div key={n.id}
-                    onClick={() => !n.is_read && markRead.mutate(n.id)}
-                    className={`p-2 border-b cursor-pointer text-xs
-                      ${!n.is_read ? 'bg-blue-50' : ''}`}>
-                    <p className="font-medium">{n.title}</p>
-                    <p className="text-gray-600">{n.body}</p>
-                  </div>
-                ))}
+                {notifications?.slice(0, 20).map((n: any) => {
+                  const meta = (() => {
+                    try { return typeof n.metadata === 'string' ? JSON.parse(n.metadata) : n.metadata; }
+                    catch { return {}; }
+                  })();
+                  return (
+                    <div key={n.id}
+                      onClick={() => {
+                        if (!n.is_read) markRead.mutate(n.id);
+                        if (n.type === 'recurring_due' && meta?.recurringId) {
+                          window.location.href =
+                            `/projects/${meta.projectId}?recurring=${meta.recurringId}`;
+                        } else if (meta?.projectId) {
+                          window.location.href = `/projects/${meta.projectId}`;
+                        }
+                      }}
+                      className={`p-2 border-b cursor-pointer text-xs
+                        ${!n.is_read ? 'bg-blue-50' : ''}`}>
+                      <p className="font-medium">{n.title}</p>
+                      <p className="text-gray-600">{n.body}</p>
+                    </div>
+                  );
+                })}
                 {(!notifications || notifications.length === 0) && (
                   <p className="p-3 text-gray-500 text-center">알림 없음</p>
                 )}

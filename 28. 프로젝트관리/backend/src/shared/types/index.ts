@@ -11,7 +11,8 @@ export type NotificationType =
   | 'deadline_d1'
   | 'deadline_dday'
   | 'overdue'
-  | 'mention';
+  | 'mention'
+  | 'recurring_due';
 export type NotificationChannel = 'in_app' | 'email' | 'push';
 export type FieldType = 'text' | 'number' | 'date' | 'select' | 'multi_select';
 

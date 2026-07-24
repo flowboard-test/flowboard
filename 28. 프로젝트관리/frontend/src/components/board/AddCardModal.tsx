@@ -7,20 +7,25 @@ import { RichEditor } from '@/components/common/RichEditor';
 interface AddCardModalProps {
   columns: Array<{ id: string; name: string }>;
   projectId: string;
+  template?: any;
   onClose: () => void;
 }
 
-export function AddCardModal({ columns, projectId, onClose }: AddCardModalProps) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+export function AddCardModal({ columns, projectId, template, onClose }: AddCardModalProps) {
+  const [title, setTitle] = useState(template?.title || '');
+  const [description, setDescription] = useState(template?.description || '');
   const [issueType, setIssueType] = useState('task');
-  const [priority, setPriority] = useState('normal');
-  const [assigneeId, setAssigneeId] = useState('');
+  const [priority, setPriority] = useState(template?.priority || 'normal');
+  const [assigneeId, setAssigneeId] = useState(template?.assignee_id || '');
   const [startDate, setStartDate] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [estimatedHours, setEstimatedHours] = useState('');
-  const [labels, setLabels] = useState('');
+  const [labels, setLabels] = useState(() => {
+    try { return (JSON.parse(template?.tags || '[]')).join(', '); }
+    catch { return ''; }
+  });
   const [attachFiles, setAttachFiles] = useState<File[]>([]);
+  const [recurType, setRecurType] = useState('none');
   const queryClient = useQueryClient();
   const currentUser = useAuthStore((s) => s.user);
 
@@ -64,6 +69,21 @@ export function AddCardModal({ columns, projectId, onClose }: AddCardModalProps)
         };
         reader.readAsDataURL(file);
       }
+    }
+    // 반복 규칙 등록
+    if (recurType !== 'none' && dueDate) {
+      const nextRun = dueDate.split('T')[0];
+      const recurTime = dueDate.split('T')[1] || null;
+      await apiClient(`/projects/${projectId}/recurring`, {
+        method: 'POST',
+        body: JSON.stringify({
+          column_id: targetColId, title,
+          description: description || null, priority,
+          assignee_id: assigneeId || null, tags,
+          recur_type: recurType, recur_interval: 1,
+          recur_time: recurTime, next_run: nextRun,
+        }),
+      });
     }
     queryClient.invalidateQueries({ queryKey: ['board', projectId] });
     onClose();
@@ -167,6 +187,24 @@ export function AddCardModal({ columns, projectId, onClose }: AddCardModalProps)
                 readOnly
                 className="w-full border rounded px-2 py-2 text-sm bg-gray-50" />
             </div>
+          </div>
+
+          {/* 반복 설정 */}
+          <div>
+            <label className="text-xs font-medium text-gray-600 mb-1 block">🔁 반복</label>
+            <select value={recurType}
+              onChange={(e) => setRecurType(e.target.value)}
+              className="w-full border rounded px-2 py-2 text-sm">
+              <option value="none">반복 안함</option>
+              <option value="daily">매일</option>
+              <option value="weekly">매주</option>
+              <option value="monthly">매월</option>
+              <option value="yearly">매년</option>
+              <option value="weekday">주중 매일(월-금)</option>
+            </select>
+            {recurType !== 'none' && !dueDate && (
+              <p className="text-xs text-red-500 mt-1">반복하려면 마감일을 설정하세요</p>
+            )}
           </div>
 
           {/* 라벨 */}
