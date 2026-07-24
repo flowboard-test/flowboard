@@ -16,11 +16,51 @@ export function CardEditForm({ card, projectId, onClose }: CardEditFormProps) {
   const [startDate, setStartDate] = useState(card.start_date || '');
   const [dueDate, setDueDate] = useState(card.due_date || '');
   const [assigneeId, setAssigneeId] = useState(card.assignee_id || '');
+  const [recurType, setRecurType] = useState('none');
+  const [recurId, setRecurId] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
   const { data: members } = useQuery<any[]>({
     queryKey: ['members', projectId],
     queryFn: () => apiClient(`/projects/${projectId}/members`),
+  });
+
+  // 이 카드와 연결된 반복 규칙 찾기
+  useQuery<any[]>({
+    queryKey: ['recurring', projectId],
+    queryFn: async () => {
+      const list: any[] = await apiClient(`/projects/${projectId}/recurring`);
+      const matched = list.find((r) => r.title === card.title);
+      if (matched) {
+        setRecurId(matched.id);
+        setRecurType(matched.recur_type);
+      }
+      return list;
+    },
+  });
+
+  const saveRecur = useMutation({
+    mutationFn: () => {
+      if (recurId) {
+        // 기존 규칙 수정 (비활성화 or 타입 변경)
+        return apiClient(`/recurring/${recurId}`, {
+          method: 'PUT',
+          body: JSON.stringify({ is_active: recurType !== 'none' }),
+        });
+      } else if (recurType !== 'none' && dueDate) {
+        // 신규 규칙 생성
+        return apiClient(`/projects/${projectId}/recurring`, {
+          method: 'POST',
+          body: JSON.stringify({
+            column_id: card.column_id, title, description,
+            priority, assignee_id: assigneeId || null, tags: [],
+            recur_type: recurType, recur_interval: 1,
+            next_run: dueDate.split('T')[0],
+          }),
+        });
+      }
+      return Promise.resolve();
+    },
   });
 
   const updateMutation = useMutation({
@@ -36,7 +76,9 @@ export function CardEditForm({ card, projectId, onClose }: CardEditFormProps) {
     },
   });
 
-  function handleSave() {
+  async function handleSave() {
+    await saveRecur.mutateAsync();
+    queryClient.invalidateQueries({ queryKey: ['recurring', projectId] });
     updateMutation.mutate({
       title, description: description || null,
       priority, assignee_id: assigneeId || null,
@@ -95,6 +137,22 @@ export function CardEditForm({ card, projectId, onClose }: CardEditFormProps) {
             onChange={(e) => setDueDate(e.target.value)}
             className="w-full border rounded px-1 py-0.5 text-xs" />
         </div>
+      </div>
+      <div>
+        <label className="text-xs text-gray-500">🔁 반복</label>
+        <select value={recurType}
+          onChange={(e) => setRecurType(e.target.value)}
+          className="w-full border rounded px-2 py-1 text-xs">
+          <option value="none">반복 안함</option>
+          <option value="daily">매일</option>
+          <option value="weekly">매주</option>
+          <option value="monthly">매월</option>
+          <option value="yearly">매년</option>
+          <option value="weekday">주중 매일(월-금)</option>
+        </select>
+        {recurId && (
+          <p className="text-xs text-blue-500 mt-1">기존 반복 규칙과 연결됨</p>
+        )}
       </div>
       <div className="flex gap-2">
         <button onClick={handleSave}
