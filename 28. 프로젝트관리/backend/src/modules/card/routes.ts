@@ -126,20 +126,44 @@ const cardRoutes: FastifyPluginAsync = async (app) => {
 
   app.post('/metrics/:metricId/values', async (request, reply) => {
     const { metricId } = request.params as { metricId: string };
-    const { record_date, value } = request.body as any;
+    const { record_date, value, series_name } = request.body as any;
     const db = require('../../shared/database/connection').getDb();
     const { v4: uid } = require('uuid');
     const date = record_date || new Date().toISOString().split('T')[0];
+    const series = series_name || '값';
     const existing = await db('card_metric_values')
-      .where({ metric_id: metricId, record_date: date }).first();
+      .where({ metric_id: metricId, record_date: date, series_name: series }).first();
     if (existing) {
       await db('card_metric_values').where('id', existing.id).update({ value });
     } else {
       await db('card_metric_values').insert({
-        id: uid(), metric_id: metricId, record_date: date, value,
+        id: uid(), metric_id: metricId, record_date: date,
+        series_name: series, value,
       });
     }
     return reply.status(201).send({ message: '기록됨' });
+  });
+
+  // 그리드 전체 교체 저장
+  app.put('/metrics/:metricId/grid', async (request, reply) => {
+    const { metricId } = request.params as { metricId: string };
+    const { rows } = request.body as { rows: any[] };
+    const db = require('../../shared/database/connection').getDb();
+    const { v4: uid } = require('uuid');
+    // 기존 값 전체 삭제 후 재삽입
+    await db('card_metric_values').where('metric_id', metricId).del();
+    for (const row of rows) {
+      for (const [series, val] of Object.entries(row.values || {})) {
+        if (val === '' || val === null || val === undefined) continue;
+        const num = parseFloat(val as string);
+        if (isNaN(num)) continue;
+        await db('card_metric_values').insert({
+          id: uid(), metric_id: metricId,
+          record_date: row.date, series_name: series, value: num,
+        });
+      }
+    }
+    return reply.send({ message: '저장됨' });
   });
 
   // 작업 로그

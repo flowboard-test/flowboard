@@ -39,7 +39,7 @@ export function AddCardModal({ columns, projectId, template, onClose }: AddCardM
 
   async function handleSubmit() {
     if (!title.trim() || !targetColId) return;
-    const tags = labels.split(',').map((l) => l.trim()).filter(Boolean);
+    const tags = labels.split(',').map((l: string) => l.trim()).filter(Boolean);
     const res: any = await apiClient(`/columns/${targetColId}/cards`, {
       method: 'POST',
       body: JSON.stringify({

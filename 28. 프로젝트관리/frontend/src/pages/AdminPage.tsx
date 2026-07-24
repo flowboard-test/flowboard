@@ -1020,12 +1020,6 @@ function StatisticsTab() {
     enabled: view === 'user',
   });
 
-  const runBatch = useMutation({
-    mutationFn: () => apiClient('/statistics/run-batch', {
-      method: 'POST', body: JSON.stringify({ date: toDate }),
-    }),
-  });
-
   // 월별 집계
   const monthlyStats = globalStats ? Object.values(
     globalStats.reduce((acc: any, s: any) => {

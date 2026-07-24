@@ -65,23 +65,13 @@ export function MetricSection({ cardId }: { cardId: string }) {
   );
 }
 
-function MetricCard({ metric, cardId }: { metric: any; cardId: string }) {
-  const [value, setValue] = useState('');
-  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
-  const [gridMode, setGridMode] = useState(false);
-  const [gridText, setGridText] = useState('');
-  const queryClient = useQueryClient();
+interface GridRow { date: string; values: Record<string, string>; }
 
-  const addValue = useMutation({
-    mutationFn: () => apiClient(`/metrics/${metric.id}/values`, {
-      method: 'POST',
-      body: JSON.stringify({ record_date: date, value: parseFloat(value) }),
-    }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['metrics', cardId] });
-      setValue('');
-    },
-  });
+function MetricCard({ metric, cardId }: { metric: any; cardId: string }) {
+  const [gridMode, setGridMode] = useState(false);
+  const [columns, setGridColumns] = useState<string[]>(['값']);
+  const [rows, setRows] = useState<GridRow[]>([]);
+  const queryClient = useQueryClient();
 
   const changeType = useMutation({
     mutationFn: (chart_type: string) => apiClient(`/metrics/${metric.id}`, {
@@ -95,35 +85,56 @@ function MetricCard({ metric, cardId }: { metric: any; cardId: string }) {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['metrics', cardId] }),
   });
 
-  // 엑셀 스타일 일괄 저장 (날짜<탭>값 형식 또는 날짜,값)
-  const bulkSave = useMutation({
-    mutationFn: async () => {
-      const lines = gridText.trim().split('\n');
-      for (const line of lines) {
-        const parts = line.split(/[\t,]/).map((s) => s.trim());
-        if (parts.length < 2) continue;
-        const d = parts[0];
-        const v = parseFloat(parts[1]);
-        if (!d || isNaN(v)) continue;
-        await apiClient(`/metrics/${metric.id}/values`, {
-          method: 'POST',
-          body: JSON.stringify({ record_date: d, value: v }),
-        });
-      }
-    },
+  // 그리드 전체 저장
+  const saveGrid = useMutation({
+    mutationFn: () => apiClient(`/metrics/${metric.id}/grid`, {
+      method: 'PUT', body: JSON.stringify({ rows }),
+    }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['metrics', cardId] });
-      setGridText(''); setGridMode(false);
+      setGridMode(false);
     },
   });
 
   function openGrid() {
-    // 기존 값을 표 텍스트로 미리 채움
-    const existing = (metric.values || [])
-      .map((v: any) => `${v.record_date?.split('T')[0]}\t${v.value}`)
-      .join('\n');
-    setGridText(existing);
+    // 기존 값을 그리드로 변환
+    const vals = metric.values || [];
+    const cols = Array.from(new Set(vals.map((v: any) => v.series_name || '값'))) as string[];
+    if (cols.length === 0) cols.push('값');
+    const byDate: Record<string, GridRow> = {};
+    for (const v of vals) {
+      const d = v.record_date?.split('T')[0];
+      if (!byDate[d]) byDate[d] = { date: d, values: {} };
+      byDate[d].values[v.series_name || '값'] = String(v.value);
+    }
+    const rowList = Object.values(byDate);
+    if (rowList.length === 0) {
+      rowList.push({ date: new Date().toISOString().split('T')[0], values: {} });
+    }
+    setGridColumns(cols);
+    setRows(rowList);
     setGridMode(true);
+  }
+
+  function addColumn() {
+    const name = prompt('추가할 컬럼(항목) 이름:');
+    if (name) setGridColumns([...columns, name]);
+  }
+  function addRow() {
+    setRows([...rows, { date: new Date().toISOString().split('T')[0], values: {} }]);
+  }
+  function updateCell(ri: number, col: string, val: string) {
+    const next = [...rows];
+    next[ri] = { ...next[ri], values: { ...next[ri].values, [col]: val } };
+    setRows(next);
+  }
+  function updateDate(ri: number, val: string) {
+    const next = [...rows];
+    next[ri] = { ...next[ri], date: val };
+    setRows(next);
+  }
+  function removeRow(ri: number) {
+    setRows(rows.filter((_, i) => i !== ri));
   }
 
   return (
@@ -150,40 +161,57 @@ function MetricCard({ metric, cardId }: { metric: any; cardId: string }) {
         data={metric.values || []} unit={metric.unit} />
       {/* 값 입력 */}
       {!gridMode ? (
-        <div className="flex gap-1 mt-2 items-center">
-          <input type="date" value={date} onChange={(e) => setDate(e.target.value)}
-            className="border rounded px-1 py-0.5 text-xs" />
-          <input type="number" value={value} onChange={(e) => setValue(e.target.value)}
-            placeholder="값" step="any"
-            className="border rounded px-2 py-0.5 text-xs w-24" />
-          <button onClick={() => value && addValue.mutate()}
-            disabled={!value}
-            className="px-2 py-0.5 bg-blue-500 text-white rounded text-xs disabled:opacity-50">
-            기록
-          </button>
-          <button onClick={openGrid}
-            className="px-2 py-0.5 border rounded text-xs ml-auto">📋 표로 입력</button>
-        </div>
+        <button onClick={openGrid}
+          className="mt-2 px-2 py-1 border rounded text-xs w-full hover:bg-gray-50">
+          📋 표 편집 (행/열 입력)
+        </button>
       ) : (
-        <div className="mt-2 space-y-1">
-          <p className="text-xs text-gray-500">
-            엑셀에서 복사한 데이터를 붙여넣으세요 (날짜[탭]값)
-          </p>
-          <div className="flex text-xs font-medium bg-gray-100 rounded-t px-2 py-1">
-            <span className="flex-1">날짜 (YYYY-MM-DD)</span>
-            <span className="w-24">값</span>
+        <div className="mt-2 space-y-2">
+          <div className="overflow-x-auto border rounded">
+            <table className="text-xs border-collapse w-full">
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="border px-2 py-1 text-left">날짜</th>
+                  {columns.map((c) => (
+                    <th key={c} className="border px-2 py-1">{c}</th>
+                  ))}
+                  <th className="border px-1 py-1 w-8"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, ri) => (
+                  <tr key={ri}>
+                    <td className="border p-0">
+                      <input type="date" value={row.date}
+                        onChange={(e) => updateDate(ri, e.target.value)}
+                        className="w-full px-1 py-0.5 text-xs outline-none" />
+                    </td>
+                    {columns.map((c) => (
+                      <td key={c} className="border p-0">
+                        <input type="number" value={row.values[c] || ''}
+                          onChange={(e) => updateCell(ri, c, e.target.value)}
+                          className="w-full px-1 py-0.5 text-xs outline-none text-right"
+                          step="any" />
+                      </td>
+                    ))}
+                    <td className="border text-center">
+                      <button onClick={() => removeRow(ri)}
+                        className="text-red-400 hover:text-red-600 text-xs">✕</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-          <textarea value={gridText}
-            onChange={(e) => setGridText(e.target.value)}
-            placeholder={"2026-07-24\t100\n2026-07-25\t200"}
-            rows={6}
-            className="w-full border rounded px-2 py-1 text-xs font-mono
-              whitespace-pre" />
-          <div className="flex gap-1">
-            <button onClick={() => bulkSave.mutate()}
-              disabled={bulkSave.isPending}
-              className="px-2 py-0.5 bg-blue-500 text-white rounded text-xs disabled:opacity-50">
-              {bulkSave.isPending ? '저장 중...' : '일괄 저장'}
+          <div className="flex gap-1 flex-wrap">
+            <button onClick={addRow}
+              className="px-2 py-0.5 border rounded text-xs">+ 행 추가</button>
+            <button onClick={addColumn}
+              className="px-2 py-0.5 border rounded text-xs">+ 열(항목) 추가</button>
+            <button onClick={() => saveGrid.mutate()}
+              disabled={saveGrid.isPending}
+              className="px-2 py-0.5 bg-blue-500 text-white rounded text-xs ml-auto disabled:opacity-50">
+              {saveGrid.isPending ? '저장 중...' : '저장'}
             </button>
             <button onClick={() => setGridMode(false)}
               className="px-2 py-0.5 border rounded text-xs">취소</button>
