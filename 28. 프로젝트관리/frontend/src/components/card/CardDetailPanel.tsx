@@ -105,6 +105,21 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
     },
   });
 
+  const changeAssignee = useMutation({
+    mutationFn: (assigneeId: string) =>
+      apiClient(`/cards/${cardId}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          assignee_id: assigneeId || null,
+          version: card?.version,
+        }),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['card', cardId] });
+      queryClient.invalidateQueries({ queryKey: ['board', projectId] });
+    },
+  });
+
   const [showRecurDelete, setShowRecurDelete] = useState(false);
 
   // 이 카드와 연결된 반복 규칙 조회
@@ -204,6 +219,19 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
           <div>
             <span className="text-gray-500 text-xs">버전</span>
             <p className="font-medium">v{card.version}</p>
+          </div>
+          <div className="col-span-2">
+            <span className="text-gray-500 text-xs">담당자</span>
+            <select
+              value={card.assignee_id || ''}
+              onChange={(e) => changeAssignee.mutate(e.target.value)}
+              className="w-full border rounded px-1 py-0.5 text-xs mt-0.5
+                font-medium cursor-pointer">
+              <option value="">미지정</option>
+              {(members && members.length > 0 ? members : allUsers || []).map((m: any) => (
+                <option key={m.id} value={m.id}>{m.name}</option>
+              ))}
+            </select>
           </div>
         </div>
 
