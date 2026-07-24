@@ -9,6 +9,7 @@ import { CommentSection } from './CommentSection';
 import { FileAttachment } from './FileAttachment';
 import { WorkLogSection } from './WorkLogSection';
 import { CardLinkSection } from './CardLinkSection';
+import { MetricSection } from './MetricSection';
 
 interface CardDetailPanelProps {
   cardId: string;
@@ -219,6 +220,9 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
 
         {/* 첨부파일 */}
         <FileAttachment cardId={cardId} />
+
+        {/* 데이터 차트 */}
+        <MetricSection cardId={cardId} />
 
         {/* 작업 시간 로그 */}
         <WorkLogSection cardId={cardId} />

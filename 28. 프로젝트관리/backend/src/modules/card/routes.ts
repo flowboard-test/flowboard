@@ -83,6 +83,65 @@ const cardRoutes: FastifyPluginAsync = async (app) => {
     return reply.status(204).send();
   });
 
+  // === 카드 메트릭(차트 데이터) ===
+  app.get('/cards/:id/metrics', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const db = require('../../shared/database/connection').getDb();
+    const metrics = await db('card_metrics').where('card_id', id);
+    for (const m of metrics) {
+      m.values = await db('card_metric_values')
+        .where('metric_id', m.id)
+        .orderBy('record_date', 'asc');
+    }
+    return reply.send(metrics);
+  });
+
+  app.post('/cards/:id/metrics', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { name, unit, chart_type } = request.body as any;
+    const db = require('../../shared/database/connection').getDb();
+    const { v4: uid } = require('uuid');
+    const metricId = uid();
+    await db('card_metrics').insert({
+      id: metricId, card_id: id, name,
+      unit: unit || null, chart_type: chart_type || 'bar',
+    });
+    return reply.status(201).send({ id: metricId });
+  });
+
+  app.put('/metrics/:metricId', async (request, reply) => {
+    const { metricId } = request.params as { metricId: string };
+    const { chart_type } = request.body as any;
+    const db = require('../../shared/database/connection').getDb();
+    await db('card_metrics').where('id', metricId).update({ chart_type });
+    return reply.send({ message: '수정됨' });
+  });
+
+  app.delete('/metrics/:metricId', async (request, reply) => {
+    const { metricId } = request.params as { metricId: string };
+    const db = require('../../shared/database/connection').getDb();
+    await db('card_metrics').where('id', metricId).del();
+    return reply.status(204).send();
+  });
+
+  app.post('/metrics/:metricId/values', async (request, reply) => {
+    const { metricId } = request.params as { metricId: string };
+    const { record_date, value } = request.body as any;
+    const db = require('../../shared/database/connection').getDb();
+    const { v4: uid } = require('uuid');
+    const date = record_date || new Date().toISOString().split('T')[0];
+    const existing = await db('card_metric_values')
+      .where({ metric_id: metricId, record_date: date }).first();
+    if (existing) {
+      await db('card_metric_values').where('id', existing.id).update({ value });
+    } else {
+      await db('card_metric_values').insert({
+        id: uid(), metric_id: metricId, record_date: date, value,
+      });
+    }
+    return reply.status(201).send({ message: '기록됨' });
+  });
+
   // 작업 로그
   app.get('/cards/:id/worklogs', async (request, reply) => {
     const { id } = request.params as { id: string };
