@@ -104,6 +104,15 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
     },
   });
 
+  const [showRecurDelete, setShowRecurDelete] = useState(false);
+
+  // 이 카드와 연결된 반복 규칙 조회
+  const { data: recurringList } = useQuery<any[]>({
+    queryKey: ['recurring', projectId],
+    queryFn: () => apiClient(`/projects/${projectId}/recurring`),
+  });
+  const linkedRecur = recurringList?.find((r) => r.title === card?.title);
+
   const deleteMutation = useMutation({
     mutationFn: () =>
       apiClient(`/cards/${cardId}`, { method: 'DELETE' }),
@@ -113,10 +122,31 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
     },
   });
 
+  const deleteRecurRule = useMutation({
+    mutationFn: () =>
+      linkedRecur
+        ? apiClient(`/recurring/${linkedRecur.id}`, { method: 'DELETE' })
+        : Promise.resolve(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['recurring', projectId] });
+    },
+  });
+
   const handleDelete = () => {
-    if (window.confirm('이 카드를 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.')) {
+    if (linkedRecur) {
+      setShowRecurDelete(true);
+    } else if (window.confirm('이 카드를 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.')) {
       deleteMutation.mutate();
     }
+  };
+
+  // 반복 삭제 옵션 처리
+  const handleRecurDelete = async (mode: 'this' | 'future') => {
+    if (mode === 'future') {
+      await deleteRecurRule.mutateAsync(); // 이후 반복 중단
+    }
+    deleteMutation.mutate(); // 현재 카드 삭제
+    setShowRecurDelete(false);
   };
 
   if (!card) return null;
@@ -336,7 +366,34 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
     </div>
   );
 
-  if (inline) return panelContent;
+  const recurDeleteModal = showRecurDelete && (
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[70]"
+      onClick={() => setShowRecurDelete(false)}>
+      <div className="bg-white rounded-lg w-[360px] p-5 space-y-3"
+        onClick={(e) => e.stopPropagation()}>
+        <h3 className="text-sm font-semibold">🔁 반복 업무 삭제</h3>
+        <p className="text-xs text-gray-500">
+          이 업무는 반복 규칙과 연결되어 있습니다. 삭제 범위를 선택하세요.
+        </p>
+        <div className="space-y-2">
+          <button onClick={() => handleRecurDelete('this')}
+            className="w-full py-2 border rounded text-sm hover:bg-gray-50 text-left px-3">
+            <span className="font-medium">이 카드만 삭제</span>
+            <span className="block text-xs text-gray-400">이후 반복은 계속 생성됩니다</span>
+          </button>
+          <button onClick={() => handleRecurDelete('future')}
+            className="w-full py-2 border border-red-200 rounded text-sm hover:bg-red-50 text-left px-3">
+            <span className="font-medium text-red-600">이 카드 + 이후 반복 모두 삭제</span>
+            <span className="block text-xs text-gray-400">기존 생성된 다른 카드는 유지됩니다</span>
+          </button>
+          <button onClick={() => setShowRecurDelete(false)}
+            className="w-full py-2 text-xs text-gray-400">취소</button>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (inline) return <>{panelContent}{recurDeleteModal}</>;
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
@@ -344,6 +401,7 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
       <div onClick={(e) => e.stopPropagation()}>
         {panelContent}
       </div>
+      {recurDeleteModal}
     </div>
   );
 }
