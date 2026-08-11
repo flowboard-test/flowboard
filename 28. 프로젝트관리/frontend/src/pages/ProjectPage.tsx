@@ -114,7 +114,7 @@ export function ProjectPage() {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="flex items-center gap-2 px-4 py-2 border-b bg-white">
+      <div className="flex items-center gap-2 px-5 py-2.5 border-b border-gray-100 bg-white">
         {isEditingName ? (
           <div className="flex items-center gap-2 mr-4">
             <input type="text" value={editName}
@@ -141,17 +141,17 @@ export function ProjectPage() {
         {views.map((v) => (
           <button key={v.key}
             onClick={() => setViewMode(v.key as any)}
-            className={`px-3 py-1 rounded text-xs
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium
               ${viewMode === v.key
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
+                ? 'bg-blue-500 text-white shadow-sm'
+                : 'text-gray-500 hover:bg-gray-100'}`}>
             {v.label}
           </button>
         ))}
         <button onClick={() => setShowAddCard(true)}
-          className="px-3 py-1 rounded text-xs bg-green-500 text-white
-            hover:bg-green-600 ml-2">
-          + 카드 추가
+          className="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-blue-500 text-white
+            hover:bg-blue-600 ml-auto shadow-sm flex items-center gap-1">
+          <span className="text-sm leading-none">+</span> 새 업무
         </button>
       </div>
 

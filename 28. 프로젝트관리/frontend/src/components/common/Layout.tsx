@@ -37,30 +37,32 @@ export function Layout() {
   const isAdmin = user?.email === 'admin@flowboard.dev';
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50">
-      <header className="h-12 bg-gradient-to-r from-blue-600 to-indigo-600
-        flex items-center px-4 justify-between shrink-0 shadow-sm">
-        <div className="flex items-center gap-6">
-          <Link to="/projects" className="font-bold text-base text-white">
-            FlowBoard
+    <div className="h-screen flex flex-col bg-[#f7f9fb]">
+      <header className="h-14 bg-white border-b border-gray-100
+        flex items-center px-5 justify-between shrink-0">
+        <div className="flex items-center gap-7">
+          <Link to="/projects" className="flex items-center gap-1.5 font-bold text-[17px] text-gray-800">
+            <span className="w-6 h-6 rounded-lg bg-gradient-to-br from-blue-500
+              to-indigo-500 flex items-center justify-center text-white text-xs">F</span>
+            Flow<span className="text-blue-500">Board</span>
           </Link>
           <nav className="hidden sm:flex gap-1">
             {navItems.map((item) => (
               <Link key={item.path} to={item.path}
-                className={`px-3 py-1 rounded text-sm
+                className={`px-3.5 py-1.5 rounded-lg text-sm font-medium
                   ${location.pathname.startsWith(item.path)
-                    ? 'bg-white/20 text-white font-medium'
-                    : 'text-white/70 hover:bg-white/10 hover:text-white'}`}>
+                    ? 'bg-blue-50 text-blue-600'
+                    : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'}`}>
                 {item.label}
               </Link>
             ))}
             {isAdmin && (
               <Link to="/admin"
-                className={`px-3 py-1 rounded text-sm
+                className={`px-3.5 py-1.5 rounded-lg text-sm font-medium
                   ${location.pathname === '/admin'
-                    ? 'bg-white/20 text-white font-medium'
-                    : 'text-yellow-200 hover:bg-white/10'}`}>
-                ⚙ 관리자
+                    ? 'bg-red-50 text-red-600'
+                    : 'text-gray-400 hover:bg-gray-50'}`}>
+                관리자
               </Link>
             )}
           </nav>
@@ -72,7 +74,7 @@ export function Layout() {
           {/* 알림 벨 */}
           <div className="relative">
             <button onClick={() => setShowNotif(!showNotif)}
-              className="relative p-1.5 rounded hover:bg-white/10 text-white">
+              className="relative p-2 rounded-lg hover:bg-gray-100 text-gray-500">
               🔔
               {unreadCount > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 bg-red-500
@@ -115,9 +117,15 @@ export function Layout() {
               </div>
             )}
           </div>
-          <span className="text-sm text-white/80">{user?.name}</span>
+          <div className="flex items-center gap-2">
+            <span className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-400
+              to-indigo-400 flex items-center justify-center text-white text-xs font-medium">
+              {user?.name?.charAt(0)}
+            </span>
+            <span className="text-sm text-gray-700 font-medium">{user?.name}</span>
+          </div>
           <button onClick={logout}
-            className="text-xs text-white/60 hover:text-white">
+            className="text-xs text-gray-400 hover:text-gray-700 px-2 py-1 rounded hover:bg-gray-100">
             로그아웃
           </button>
         </div>

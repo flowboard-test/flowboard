@@ -34,13 +34,19 @@ export function ColumnComponent({ column }: ColumnProps) {
 
   return (
     <div ref={setNodeRef}
-      className={`flex flex-col w-72 min-w-72 max-h-full bg-white rounded-lg shadow-sm
-        ${columnColors[column.name] || 'border-t-4 border-t-gray-300'}
-        ${isOver ? 'ring-2 ring-blue-400' : ''}
-        ${isOverLimit ? 'border-2 border-red-300' : ''}`}>
-      <div className="flex items-center justify-between p-3 border-b">
-        <h3 className="font-semibold text-sm">{column.name}</h3>
-        <span className="text-xs text-gray-500">
+      className={`flex flex-col w-72 min-w-72 max-h-full bg-[#f1f3f5] rounded-xl
+        ${isOver ? 'ring-2 ring-blue-400 bg-blue-50' : ''}
+        ${isOverLimit ? 'ring-2 ring-red-300' : ''}`}>
+      <div className="flex items-center justify-between px-3 py-2.5">
+        <div className="flex items-center gap-2">
+          <span className={`w-2 h-2 rounded-full
+            ${column.name === '할 일' ? 'bg-blue-400' :
+              column.name === '진행 중' ? 'bg-yellow-400' :
+              column.name === '검토' ? 'bg-purple-400' :
+              column.name === '완료' ? 'bg-green-400' : 'bg-gray-400'}`} />
+          <h3 className="font-semibold text-sm text-gray-700">{column.name}</h3>
+        </div>
+        <span className="text-xs text-gray-400 bg-white rounded-full px-2 py-0.5">
           {column.cards.length}
           {column.wip_limit && ` / ${column.wip_limit}`}
         </span>

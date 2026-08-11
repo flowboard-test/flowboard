@@ -41,8 +41,8 @@ export function CardItem({ card }: CardItemProps) {
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}
       onClick={() => setSelectedCard(card.id)}
-      className={`bg-white rounded-md p-3 shadow-sm
-        cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5
+      className={`bg-white rounded-xl p-3 border border-gray-100
+        cursor-pointer hover:shadow-md hover:border-gray-200 transition-all hover:-translate-y-0.5
         ${priorityColors[card.priority] || 'border-l-4 border-l-gray-300'}
         ${isDragging ? 'opacity-50 rotate-1 shadow-lg' : ''}`}>
       {(card as any).issue_key && (

@@ -133,23 +133,27 @@ export function BoardView() {
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="px-4 pt-2 pb-1">
-        <label className="inline-flex items-center gap-2 text-xs cursor-pointer">
+      <div className="px-4 pt-3 pb-1">
+        <label className="inline-flex items-center gap-2 text-xs cursor-pointer
+          text-gray-500 hover:text-gray-700">
           <input type="checkbox" checked={myOnly}
             onChange={(e) => setMyOnly(e.target.checked)}
-            className="rounded" />
+            className="rounded accent-blue-500" />
           <span>내 업무만 보기</span>
         </label>
       </div>
-      <div className="flex gap-4 overflow-x-auto p-4 pt-2 h-[calc(100vh-180px)] bg-gray-100 rounded-lg mx-4">
+      <div className="flex gap-3 overflow-x-auto p-4 pt-2 h-[calc(100vh-180px)]">
         {filteredColumns.map((column) => (
           <ColumnComponent key={column.id} column={column} />
         ))}
         {/* 프로젝트 보드 - 모든 카드 게시판 */}
-        <div className="flex flex-col w-80 min-w-80 max-h-full bg-white rounded-lg shadow-sm border-t-4 border-t-indigo-400">
-          <div className="flex items-center justify-between p-3 border-b">
-            <h3 className="font-semibold text-sm">프로젝트 보드</h3>
-            <span className="text-xs text-gray-500">
+        <div className="flex flex-col w-80 min-w-80 max-h-full bg-[#f1f3f5] rounded-xl">
+          <div className="flex items-center justify-between px-3 py-2.5">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-indigo-400" />
+              <h3 className="font-semibold text-sm text-gray-700">프로젝트 보드</h3>
+            </div>
+            <span className="text-xs text-gray-400 bg-white rounded-full px-2 py-0.5">
               {columns.flatMap((c) => c.cards).length}
             </span>
           </div>
