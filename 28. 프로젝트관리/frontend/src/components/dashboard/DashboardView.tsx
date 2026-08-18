@@ -5,7 +5,7 @@ interface DashboardData {
   columnDistribution: Array<{ column_name: string; count: number }>;
   columnDwellTime?: Array<{ column_name: string; avg_hours: number }>;
   memberStats?: Array<{ id: string; name: string; assigned: number; completed: number }>;
-}
+} 
 
 interface DashboardViewProps {
   data: DashboardData | null;

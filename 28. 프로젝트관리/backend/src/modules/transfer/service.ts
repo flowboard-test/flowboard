@@ -8,7 +8,7 @@ export class TransferService {
   async create(cardId: string, input: TransferRequest, fromUserId: string) {
     const db = getDb();
 
-    return await db.transaction(async (trx) => {
+    const result: any = await db.transaction(async (trx) => {
       const card = await trx('cards').where('id', cardId).first();
       if (!card) {
         throw AppError.notFound('카드를 찾을 수 없습니다');
@@ -109,25 +109,7 @@ export class TransferService {
         }),
       });
 
-      // 알림 발송
       const fromUser = await trx('users').where('id', fromUserId).first();
-      if (input.resolutionType === 'rejected') {
-        await notificationService.sendRejectionNotification(
-          newAssignee,
-          fromUser?.name || '알 수 없음',
-          card.title,
-          cardId,
-          board.project_id
-        );
-      } else {
-        await notificationService.sendTransferNotification(
-          newAssignee,
-          fromUser?.name || '알 수 없음',
-          card.title,
-          cardId,
-          board.project_id
-        );
-      }
 
       return {
         id: transferId,
@@ -136,8 +118,36 @@ export class TransferService {
         to_user_id: newAssignee,
         resolution_type: input.resolutionType,
         comment: input.comment,
+        // 트랜잭션 밖 알림용 데이터
+        _notify: {
+          newAssignee,
+          fromUserName: fromUser?.name || '알 수 없음',
+          cardTitle: card.title,
+          projectId: board.project_id,
+          isRejected: input.resolutionType === 'rejected',
+        },
       };
     });
+
+    // 트랜잭션 완료 후 알림 발송 (커넥션 데드락 방지)
+    const n = result._notify;
+    if (n) {
+      try {
+        if (n.isRejected) {
+          await notificationService.sendRejectionNotification(
+            n.newAssignee, n.fromUserName, n.cardTitle, cardId, n.projectId
+          );
+        } else {
+          await notificationService.sendTransferNotification(
+            n.newAssignee, n.fromUserName, n.cardTitle, cardId, n.projectId
+          );
+        }
+      } catch (e) {
+        // 알림 실패는 이관 성공에 영향 주지 않음
+      }
+    }
+    delete result._notify;
+    return result;
   }
 
   async getHistory(cardId: string) {
