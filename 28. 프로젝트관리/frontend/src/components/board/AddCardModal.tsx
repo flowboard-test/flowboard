@@ -26,6 +26,8 @@ export function AddCardModal({ columns, projectId, template, onClose }: AddCardM
   });
   const [attachFiles, setAttachFiles] = useState<File[]>([]);
   const [recurType, setRecurType] = useState('none');
+  const [taskMode, setTaskMode] = useState<'sequential' | 'shared'>('sequential');
+  const [collaborators, setCollaborators] = useState<string[]>([]);
   const queryClient = useQueryClient();
   const currentUser = useAuthStore((s) => s.user);
 
@@ -50,6 +52,8 @@ export function AddCardModal({ columns, projectId, template, onClose }: AddCardM
         start_date: startDate || undefined,
         due_date: dueDate || undefined,
         tags,
+        task_mode: taskMode,
+        collaborator_ids: taskMode === 'shared' ? collaborators : [],
       }),
     });
     // 첨부파일 업로드
@@ -102,6 +106,22 @@ export function AddCardModal({ columns, projectId, template, onClose }: AddCardM
         </div>
 
         <div className="p-4 space-y-4">
+          {/* 업무 유형 선택 */}
+          <div className="flex gap-2">
+            <button type="button" onClick={() => setTaskMode('sequential')}
+              className={`flex-1 border rounded-lg p-2.5 text-left
+                ${taskMode === 'sequential' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`}>
+              <p className="text-sm font-medium">🔄 순차 업무</p>
+              <p className="text-xs text-gray-400">완료 시 다음 담당자에게 전달</p>
+            </button>
+            <button type="button" onClick={() => setTaskMode('shared')}
+              className={`flex-1 border rounded-lg p-2.5 text-left
+                ${taskMode === 'shared' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`}>
+              <p className="text-sm font-medium">👥 공동 업무</p>
+              <p className="text-xs text-gray-400">여러 명이 함께 관리</p>
+            </button>
+          </div>
+
           {/* 이슈 유형 + 제목 */}
           <div className="flex gap-2">
             <select value={issueType}
@@ -142,18 +162,20 @@ export function AddCardModal({ columns, projectId, template, onClose }: AddCardM
               </select>
             </div>
 
-            {/* 담당자 */}
-            <div>
-              <label className="text-xs font-medium text-gray-600 mb-1 block">담당자</label>
-              <select value={assigneeId}
-                onChange={(e) => setAssigneeId(e.target.value)}
-                className="w-full border rounded px-2 py-2 text-sm">
-                <option value="">미지정</option>
-                {members?.map((m: any) => (
-                  <option key={m.id} value={m.id}>{m.name}</option>
-                ))}
-              </select>
-            </div>
+            {/* 담당자 (순차 업무) */}
+            {taskMode === 'sequential' && (
+              <div>
+                <label className="text-xs font-medium text-gray-600 mb-1 block">담당자</label>
+                <select value={assigneeId}
+                  onChange={(e) => setAssigneeId(e.target.value)}
+                  className="w-full border rounded px-2 py-2 text-sm">
+                  <option value="">미지정</option>
+                  {members?.map((m: any) => (
+                    <option key={m.id} value={m.id}>{m.name}</option>
+                  ))}
+                </select>
+              </div>
+            )}
 
             {/* 시작일 */}
             <div>
@@ -188,6 +210,28 @@ export function AddCardModal({ columns, projectId, template, onClose }: AddCardM
                 className="w-full border rounded px-2 py-2 text-sm bg-gray-50" />
             </div>
           </div>
+
+          {/* 공동 업무 참여자 선택 */}
+          {taskMode === 'shared' && (
+            <div>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">참여자 (공동 관리)</label>
+              <div className="flex flex-wrap gap-1.5">
+                {members?.map((m: any) => {
+                  const selected = collaborators.includes(m.id);
+                  return (
+                    <button key={m.id} type="button"
+                      onClick={() => setCollaborators(selected
+                        ? collaborators.filter((c) => c !== m.id)
+                        : [...collaborators, m.id])}
+                      className={`px-2.5 py-1 rounded-full text-xs border
+                        ${selected ? 'bg-blue-500 text-white border-blue-500' : 'border-gray-200'}`}>
+                      {m.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           {/* 반복 설정 */}
           <div>

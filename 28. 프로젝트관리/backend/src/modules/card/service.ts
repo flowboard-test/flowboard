@@ -54,6 +54,7 @@ export class CardService {
       }
     }
 
+    const taskMode = (input as any).task_mode || 'sequential';
     const cardId = uuid();
     await db('cards').insert({
       id: cardId,
@@ -67,12 +68,13 @@ export class CardService {
       tags: JSON.stringify(input.tags || []),
       position: insertPosition,
       created_by: userId,
+      task_mode: taskMode,
       ...(issueNumber ? { issue_number: issueNumber } : {}),
     });
 
-    // 워크플로우가 있으면 첫 번째 담당자 자동 배정
+    // 순차 업무 + 워크플로우가 있으면 첫 번째 담당자 자동 배정
     const board = await db('boards').where('id', column.board_id).first();
-    if (board) {
+    if (board && taskMode === 'sequential') {
       const chain = await db('workflow_chains')
         .where({ project_id: board.project_id, is_active: true })
         .first();
@@ -86,6 +88,16 @@ export class CardService {
             assignee_id: firstStep.assignee_id,
           });
         }
+      }
+    }
+
+    // 공동 업무: 참여자(협업자) 등록
+    const collabIds: string[] = (input as any).collaborator_ids || [];
+    if (taskMode === 'shared' && collabIds.length > 0) {
+      for (const uid2 of collabIds) {
+        await db('card_collaborators').insert({
+          id: uuid(), card_id: cardId, user_id: uid2,
+        }).catch(() => {});
       }
     }
 

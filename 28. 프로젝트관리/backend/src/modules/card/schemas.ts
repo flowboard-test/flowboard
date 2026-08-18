@@ -8,6 +8,8 @@ export const createCardSchema = z.object({
   start_date: z.string().optional(),
   due_date: z.string().optional(),
   tags: z.array(z.string()).optional().default([]),
+  task_mode: z.enum(['sequential', 'shared']).optional().default('sequential'),
+  collaborator_ids: z.array(z.string().uuid()).optional().default([]),
 });
 
 export const updateCardSchema = z.object({

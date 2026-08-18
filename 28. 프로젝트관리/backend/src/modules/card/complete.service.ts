@@ -15,6 +15,23 @@ export class CardCompleteService {
     const card = await db('cards').where('id', cardId).first();
     if (!card) throw AppError.notFound('카드를 찾을 수 없습니다');
 
+    // 공동 업무는 이관 없이 바로 완료 처리
+    if (card.task_mode === 'shared') {
+      const col = await db('columns').where('id', card.column_id).first();
+      const doneColShared = await db('columns')
+        .where({ board_id: col.board_id, name: '완료' }).first();
+      await db('cards').where('id', cardId).update({
+        status: 'done',
+        column_id: doneColShared ? doneColShared.id : card.column_id,
+        updated_at: db.fn.now(),
+      });
+      await db('card_timeline').insert({
+        id: uuid(), card_id: cardId, event_type: 'completed',
+        actor_id: userId, payload: JSON.stringify({ comment, mode: 'shared' }),
+      });
+      return { status: 'done', message: '공동 업무가 완료되었습니다.' };
+    }
+
     // 서브태스크 완료 검증
     const incompleteSubtasks = await db('cards')
       .where('parent_id', cardId)
