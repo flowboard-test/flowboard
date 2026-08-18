@@ -227,7 +227,7 @@ const cardRoutes: FastifyPluginAsync = async (app) => {
   app.put('/cards/:id', async (request, reply) => {
     const { id } = request.params as { id: string };
     const input = updateCardSchema.parse(request.body);
-    const card = await cardService.update(id, input);
+    const card = await cardService.update(id, input, request.userId!);
     return reply.send(card);
   });
 

@@ -114,7 +114,7 @@ export class CardService {
     return card;
   }
 
-  async update(cardId: string, input: UpdateCardInput) {
+  async update(cardId: string, input: UpdateCardInput, userId?: string) {
     const db = getDb();
     const { version, ...data } = input;
 
@@ -145,6 +145,32 @@ export class CardService {
     }
 
     const updatedCard = await db('cards').where('id', cardId).first();
+
+    // 변경 이력 기록 (필드별 변경 감지)
+    if (userId && existing) {
+      const fieldLabels: Record<string, string> = {
+        title: '제목', description: '설명', priority: '우선순위',
+        assignee_id: '담당자', start_date: '시작일', due_date: '마감일',
+        status: '상태',
+      };
+      const changes: string[] = [];
+      for (const key of Object.keys(data)) {
+        const before = existing[key];
+        const after = (data as any)[key];
+        if (String(before ?? '') !== String(after ?? '')) {
+          changes.push(fieldLabels[key] || key);
+        }
+      }
+      if (changes.length > 0) {
+        await db('card_timeline').insert({
+          id: uuid(),
+          card_id: cardId,
+          event_type: 'updated',
+          actor_id: userId,
+          payload: JSON.stringify({ changed_fields: changes }),
+        });
+      }
+    }
 
     return updatedCard;
   }

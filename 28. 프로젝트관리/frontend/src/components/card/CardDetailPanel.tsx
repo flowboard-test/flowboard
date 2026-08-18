@@ -19,7 +19,16 @@ interface CardDetailPanelProps {
   onClose?: () => void;
 }
 
-function eventLabel(type: string): string {
+function eventLabel(type: string, payload?: string): string {
+  if (type === 'updated') {
+    try {
+      const p = JSON.parse(payload || '{}');
+      if (p.changed_fields?.length) {
+        return `님이 ${p.changed_fields.join(', ')}을(를) 수정했습니다`;
+      }
+    } catch {}
+    return '님이 카드를 수정했습니다';
+  }
   const labels: Record<string, string> = {
     created: '님이 카드를 생성했습니다',
     column_moved: '님이 카드를 이동했습니다',
@@ -28,7 +37,6 @@ function eventLabel(type: string): string {
     completed: '님이 완료 처리했습니다',
     rejected: '님이 반려했습니다',
     workflow_completed: '님이 워크플로우를 완료했습니다',
-    updated: '님이 카드를 수정했습니다',
   };
   return labels[type] || `님의 활동 (${type})`;
 }
@@ -396,7 +404,7 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
                   </span>
                   <span className="text-gray-700">
                     <b>{t.actor_name || '시스템'}</b>{' '}
-                    {eventLabel(t.event_type)}
+                    {eventLabel(t.event_type, t.payload)}
                   </span>
                 </div>
               ))}
