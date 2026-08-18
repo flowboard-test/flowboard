@@ -42,6 +42,7 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
   const [transferTo, setTransferTo] = useState('');
   const [resType, setResType] = useState('completed');
   const [comment, setComment] = useState('');
+  const [transferError, setTransferError] = useState('');
 
   const { data: card } = useQuery<any>({
     queryKey: ['card', cardId],
@@ -89,8 +90,13 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
       queryClient.invalidateQueries({ queryKey: ['transfers', cardId] });
       queryClient.invalidateQueries({ queryKey: ['board', projectId] });
       queryClient.invalidateQueries({ queryKey: ['card', cardId] });
+      queryClient.invalidateQueries({ queryKey: ['my-tasks'] });
       setShowTransfer(false);
       setComment('');
+      setTransferError('');
+    },
+    onError: (err: any) => {
+      setTransferError(err?.data?.message || err?.message || '이관에 실패했습니다');
     },
   });
 
@@ -330,13 +336,16 @@ export function CardDetailPanel({ cardId, projectId, inline, onClose }: CardDeta
               onClick={() => transferMutation.mutate({
                 toUserId: transferTo,
                 resolutionType: resType,
-                comment,
+                comment: comment || undefined,
               })}
-              disabled={!transferTo}
+              disabled={!transferTo || transferMutation.isPending}
               className="w-full py-1.5 bg-blue-500 text-white rounded text-xs
                 disabled:opacity-50">
-              이관 완료
+              {transferMutation.isPending ? '처리 중...' : '이관 완료'}
             </button>
+            {transferError && (
+              <p className="text-xs text-red-500 mt-1">{transferError}</p>
+            )}
             </>
             )}
           </div>
